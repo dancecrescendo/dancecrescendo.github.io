@@ -1,0 +1,106 @@
+/* General: Body */
+body{
+  width: 100%;
+  overflow-x: hidden;
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: black;
+}
+p{
+ font-size: 14px;
+ line-height: 1.75; 
+}
+a {
+  color: #fed136;
+}
+a:hover,
+a:focus,
+a:active,
+a.active {
+  color: #fff;
+}
+a,
+a:hover,
+a:focus,
+a:active,
+a.active {
+  outline: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /*text-transform: uppercase;*/
+  font-weight: 700;
+}
+
+/* text related */
+.text-align-justify{
+  text-align: justify;
+}
+.removeUnderline{
+  text-decoration:none !important;
+}
+
+
+/* Navigation bar */
+.navbar-fixed-top {
+  background-color: #222222;
+  background: rgba(255,255,255,0.5);
+  border-color: transparent;
+  text-shadow: 1px 1px gray;
+}
+.navbar-fixed-top .navbar-brand {
+  /* Logo */
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, cursive;
+  height: 100%;
+}
+.navbar-fixed-top .navbar-brand img{
+  height: 28px;
+}
+.navbar-fixed-top .navbar-brand:hover,
+.navbar-fixed-top .navbar-brand:focus,
+.navbar-fixed-top .navbar-brand:active,
+.navbar-fixed-top .navbar-brand.active {
+  color: blue;
+}
+.navbar-fixed-top .navbar-toggle:hover,
+.navbar-fixed-top .navbar-toggle:focus {
+  background-color: red;
+}
+.navbar-fixed-top .navbar-collapse {
+  /*border-color: rgba(255, 255, 255, 0.02);*/
+  border-color: rgba(0, 0, 0, 0.02);
+}
+.navbar-fixed-top .navbar-toggle {
+  background-color: white;
+  border-color: white;
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  color: black;
+  font-size: 12px;
+}
+.navbar-fixed-top .nav li a {
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: white;
+}
+.navbar-fixed-top .nav li a:hover,
+.navbar-fixed-top .nav li a:focus {
+  color: green;
+  outline: none;
+}
+.navbar-fixed-top .navbar-nav > .active > a {
+  border-radius: 0;
+  color: white;
+  background-color: purple;
+}
+.navbar-fixed-top .navbar-nav > .active > a:hover,
+.navbar-fixed-top .navbar-nav > .active > a:focus {
+  color: white;
+  background-color: #fec503;
+}
