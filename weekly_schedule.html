@@ -9,7 +9,7 @@
   <!-- jQuery JS -->
   <script src="js/jquery.min.js"></script>
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
-  
+
   <!-- Boostrap JS -->
   <script src="js/bootstrap.min.js"></script>
   <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
@@ -79,18 +79,26 @@
     border-left: 3px double gray !important;
   }
   .border-hour1{
-    border-bottom: 2px dashed #f54949 !important;
+    border-bottom: 2px dashed gray !important;
   }
   .border-hour2{
-    border-bottom: 2px dashed #ffe94d !important;
+    border-bottom: 2px dashed gray !important;
   }
   .border-hour3{
-    border-bottom: 2px dashed #3666ff !important;
+    border-bottom: 2px dashed gray !important;
+  }
+  .table-hover tbody tr td:hover {
+    color:inherit;
+    -webkit-filter: drop-shadow(5px 5px 3px gray);
+    /*filter:invert(100%);*/
+  }
+  .table-hover tbody tr:hover {
+    background: lightgray;
   }
 </style>
 
 
-<table id="" class="table table-bordered table-condensed">
+<table id="" class="table table-bordered table-condensed table-hover">
   <thead>
     <tr>
       <th></th> <th colspan="5">Monday</th> <th colspan="5">Tuesday</th> <th colspan="5">Wednesday</th> <th colspan="5">Thursday</th> <th colspan="5">Friday</th> <th colspan="5">Saturday</th> <th colspan="5">Sunday</th>
@@ -688,7 +696,7 @@
       <td class="border-hour3"></td>
     </tr>
     <tr>
-      <td class="border-hour3" class="timeLine"> 12:00 PM </td>
+      <td class="timeLine"> 12:00 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -1815,8 +1823,10 @@
       <!-- Sunday -->
       <td class="border-day"></td>
       <td></td>
-      <td class="pre-class class-border"></td>
-      <td class="class-border">Pre/Combo Classes</td>
+      <td></td>
+      <td></td>
+      <!-- <td class="pre-class class-border"></td>
+      <td class="class-border">Pre/Combo Classes</td> -->
       <td></td>
       <!-- <td class="-class class-border"></td>
       <td class="class-border"></td> -->
@@ -1862,8 +1872,10 @@
       <!-- Sunday -->
       <td class="border-day"></td>
       <td></td>
-      <td class="ballet-class class-border"></td>
-      <td class="class-border">Ballet</td>
+      <td></td>
+      <td></td>
+      <!-- <td class="ballet-class class-border"></td>
+      <td class="class-border">Ballet</td> -->
       <td></td>
     </tr>
 
@@ -1908,8 +1920,10 @@
       <!-- Sunday -->
       <td class="border-day"></td>
       <td></td>
-      <td class="jazz-class class-border"></td>
-      <td class="class-border">Jazz</td>
+      <td></td>
+      <td></td>
+      <!-- <td class="jazz-class class-border"></td>
+      <td class="class-border">Jazz</td> -->
       <td></td>
     </tr>
     <tr>
@@ -1953,8 +1967,10 @@
       <!-- Sunday -->
       <td class="border-day border-hour1"></td>
       <td class="border-hour1"></td>
-      <td class="hiphop-class class-border"></td>
-      <td class="class-border">Hip Hop</td>
+      <td class="border-hour1"></td>
+      <td class="border-hour1"></td>
+      <!-- <td class="hiphop-class class-border"></td>
+      <td class="class-border">Hip Hop</td> -->
       <td class="border-hour1"></td>
     </tr>
     <tr>
@@ -1998,8 +2014,10 @@
       <!-- Sunday -->
       <td class="border-day"></td>
       <td></td>
-      <td class="theater-class class-border"></td>
-      <td class="class-border">Music Theatre</td>
+      <td></td>
+      <td></td>
+      <!-- <td class="theater-class class-border"></td>
+      <td class="class-border">Music Theatre</td> -->
       <td></td>
     </tr>
     <tr>
@@ -2043,8 +2061,10 @@
       <!-- Sunday -->
       <td class="border-day"></td>
       <td></td>
-      <td class="tap-class class-border"></td>
-      <td class="class-border">Tap</td>
+      <td></td>
+      <td></td>
+      <!-- <td class="tap-class class-border"></td>
+      <td class="class-border">Tap</td> -->
       <td></td>
     </tr>
 
@@ -2089,8 +2109,10 @@
       <!-- Sunday -->
       <td class="border-day"></td>
       <td></td>
-      <td class="contemporary-class class-border"></td>
-      <td class="class-border">Contemporary</td>
+      <td></td>
+      <td></td>
+      <!-- <td class="contemporary-class class-border"></td>
+      <td class="class-border">Contemporary</td> -->
       <td></td>
     </tr>
     <tr>
@@ -2134,8 +2156,10 @@
       <!-- Sunday -->
       <td class="border-day border-hour2"></td>
       <td class="border-hour2"></td>
-      <td class="acro-class class-border"></td>
-      <td class="class-border">Acro</td>
+      <td class="border-hour2"></td>
+      <td class="border-hour2"></td>
+      <!-- <td class="acro-class class-border"></td>
+      <td class="class-border">Acro</td> -->
       <td class="border-hour2"></td>
     </tr>
     <tr>
@@ -2179,8 +2203,10 @@
       <!-- Sunday -->
       <td class="border-day"></td>
       <td></td>
-      <td class="danceWithMe-class class-border"></td>
-      <td class="class-border">Dance with Me</td>
+      <td></td>
+      <td></td>
+      <!-- <td class="danceWithMe-class class-border"></td>
+      <td class="class-border">Dance with Me</td> -->
       <td></td>
     </tr>
     <tr>
@@ -2224,8 +2250,10 @@
       <!-- Sunday -->
       <td class="border-day"></td>
       <td></td>
-      <td class="stretch-class class-border"></td>
-      <td class="class-border">Stretch &amp; Cond.</td>
+      <td></td>
+      <td></td>
+      <!-- <td class="stretch-class class-border"></td>
+      <td class="class-border">Stretch &amp; Cond.</td> -->
       <td></td>
     </tr>
 
@@ -2270,8 +2298,10 @@
       <!-- Sunday -->
       <td class="border-day"></td>
       <td></td>
-      <td class="toddler-class class-border"></td>
-      <td class="class-border">Toddler</td>
+      <td></td>
+      <td></td>
+      <!-- <td class="toddler-class class-border"></td>
+      <td class="class-border">Toddler</td> -->
       <td></td>
     </tr>
     <tr>
@@ -2315,8 +2345,10 @@
       <!-- Sunday -->
       <td class="border-day"></td>
       <td></td>
-      <td class="lyrical-class class-border"></td>
-      <td class="class-border">Lyrical</td>
+      <td></td>
+      <td></td>
+      <!-- <td class="lyrical-class class-border"></td>
+      <td class="class-border">Lyrical</td> -->
       <td></td>
     </tr>
     <tr>
