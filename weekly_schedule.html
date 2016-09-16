@@ -78,6 +78,9 @@
   .zumba-class{
     background-color: #ffb400;
   }
+  .rental{
+    background-color: #c1987c;
+  }
   .class-border{
     border: 2px solid black !important;
   }
@@ -101,19 +104,22 @@
   .table-hover tbody tr:hover {
     background: lightgray;
   }
+  .timeLine{
+    /*position:absolute;*/
+  }
 </style>
 
 
 <table id="" class="table table-bordered table-condensed table-hover">
   <thead>
     <tr>
-      <th></th> <th colspan="5">Monday</th> <th colspan="5">Tuesday</th> <th colspan="5">Wednesday</th> <th colspan="5">Thursday</th> <th colspan="5">Friday</th> <th colspan="5">Saturday</th> <th colspan="5">Sunday</th>
+      <th class="timeLine"></th> <th colspan="5">Monday</th> <th colspan="5">Tuesday</th> <th colspan="5">Wednesday</th> <th colspan="5">Thursday</th> <th colspan="5">Friday</th> <th colspan="5">Saturday</th> <th colspan="5">Sunday</th>
     </tr>
   </thead>
 
   <tbody>
     <tr>
-      <td></td>
+      <td class="timeLine"></td>
       <!-- Monday -->
       <td class="border-day"> Studio 1 </td>
       <td> Studio 2 </td>
@@ -236,7 +242,7 @@
       <td></td>
       <td></td>
       <!-- Saturday -->
-      <td rowspan="2" class="danceWithMe-class class-border"> <b>Dance With Me</b> <br> 9:15-9:45 </td>
+      <td class="border-day"></td>
       <td></td>
       <td></td>
       <td></td>
@@ -282,7 +288,7 @@
       <td></td>
       <td></td>
       <!-- Saturday -->
-      <!-- <td class="border-day"></td> -->
+      <td rowspan="2" class="danceWithMe-class class-border"> <b>Dance With Me</b> <br> 9:30-10:00 </td>
       <td rowspan="3" class="pre-class class-border"> <b>Pre Jazz/Hip Hop</b> <br> 9:30-10:15 </td>
       <td></td>
       <td></td>
@@ -327,7 +333,7 @@
       <td class="border-hour1"></td>
       <td class="border-hour1"></td>
       <!-- Saturday -->
-      <td class="border-day border-hour1"></td>
+      <!-- <td class="border-day border-hour1"></td> -->
       <!-- <td class="border-hour1"></td> -->
       <td class="border-hour1"></td>
       <td class="border-hour1"></td>
@@ -834,7 +840,7 @@
       <td class="border-day"></td>
       <!-- <td></td> -->
       <td></td>
-      <td rowspan="4" class="hiphop-class class-border"> <b>Hip Hop 1/2</b> <br> 12:30-1:30 </td>
+      <td></td><!-- <td rowspan="4" class="hiphop-class class-border"> <b>Hip Hop 1/2</b> <br> 12:30-1:30 </td> -->
       <td></td>
     </tr>
     <tr>
@@ -879,7 +885,7 @@
       <td class="border-day border-hour1"></td>
       <!-- <td class="border-hour1"></td> -->
       <td class="border-hour1"></td>
-      <!-- <td class="border-hour1"></td> -->
+      <td class="border-hour1"></td>
       <td class="border-hour1"></td>
     </tr>
     <tr>
@@ -921,10 +927,10 @@
       <td></td>
       <td></td>
       <!-- Sunday -->
-      <td rowspan="6" class="stretch-class class-border border-day"> <b> Stretch &amp; Cond. <br> Turns &amp; Leaps </b> <br> 1:00-2:30 </td>
+      <td class="border-day"></td>
+      <td rowspan="6" class="stretch-class class-border"> <b> Stretch &amp; Cond. <br> Turns &amp; Leaps </b> <br> 1:00-2:30 </td>
       <td></td>
       <td></td>
-      <!-- <td></td> -->
       <td></td>
     </tr>
     <tr>
@@ -966,10 +972,10 @@
       <td></td>
       <td></td>
       <!-- Sunday -->
-      <!-- <td class="border-day"></td> -->
-      <td></td>
-      <td></td>
+      <td class="border-day"></td>
       <!-- <td></td> -->
+      <td></td>
+      <td></td>
       <td></td>
     </tr>
 
@@ -1012,8 +1018,8 @@
       <td></td>
       <td></td>
       <!-- Sunday -->
-      <!-- <td class="border-day"></td> -->
-      <td></td>
+      <td class="border-day"></td>
+      <!-- <td></td> -->
       <td></td>
       <td></td>
       <td></td>
@@ -1057,8 +1063,8 @@
       <td class="border-hour2"></td>
       <td class="border-hour2"></td>
       <!-- Sunday -->
-      <!-- <td class="border-day border-hour2"></td> -->
-      <td class="border-hour2"></td>
+      <td class="border-day border-hour2"></td>
+      <!-- <td class="border-hour2"></td> -->
       <td class="border-hour2"></td>
       <td class="border-hour2"></td>
       <td class="border-hour2"></td>
@@ -1102,8 +1108,8 @@
       <td></td>
       <td></td>
       <!-- Sunday -->
-      <!-- <td class="border-day"></td> -->
-      <td></td>
+      <td class="border-day"></td>
+      <!-- <td></td> -->
       <td></td>
       <td></td>
       <td></td>
@@ -1147,8 +1153,8 @@
       <td></td>
       <td></td>
       <!-- Sunday -->
-      <!-- <td class="border-day"></td> -->
-      <td></td>
+      <td class="border-day"></td>
+      <!-- <td></td> -->
       <td></td>
       <td></td>
       <td></td>
@@ -1265,10 +1271,10 @@
       <!-- <td></td> -->
       <td></td>
       <!-- Thursday -->
-      <td class="border-day"></td>
+      <td rowspan="3" class="pre-class class-border"> <b>Pre Ballet/Tap </b> <br> 3:00-3:45 <br> D </td>
       <td rowspan="3" class="acro-class class-border"> <b> Tumbling Tots </b> <br> 3:00-3:45 </td>
       <td></td>
-      <td rowspan="3" class="pre-class class-border"> <b>Pre Ballet/Tap </b> <br> 3:00-3:45 <br> D </td>
+      <td></td>
       <td></td>
       <!-- Friday -->
       <td class="border-day"></td>
@@ -1310,10 +1316,10 @@
       <td></td>
       <td></td>
       <!-- Thursday -->
-      <td class="border-day"></td>
+      <!-- <td class="border-day"></td> -->
       <!-- <td></td> -->
       <td></td>
-      <!-- <td></td> -->
+      <td></td>
       <td></td>
       <!-- Friday -->
       <td class="border-day"></td>
@@ -1344,10 +1350,10 @@
       <td></td>
       <td></td>
       <!-- Tuesday -->
+      <td rowspan="4" class="rental class-border"> <b>Rental </b></td>
       <td rowspan="2" class="pre-class class-border"> <b>Pre Jazz (D) </b> <br> 3:30-4:00 </td>
+      <td></td>
       <td rowspan="2" class="hiphop-class class-border"> <b>Kid Hop (R) </b> <br> 3:30-4:00 </td>
-      <td></td>
-      <td></td>
       <td></td>
       <!-- Wednesday -->
       <td rowspan="2" class="pre-class class-border"> <b>Pre Ballet (R) </b> <br> 3:30-4:00 </td>
@@ -1356,10 +1362,10 @@
       <td rowspan="3" class="pre-class class-border"> <b>Pre Jazz/Tap</b> <br> 3:30-4:15 <br> D</td>
       <td></td>
       <!-- Thursday -->
-      <td class="border-day"></td>
+      <!-- <td class="border-day"></td> -->
       <!-- <td></td> -->
       <td></td>
-      <!-- <td></td> -->
+      <td></td>
       <td></td>
       <!-- Friday -->
       <td class="border-day"></td>
@@ -1392,7 +1398,7 @@
       <!-- <td class="border-day border-hour1"></td> -->
       <!-- <td class="border-hour1"></td> -->
       <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
+      <!-- <td class="border-hour1"></td> -->
       <td class="border-hour1"></td>
       <!-- Wednesday -->
       <!-- <td class="border-day border-hour1"></td> -->
@@ -1434,17 +1440,17 @@
       <td></td>
       <td></td>
       <!-- Tuesday -->
-      <td rowspan="4" class="lyrical-class class-border"> <b>Lyrical 1/2 </b> <br> 4:00-5:00 </td>
-      <td rowspan="2" class="pre-class class-border"> <b>Pre Tap </b> <br> 4:00-4:30 <br> R+D </td>
-      <td></td>
-      <td></td>
+      <!-- <td class="border-day"></td> -->
       <td rowspan="4" class="ballet-class class-border"> <b>Ballet 2</b> <br> 4:00-5:00 </td>
+      <td></td>
+      <td rowspan="2" class="pre-class class-border"> <b>Pre Tap </b> <br> 4:00-4:30 <br> R+D </td>
+      <td rowspan="4" class="lyrical-class class-border"> <b>Lyrical 1/2 </b> <br> 4:00-5:00 </td>
       <!-- Wednesday -->
       <td rowspan="4" class="ballet-class class-border"> <b>Ballet 2</b> <br> 4:00-5:00 </td>
       <td rowspan="4" class="hiphop-class class-border"> <b>Hip Hop 1/2</b> <br> 4:00-5:00 </td>
       <td></td>
       <!-- <td></td> -->
-      <td rowspan="6" class="ballet-class class-border"> <b>Ballet</b> <br> 4:00-5:30 <br> (Adv.) </td>
+      <td rowspan="6" class="ballet-class class-border"> <b>Ballet</b> <br> 4:00-5:30 <br> (Teen Sr.) </td>
       <!-- Thursday -->
       <td rowspan="4" class="jazz-class class-border"> <b> Jazz 1 </b> <br> 4:00-5:00 </td>
       <td rowspan="4" class="acro-class class-border"> <b> Acro 3/4 </b> <br> 4:00-5:00 </td>
@@ -1482,7 +1488,7 @@
       <!-- <td class="border-day"></td> -->
       <!-- <td></td> -->
       <td></td>
-      <td></td>
+      <!-- <td></td> -->
       <!-- <td></td> -->
       <!-- Wednesday -->
       <!-- <td class="border-day"></td> -->
@@ -1525,10 +1531,10 @@
       <td></td>
       <td></td>
       <!-- Tuesday -->
-      <!-- <td class="border-day"></td> -->
+      <td class="border-day"></td>
+      <!-- <td></td> -->
+      <td></td>
       <td rowspan="2" class="pre-class class-border"> <b>Pre Ballet </b> <br> 4:30-5:00 <br> R+D </td>
-      <td></td>
-      <td></td>
       <!-- <td></td> -->
       <!-- Wednesday -->
       <!-- <td class="border-day"></td> -->
@@ -1565,15 +1571,15 @@
       <td class="timeLine"> 04:45 PM </td>
       <!-- Monday -->
       <td class="border-day border-hour2"></td>
-      <td rowspan="5" class="jazz-class class-border"> <b>Teen Sr. <br> Jazz </b> <br> 4:45-6:00</td>
+      <td rowspan="5" class="jazz-class class-border"> <b>Jazz </b> <br> 4:45-6:00 <br> (Teen Sr.)</td>
       <td class="border-hour2"></td>
       <td class="border-hour2"></td>
       <td class="border-hour2"></td>
       <!-- Tuesday -->
-      <!-- <td class="border-day border-hour2"></td> -->
+      <td class="border-day border-hour2"></td>
       <!-- <td class="border-hour2"></td> -->
       <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
+      <!-- <td class="border-hour2"></td> -->
       <!-- <td class="border-hour2"></td> -->
       <!-- Wednesday -->
       <!-- <td class="border-day border-hour2"></td> -->
@@ -1609,17 +1615,17 @@
     <tr>
       <td class="timeLine"> 05:00 PM </td>
       <!-- Monday -->
-      <td rowspan="4" class="theater-class class-border"> <b>Music Theatre 1/2 </b> <br> 5:00-6:00 </td>
+      <td class="border-day"></td>
       <!-- <td></td> -->
       <td></td>
-      <td></td>
+      <td rowspan="4" class="theater-class class-border"> <b>Music Theatre 1/2 </b> <br> 5:00-6:00 </td>
       <td></td>
       <!-- Tuesday -->
-      <td rowspan="4" class="lyrical-class class-border"><b>Lyrical</b> <br> 5:00-6:00 <br> Open </td>
+      <td class="border-day"></td>
+      <td rowspan="6" class="ballet-class class-border"> <b>Ballet </b> <br> 5:00-6:30 <br> (Teen Sr.)</td>
+      <td></td>
       <td rowspan="4" class="ballet-class class-border"> <b>Ballet 1</b> <br> 5:00-6:00 </td>
       <td></td>
-      <td></td>
-      <td rowspan="6" class="ballet-class class-border"> <b>Ballet 3/4</b> <br> 5:00-6:30 </td>
       <!-- Wednesday -->
       <td rowspan="4" class="lyrical-class class-border"> <b>Lyrical 1/2 </b> <br> 5:00-6:00 </td>
       <td rowspan="4" class="hiphop-class class-border"> <b>Hip Hop</b> <br> 5:00-6:00 <br> Boys Only <br> (5-8 yrs)</td>
@@ -1654,17 +1660,17 @@
     <tr>
       <td class="timeLine"> 05:15 PM </td>
       <!-- Monday -->
-      <!-- <td class="border-day"></td> -->
+      <td class="border-day"></td>
       <!-- <td></td> -->
       <td></td>
-      <td></td>
+      <!-- <td></td> -->
       <td></td>
       <!-- Tuesday -->
-      <!-- <td class="border-day"></td> -->
+      <td class="border-day"></td>
       <!-- <td></td> -->
       <td></td>
-      <td></td>
       <!-- <td></td> -->
+      <td></td>
       <!-- Wednesday -->
       <!-- <td class="border-day"></td> -->
       <!-- <td></td> -->
@@ -1700,23 +1706,23 @@
     <tr>
       <td class="timeLine"> 05:30 PM </td>
       <!-- Monday -->
-      <!-- <td class="border-day"></td> -->
+      <td class="border-day"></td>
       <!-- <td></td> -->
       <td></td>
-      <td></td>
+      <!-- <td></td> -->
       <td></td>
       <!-- Tuesday -->
-      <!-- <td class="border-day"></td> -->
+      <td class="border-day"></td>
       <!-- <td></td> -->
       <td></td>
-      <td></td>
       <!-- <td></td> -->
+      <td></td>
       <!-- Wednesday -->
       <!-- <td class="border-day"></td> -->
       <!-- <td></td> -->
       <td></td>
       <!-- <td></td> -->
-      <td rowspan="5" class="contemporary-class class-border"> <b> Contemporary </b> <br> 5:30-6:45 <br> (Adv.)</td>
+      <td></td>
       <!-- Thursday -->
       <!-- <td class="border-day"></td> -->
       <!-- <td></td> -->
@@ -1745,23 +1751,23 @@
     <tr>
       <td class="timeLine"> 05:45 PM </td>
       <!-- Monday -->
-      <!-- <td class="border-day border-hour3"></td> -->
+      <td class="border-day border-hour3"></td>
       <!-- <td class="border-hour3"></td> -->
       <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
+      <!-- <td class="border-hour3"></td> -->
       <td class="border-hour3"></td>
       <!-- Tuesday -->
-      <!-- <td class="border-day border-hour3"></td> -->
+      <td class="border-day border-hour3"></td>
       <!-- <td class="border-hour3"></td> -->
       <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
       <!-- <td class="border-hour3"></td> -->
+      <td class="border-hour3"></td>
       <!-- Wednesday -->
       <!-- <td class="border-day border-hour3"></td> -->
       <!-- <td class="border-hour3"></td> -->
       <td class="border-hour3"></td>
       <!-- <td class="border-hour3"></td> -->
-      <!-- <td class="border-hour3"></td> -->
+      <td class="border-hour3"></td>
       <!-- Thursday -->
       <!-- <td class="border-day border-hour3"></td> -->
       <td rowspan="4" class="contemporary-class class-border"> <b>Contemporary <br> 1/2</b> <br/> 5:45-6:45 </td>
@@ -1797,16 +1803,16 @@
       <td></td>
       <!-- Tuesday -->
       <td class="border-day"></td>
-      <td rowspan="3" class="tap-class class-border"> <b> Tap 1 </b> <br> 6:00-6:45 </td>
-      <td></td>
-      <td></td>
       <!-- <td></td> -->
+      <td></td>
+      <td rowspan="3" class="tap-class class-border"> <b> Tap 1/2 </b> <br> 6:00-6:45 </td>
+      <td></td>
       <!-- Wednesday -->
-      <td rowspan="6" class="ballet-class class-border"> <b> Teen Sr. <br> Ballet </b> <br> 6:00-7:30 </td>
+      <td rowspan="6" class="ballet-class class-border"> <b> Ballet </b> <br> 6:00-7:30 <br> (Teen Sr.)</td>
       <td></td>
       <td></td>
       <td rowspan="6" class="stretch-class class-border"> <b> Stretch &amp; Cond. <br> Turns and Leaps </b> <br> 6:00-7:30 </td>
-      <!-- <td></td> -->
+      <td></td>
       <!-- Thursday -->
       <td class="border-day"></td>
       <!-- <td></td> -->
@@ -1839,23 +1845,23 @@
     <tr>
       <td class="timeLine"> 06:15 PM </td>
       <!-- Monday -->
+      <td class="border-day"></td>
+      <td rowspan="4" class="jazz-class class-border"> <b>Jazz 1/2 </b> <br> 6:15-7:15 </td>
+      <td></td>
       <td rowspan="4" class="tap-class class-border"> <b>Broadway Tap </b> <br> 6:15-7:15 </td>
-      <td rowspan="3" class="jazz-class class-border"> <b>Jazz 1 </b> <br> 6:15-7:00 </td>
-      <td></td>
-      <td></td>
       <td></td>
       <!-- Tuesday -->
-      <td rowspan="4" class="lyrical-class class-border"> <b>Teen Sr. <br> Lyrical </b> <br> 6:15-7:15 </td>
+      <td class="border-day"></td>
       <!-- <td></td> -->
       <td></td>
-      <td></td>
       <!-- <td></td> -->
+      <td></td>
       <!-- Wednesday -->
       <!-- <td class="border-day"></td> -->
       <td></td>
       <td></td>
       <!-- <td></td> -->
-      <!-- <td></td> -->
+      <td></td>
       <!-- Thursday -->
       <td class="border-day"></td>
       <!-- <td></td> -->
@@ -1889,21 +1895,21 @@
       <!-- Monday -->
       <td class="border-day"></td>
       <!-- <td></td> -->
-      <!-- <td></td> -->
       <td></td>
+      <!-- <td></td> -->
       <td></td>
       <!-- Tuesday -->
-      <!-- <td class="border-day"></td> -->
+      <td class="border-day"></td>
+      <td rowspan="4" class="lyrical-class class-border"> <b>Lyrical </b> <br> 6:30-7:30 <br> Teen Sr.</td>
+      <td></td>
       <!-- <td></td> -->
-      <td></td>
-      <td></td>
       <td></td>
       <!-- Wednesday -->
       <!-- <td class="border-day"></td> -->
       <td></td>
       <td></td>
       <!-- <td></td> -->
-      <!-- <td></td> -->
+      <td></td>
       <!-- Thursday -->
       <td class="border-day"></td>
       <!-- <td></td> -->
@@ -1934,16 +1940,16 @@
     <tr>
       <td class="timeLine"> 06:45 PM </td>
       <!-- Monday -->
-      <!-- <td class="border-day border-hour1"></td> -->
+      <td class="border-day border-hour1"></td>
       <!-- <td class="border-hour1"></td> -->
       <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
+      <!-- <td class="border-hour1"></td> -->
       <td class="border-hour1"></td>
       <!-- Tuesday -->
-      <!-- <td class="border-day border-hour1"></td> -->
+      <td class="border-day border-hour1"></td>
+      <!-- <td class="border-hour1"></td> -->
+      <td class="border-hour1"></td>
       <td rowspan="3" class="tap-class class-border"> <b> Tap 3/4 </b> <br> 6:45-7:30 </td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
       <td class="border-hour1"></td>
       <!-- Wednesday -->
       <!-- <td class="border-day border-hour1"></td> -->
@@ -1953,7 +1959,7 @@
       <td class="border-hour1"></td>
       <!-- Thursday -->
       <td class="border-day border-hour1"></td>
-      <td rowspan="5" class="contemporary-class class-border"> <b> Contemporary <br> 3/4</b> <br> 6:45-8:00 </td>
+      <td class="border-hour1"></td>
       <td class="border-hour1"></td>
       <!-- <td class="border-hour1"></td> -->
       <td class="border-hour1"></td>
@@ -1981,16 +1987,16 @@
     <tr>
       <td class="timeLine"> 07:00 PM </td>
       <!-- Monday -->
-      <!-- <td class="border-day"></td> -->
-      <td rowspan="4" class="jazz-class class-border"> <b>Jazz 2 </b> <br> 7:00-8:00 </td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <!-- <td class="border-day"></td> -->
+      <td class="border-day"></td>
       <!-- <td></td> -->
       <td></td>
+      <!-- <td></td> -->
       <td></td>
+      <!-- Tuesday -->
+      <td class="border-day"></td>
+      <!-- <td></td> -->
+      <td></td>
+      <!-- <td></td> -->
       <td></td>
       <!-- Wednesday -->
       <!-- <td class="border-day"></td> -->
@@ -2000,7 +2006,7 @@
       <td></td>
       <!-- Thursday -->
       <td class="border-day"></td>
-      <!-- <td></td> -->
+      <td></td>
       <td></td>
       <td rowspan="4" class="hiphop-class class-border"> <b>Hip Hop 1/2 </b> <br> 7:00-8:00 </td>
       <td></td>
@@ -2028,16 +2034,16 @@
     <tr>
       <td class="timeLine"> 07:15 PM </td>
       <!-- Monday -->
+      <td class="border-day"></td>
+      <td rowspan="5" class="contemporary-class class-border"> <b>Contemporary </b> <br> 7:15-08:30 <br> (Teen Sr.)</td>
+      <td></td>
       <td rowspan="4" class="theater-class class-border"> <b>Musical Theatre 3/4 </b> <br> 7:15-8:15 </td>
-      <!-- <td></td> -->
-      <td></td>
-      <td></td>
       <td></td>
       <!-- Tuesday -->
-      <td rowspan="3" class="jazz-class class-border"> <b>Jazz 1 </b> <br> 7:15-8:00 <br> Boys Only </td>
+      <td class="border-day"></td>
       <!-- <td></td> -->
       <td></td>
-      <td></td>
+      <!-- <td></td> -->
       <td></td>
       <!-- Wednesday -->
       <!-- <td class="border-day"></td> -->
@@ -2047,7 +2053,7 @@
       <td></td>
       <!-- Thursday -->
       <td class="border-day"></td>
-      <!-- <td></td> -->
+      <td></td>
       <td></td>
       <!-- <td></td> -->
       <td></td>
@@ -2076,26 +2082,26 @@
     <tr>
       <td class="timeLine"> 07:30 PM </td>
       <!-- Monday -->
-      <!-- <td class="border-day"></td> -->
+      <td class="border-day"></td>
       <!-- <td></td> -->
       <td></td>
-      <td></td>
+      <!-- <td></td> -->
       <td></td>
       <!-- Tuesday -->
-      <!-- <td class="border-day"></td> -->
-      <td rowspan="3" class="tap-class class-border"> <b> Tap 1/2 </b> <br> 7:30-8:15 </td>
+      <td class="border-day"></td>
+      <td rowspan="3" class="jazz-class class-border"> <b>Jazz 1 </b> <br> 7:30-8:15 <br> Boys Only </td>
       <td></td>
       <td></td>
       <td rowspan="6" class="stretch-class class-border"> <b> Stretch &amp; Cond. <br> Turns and Leaps </b> <br> 7:30-9:00 </td>
       <!-- Wednesday -->
-      <td rowspan="5" class="contemporary-class class-border"> <b> Teen Sr.<br> Contemporary </b> <br> 7:30-8:45 </td>
+      <td rowspan="5" class="contemporary-class class-border"> <b> Contemporary </b> <br> 7:30-9:00 <br> (Teen Sr.)</td>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
       <!-- Thursday -->
       <td class="border-day"></td>
-      <!-- <td></td> -->
+      <td></td>
       <td></td>
       <!-- <td></td> -->
       <td></td>
@@ -2123,13 +2129,13 @@
     <tr>
       <td class="timeLine"> 07:45 PM </td>
       <!-- Monday -->
-      <!-- <td class="border-day border-hour2"></td> -->
+      <td class="border-day border-hour2"></td>
       <!-- <td class="border-hour2"></td> -->
       <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
+      <!-- <td class="border-hour2"></td> -->
       <td class="border-hour2"></td>
       <!-- Tuesday -->
-      <!-- <td class="border-day border-hour2"></td> -->
+      <td class="border-day border-hour2"></td>
       <!-- <td class="border-hour2"></td> -->
       <td class="border-hour2"></td>
       <td class="border-hour2"></td>
@@ -2142,7 +2148,7 @@
       <td class="border-hour2"></td>
       <!-- Thursday -->
       <td class="border-day border-hour2"></td>
-      <!-- <td class="border-hour2"></td> -->
+      <td class="border-hour2"></td>
       <td class="border-hour2"></td>
       <!-- <td class="border-hour2"></td> -->
       <td class="border-hour2"></td>
@@ -2170,10 +2176,10 @@
     <tr>
       <td class="timeLine"> 08:00 PM </td>
       <!-- Monday -->
-      <!-- <td class="border-day"></td> -->
+      <td class="border-day"></td>
+      <!-- <td></td> -->
       <td></td>
-      <td></td>
-      <td></td>
+      <!-- <td></td> -->
       <td></td>
       <!-- Tuesday -->
       <td class="border-day"></td>
@@ -2218,7 +2224,7 @@
       <td class="timeLine"> 08:15 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
-      <td></td>
+      <!-- <td></td> -->
       <td></td>
       <td></td>
       <td></td>
@@ -2398,7 +2404,7 @@
       <td class="border-day"></td>
       <td></td>
       <td></td>
-      <td colspan="2" style="text-align: right;"><i>Last updated: 09/12/2016</i></td>
+      <td colspan="2" style="text-align: right;"><i>Last updated: 09/16/2016</i></td>
       <!-- <td></td> -->
     </tr>
   </tbody>
