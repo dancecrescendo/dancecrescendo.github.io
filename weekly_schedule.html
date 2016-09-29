@@ -18,24 +18,67 @@
 
 <style>
   h2{
-    text-align:center;
+    /*text-align:center;*/
   }
   table{
     font-size: 1.2rem;
     text-align: center;
-    white-space:nowrap;
+    border-collapse: collapse;
+    /*white-space: nowrap;*/ /* Does not affect, since the width was fixed */
   }
   th{
     text-align: center;
     text-transform: uppercase;
   }
-  td{
+  th, td{
+    white-space:nowrap;
     vertical-align: middle !important;
+    /*padding: 1px;*/
+    max-width: 100px;
+    min-width: 100px;
   }
-  thead{
+  tr, th, td{
+    height: 32px !important;
+    min-height: 32px !important;
+  }
+  .container{
+    width: 100%;
+    padding: 0;
+  }
+  .timeLine{
+    min-width: 70px !important;
+    max-width: 70px !important;
+    background-color: white;
+  }
+  .superfixed {
+    background: white;
+    position: fixed;
+    left: 0;
+    min-width: 71px !important;
+    max-width: 71px !important;
+  }
+  .header-days {
+    position: fixed;
+    margin-left: 69px;
+    z-index: 3;
+  }
+  .left-timeLine {
+    top: 61px; /* You should also change the 'marginTop' in jQuery, if you change this parameter*/
+    position: fixed;
+  }
+  .right-schedule {
+    /*background: white;*/
+    margin-top: 60px;
+    margin-left: 70px;
+  }
+  .row-days{
     background-color: black;
     color: #D4AF37;
   }
+  .row-studio{
+    background-color: white;
+  }
+
   .pre-class{
     background-color: #aaf9ff;
   }
@@ -104,68 +147,127 @@
   .table-hover tbody tr:hover {
     background: lightgray;
   }
-  .timeLine{
-    /*position:absolute;*/
-  }
 </style>
 
 
-<table id="student-full-schedule" class="table table-bordered table-condensed table-hover">
-  <thead>
-    <tr>
-      <th class="timeLine"></th> <th colspan="5">Monday</th> <th colspan="5">Tuesday</th> <th colspan="5">Wednesday</th> <th colspan="5">Thursday</th> <th colspan="5">Friday</th> <th colspan="5">Saturday</th> <th colspan="5">Sunday</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <tr>
-      <td class="timeLine"></td>
-      <!-- Monday -->
-      <td class="border-day"> Studio 1 </td>
-      <td> Studio 2 </td>
-      <td> Studio 3 </td>
-      <td> Studio 4 </td>
-      <td> Studio 5 </td>
-      <!-- Tuesday -->
-      <td class="border-day"> Studio 1 </td>
-      <td> Studio 2 </td>
-      <td> Studio 3 </td>
-      <td> Studio 4 </td>
-      <td> Studio 5 </td>
-      <!-- Wednesday -->
-      <td class="border-day"> Studio 1 </td>
-      <td> Studio 2 </td>
-      <td> Studio 3 </td>
-      <td> Studio 4 </td>
-      <td> Studio 5 </td>
-      <!-- Thursday -->
-      <td class="border-day"> Studio 1 </td>
-      <td> Studio 2 </td>
-      <td> Studio 3 </td>
-      <td> Studio 4 </td>
-      <td> Studio 5 </td>
-      <!-- Friday -->
-      <td class="border-day"> Studio 1 </td>
-      <td> Studio 2 </td>
-      <td> Studio 3 </td>
-      <td> Studio 4 </td>
-      <td> Studio 5 </td>
-      <!-- Saturday -->
-      <td class="border-day"> Studio 1 </td>
-      <td> Studio 2 </td>
-      <td> Studio 3 </td>
-      <td> Studio 4 </td>
-      <td> Studio 5 </td>
-      <!-- Sunday -->
-      <td class="border-day"> Studio 1 </td>
-      <td> Studio 2 </td>
-      <td> Studio 3 </td>
-      <td> Studio 4 </td>
-      <td> Studio 5 </td>
-    </tr>
-
-    <tr>
-      <td class="timeLine"> 09:00 AM </td>
+<div class="container">
+  <div class="header-days">
+    <table id="" class="table table-bordered table-condensed table-hover">
+      <thead>
+        <tr class="row-days">
+          <th class="superfixed"></th>
+          <th colspan="5">Monday</th> 
+          <th colspan="5">Tuesday</th> 
+          <th colspan="5">Wednesday</th> 
+          <th colspan="5">Thursday</th> 
+          <th colspan="5">Friday</th> 
+          <th colspan="5">Saturday</th> 
+          <th colspan="5">Sunday</th>
+        </tr>
+        <tr class="row-studio">
+          <th class="superfixed"></th>
+          <!-- Monday -->
+          <th class="border-day"> Studio 1 </th>
+          <th> Studio 2 </th>
+          <th> Studio 3 </th>
+          <th> Studio 4 </th>
+          <th> Studio 5 </th>
+          <!-- Tuesday -->
+          <th class="border-day"> Studio 1 </th>
+          <th> Studio 2 </th>
+          <th> Studio 3 </th>
+          <th> Studio 4 </th>
+          <th> Studio 5 </th>
+          <!-- Wednesday -->
+          <th class="border-day"> Studio 1 </th>
+          <th> Studio 2 </th>
+          <th> Studio 3 </th>
+          <th> Studio 4 </th>
+          <th> Studio 5 </th>
+          <!-- Thursday -->
+          <th class="border-day"> Studio 1 </th>
+          <th> Studio 2 </th>
+          <th> Studio 3 </th>
+          <th> Studio 4 </th>
+          <th> Studio 5 </th>
+          <!-- Friday -->
+          <th class="border-day"> Studio 1 </th>
+          <th> Studio 2 </th>
+          <th> Studio 3 </th>
+          <th> Studio 4 </th>
+          <th> Studio 5 </th>
+          <!-- Saturday -->
+          <th class="border-day"> Studio 1 </th>
+          <th> Studio 2 </th>
+          <th> Studio 3 </th>
+          <th> Studio 4 </th>
+          <th> Studio 5 </th>
+          <!-- Sunday -->
+          <th class="border-day"> Studio 1 </th>
+          <th> Studio 2 </th>
+          <th> Studio 3 </th>
+          <th> Studio 4 </th>
+          <th> Studio 5 </th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <div class="left-timeLine">
+    <table id="" class="table table-bordered table-condensed">
+      <tr><td class="timeLine"> 09:00 AM </td></tr>
+      <tr><td class="timeLine"> 09:15 AM </td></tr>
+      <tr><td class="timeLine"> 09:30 AM </td></tr>
+      <tr><td class="timeLine"> 09:45 AM </td></tr>
+      <tr><td class="timeLine"> 10:00 AM </td></tr>
+      <tr><td class="timeLine"> 10:15 AM </td></tr>
+      <tr><td class="timeLine"> 10:30 AM </td></tr>
+      <tr><td class="timeLine"> 10:45 AM </td></tr>
+      <tr><td class="timeLine"> 11:00 AM </td></tr>
+      <tr><td class="timeLine"> 11:15 AM </td></tr>
+      <tr><td class="timeLine"> 11:30 AM </td></tr>
+      <tr><td class="timeLine"> 11:45 PM </td></tr>
+      <tr><td class="timeLine"> 12:00 PM </td></tr>
+      <tr><td class="timeLine"> 12:15 PM </td></tr>
+      <tr><td class="timeLine"> 12:30 PM </td></tr>
+      <tr><td class="timeLine"> 12:45 PM </td></tr>
+      <tr><td class="timeLine"> 01:00 PM </td></tr>
+      <tr><td class="timeLine"> 01:15 PM </td></tr>
+      <tr><td class="timeLine"> 01:30 PM </td></tr>
+      <tr><td class="timeLine"> 01:45 PM </td></tr>
+      <tr><td class="timeLine"> 02:00 PM </td></tr>
+      <tr><td class="timeLine"> 02:15 PM </td></tr>
+      <tr><td class="timeLine"> 02:30 PM </td></tr>
+      <tr><td class="timeLine"> 02:45 PM </td></tr>
+      <tr><td class="timeLine"> 03:00 PM </td></tr>
+      <tr><td class="timeLine"> 03:15 PM </td></tr>
+      <tr><td class="timeLine"> 03:30 PM </td></tr>
+      <tr><td class="timeLine"> 03:45 PM </td></tr>
+      <tr><td class="timeLine"> 04:00 PM </td></tr>
+      <tr><td class="timeLine"> 04:15 PM </td></tr>
+      <tr><td class="timeLine"> 04:30 PM </td></tr>
+      <tr><td class="timeLine"> 04:45 PM </td></tr>
+      <tr><td class="timeLine"> 05:00 PM </td></tr>
+      <tr><td class="timeLine"> 05:15 PM </td></tr>
+      <tr><td class="timeLine"> 05:30 PM </td></tr>
+      <tr><td class="timeLine"> 05:45 PM </td></tr>
+      <tr><td class="timeLine"> 06:00 PM </td></tr>
+      <tr><td class="timeLine"> 06:15 PM </td></tr>
+      <tr><td class="timeLine"> 06:30 PM </td></tr>
+      <tr><td class="timeLine"> 06:45 PM </td></tr>
+      <tr><td class="timeLine"> 07:00 PM </td></tr>
+      <tr><td class="timeLine"> 07:15 PM </td></tr>
+      <tr><td class="timeLine"> 07:30 PM </td></tr>
+      <tr><td class="timeLine"> 07:45 PM </td></tr>
+      <tr><td class="timeLine"> 08:00 PM </td></tr>
+      <tr><td class="timeLine"> 08:15 PM </td></tr>
+      <tr><td class="timeLine"> 08:30 PM </td></tr>
+      <tr><td class="timeLine"> 08:45 PM </td></tr>
+      <tr><td class="timeLine"> 09:00 PM </td></tr>
+    </table>
+  </div>
+  <div class="right-schedule">
+    <table id="" class="table table-bordered table-condensed table-hover">
+      <tr>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -210,7 +312,6 @@
       <td rowspan="3" class="pre-class class-border"> <b>Hip Hop/ <br> Pre Tumble </b> <br> 9:00-09:45 <br> (R+D) </td>
     </tr>
     <tr>
-      <td class="timeLine"> 09:15 AM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -256,7 +357,6 @@
     </tr>
 
     <tr>
-      <td class="timeLine"> 09:30 AM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -289,7 +389,7 @@
       <td></td>
       <!-- Saturday -->
       <td rowspan="2" class="danceWithMe-class class-border"> <b>Dance With Me</b> <br> 9:30-10:00 </td>
-      <td rowspan="3" class="pre-class class-border"> <b>Pre Jazz/Hip Hop</b> <br> 9:30-10:15 </td>
+      <td rowspan="3" class="pre-class class-border"> <b>Pre Jazz/ <br> Hip Hop</b> <br> 9:30-10:15 </td>
       <td></td>
       <td></td>
       <td></td>
@@ -301,7 +401,6 @@
       <!-- <td></td> -->
     </tr>
     <tr>
-      <td class="timeLine"> 09:45 AM </td>
       <!-- Monday -->
       <td class="border-day border-hour1"></td>
       <td class="border-hour1"></td>
@@ -346,7 +445,6 @@
       <td rowspan="3" class="pre-class class-border"> <b>Pre Jazz/Tap</b> <br> 9:45-10:30 <br> R+D </td>
     </tr>
     <tr>
-      <td class="timeLine"> 10:00 AM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -391,7 +489,6 @@
       <!-- <td></td> -->
     </tr>
     <tr>
-      <td class="timeLine"> 10:15 AM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -437,7 +534,6 @@
     </tr>
 
     <tr>
-      <td class="timeLine"> 10:30 AM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -479,10 +575,9 @@
       <td rowspan="3" class="pre-class class-border"> <b>Pre Ballet</b> <br> 10:30-11:15 <br> R+D </td>
       <td></td>
       <td></td>
-      <td rowspan="2" class="toddler-class class-border"> <b>Toddler Movement</b> <br> 10:30-11:00 </td>
+      <td rowspan="2" class="toddler-class class-border"> <b>Toddler <br> Movement</b> <br> 10:30-11:00 </td>
     </tr>
     <tr>
-      <td class="timeLine"> 10:45 AM </td>
       <!-- Monday -->
       <td class="border-day border-hour2"></td>
       <td class="border-hour2"></td>
@@ -527,7 +622,6 @@
       <!-- <td class="border-hour2"></td> -->
     </tr>
     <tr>
-      <td class="timeLine"> 11:00 AM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -572,7 +666,6 @@
       <td rowspan="2" class="pre-class class-border"> <b>Pre Tap</b> <br> 11:00-11:30 <br> (Boys Only) </td>
     </tr>
     <tr>
-      <td class="timeLine"> 11:15 AM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -618,7 +711,6 @@
     </tr>
 
     <tr>
-      <td class="timeLine"> 11:30 AM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -663,7 +755,6 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 11:45 PM </td>
       <!-- Monday -->
       <td class="border-day border-hour3"></td>
       <td class="border-hour3"></td>
@@ -708,7 +799,6 @@
       <td class="border-hour3"></td>
     </tr>
     <tr>
-      <td class="timeLine"> 12:00 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -753,7 +843,6 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 12:15 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -799,7 +888,6 @@
     </tr>
 
     <tr>
-      <td class="timeLine"> 12:30 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -844,7 +932,6 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 12:45 PM </td>
       <!-- Monday -->
       <td class="border-day border-hour1"></td>
       <td class="border-hour1"></td>
@@ -889,7 +976,6 @@
       <td class="border-hour1"></td>
     </tr>
     <tr>
-      <td class="timeLine"> 01:00 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -934,7 +1020,6 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 01:15 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -980,7 +1065,6 @@
     </tr>
 
     <tr>
-      <td class="timeLine"> 01:30 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -1025,7 +1109,6 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 01:45 PM </td>
       <!-- Monday -->
       <td class="border-day border-hour2"></td>
       <td class="border-hour2"></td>
@@ -1070,7 +1153,6 @@
       <td class="border-hour2"></td>
     </tr>
     <tr>
-      <td class="timeLine"> 02:00 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -1115,7 +1197,6 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 02:15 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -1161,7 +1242,6 @@
     </tr>
 
     <tr>
-      <td class="timeLine"> 02:30 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -1206,7 +1286,6 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 02:45 PM </td>
       <!-- Monday -->
       <td class="border-day border-hour3"></td>
       <td class="border-hour3"></td>
@@ -1251,7 +1330,6 @@
       <td class="border-hour3"></td>
     </tr>
     <tr>
-      <td class="timeLine"> 03:00 PM </td>
       <!-- Monday -->
       <td rowspan="3" class="theater-class class-border"> <b>Music Theory</b> <br> 3:00-3:45 </td>
       <td></td>
@@ -1296,7 +1374,6 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 03:15 PM </td>
       <!-- Monday -->
       <!-- <td class="border-day"></td> -->
       <td rowspan="3" class="pre-class class-border"> <b>Pre Ballet/Tap</b> <br> 3:15-4:00 <br> R+D </td>
@@ -1342,7 +1419,6 @@
     </tr>
 
     <tr>
-      <td class="timeLine"> 03:30 PM </td>
       <!-- Monday -->
       <!-- <td class="border-day"></td> -->
       <!-- <td></td> -->
@@ -1387,7 +1463,6 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 03:45 PM </td>
       <!-- Monday -->
       <td class="border-day border-hour1"></td>
       <!-- <td class="border-hour1"></td> -->
@@ -1432,7 +1507,6 @@
       <td class="border-hour1"></td>
     </tr>
     <tr>
-      <td class="timeLine"> 04:00 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td rowspan="2" class="pre-class class-border"> <b>Pre Jazz</b> <br> 4:00-4:30 <br> R </td>
@@ -1477,7 +1551,6 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 04:15 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <!-- <td></td> -->
@@ -1523,7 +1596,6 @@
     </tr>
 
     <tr>
-      <td class="timeLine"> 04:30 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -1568,7 +1640,6 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 04:45 PM </td>
       <!-- Monday -->
       <td class="border-day border-hour2"></td>
       <td rowspan="5" class="jazz-class class-border"> <b>Jazz </b> <br> 4:45-6:00 <br> (Teen Sr.)</td>
@@ -1613,12 +1684,11 @@
       <td class="border-hour2"></td>
     </tr>
     <tr>
-      <td class="timeLine"> 05:00 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <!-- <td></td> -->
       <td></td>
-      <td rowspan="4" class="theater-class class-border"> <b>Musical Theatre 1/2 </b> <br> 5:00-6:00 </td>
+      <td rowspan="4" class="theater-class class-border"> <b>Musical <br> Theatre 1/2 </b> <br> 5:00-6:00 </td>
       <td></td>
       <!-- Tuesday -->
       <td class="border-day"></td>
@@ -1658,7 +1728,6 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 05:15 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <!-- <td></td> -->
@@ -1704,7 +1773,6 @@
     </tr>
 
     <tr>
-      <td class="timeLine"> 05:30 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <!-- <td></td> -->
@@ -1749,7 +1817,6 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 05:45 PM </td>
       <!-- Monday -->
       <td class="border-day border-hour3"></td>
       <!-- <td class="border-hour3"></td> -->
@@ -1794,7 +1861,6 @@
       <td class="border-hour3"></td>
     </tr>
     <tr>
-      <td class="timeLine"> 06:00 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -1843,7 +1909,6 @@
       <td class="class-border"></td> -->
     </tr>
     <tr>
-      <td class="timeLine"> 06:15 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td rowspan="4" class="jazz-class class-border"> <b>Jazz 1/2 </b> <br> 6:15-7:15 </td>
@@ -1891,7 +1956,6 @@
     </tr>
 
     <tr>
-      <td class="timeLine"> 06:30 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <!-- <td></td> -->
@@ -1900,7 +1964,7 @@
       <td></td>
       <!-- Tuesday -->
       <td class="border-day"></td>
-      <td rowspan="4" class="lyrical-class class-border"> <b>Lyrical </b> <br> 6:30-7:30 <br> (Teen Sr.) </td>
+      <td rowspan="4" class="lyrical-class class-border"> <b>Lyrical </b> <br> 6:30-7:30 <br> (Teen Sr.)  </td>
       <td></td>
       <!-- <td></td> -->
       <td></td>
@@ -1938,7 +2002,6 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 06:45 PM </td>
       <!-- Monday -->
       <td class="border-day border-hour1"></td>
       <!-- <td class="border-hour1"></td> -->
@@ -1985,7 +2048,6 @@
       <td class="border-hour1"></td>
     </tr>
     <tr>
-      <td class="timeLine"> 07:00 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <!-- <td></td> -->
@@ -2032,12 +2094,11 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 07:15 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td rowspan="5" class="contemporary-class class-border"> <b>Contemporary </b> <br> 7:15-08:30 <br> (Teen Sr.)</td>
       <td></td>
-      <td rowspan="4" class="theater-class class-border"> <b>Musical Theatre 3/4 </b> <br> 7:15-8:15 </td>
+      <td rowspan="4" class="theater-class class-border"> <b>Musical <br> Theatre 3/4 </b> <br> 7:15-8:15 </td>
       <td></td>
       <!-- Tuesday -->
       <td class="border-day"></td>
@@ -2080,7 +2141,6 @@
     </tr>
 
     <tr>
-      <td class="timeLine"> 07:30 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <!-- <td></td> -->
@@ -2127,7 +2187,6 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 07:45 PM </td>
       <!-- Monday -->
       <td class="border-day border-hour2"></td>
       <!-- <td class="border-hour2"></td> -->
@@ -2174,7 +2233,6 @@
       <td class="border-hour2"></td>
     </tr>
     <tr>
-      <td class="timeLine"> 08:00 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <!-- <td></td> -->
@@ -2221,7 +2279,6 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 08:15 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <!-- <td></td> -->
@@ -2269,7 +2326,6 @@
     </tr>
 
     <tr>
-      <td class="timeLine"> 08:30 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -2316,7 +2372,6 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 08:45 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -2363,7 +2418,6 @@
       <td></td>
     </tr>
     <tr>
-      <td class="timeLine"> 09:00 PM </td>
       <!-- Monday -->
       <td class="border-day"></td>
       <td></td>
@@ -2407,8 +2461,30 @@
       <td colspan="2" style="text-align: right;"><i>Last updated: 09/29/2016</i></td>
       <!-- <td></td> -->
     </tr>
-  </tbody>
-</table>
+    </table>
+  </div>
+</div>
+
+<!-- jQuery: Set the fixed row and column on the browser -->
+<script>
+  var prevTop = 0;
+  var prevLeft = 0;
+  var marginTop = 61; //The parameter of top margin for timeline column
+
+  $(window).scroll(function(event){
+    var currentTop = $(this).scrollTop();
+    var currentLeft = $(this).scrollLeft();
+    
+    if(prevLeft !== currentLeft) {
+      prevLeft = currentLeft;
+      $('.header-days').css({'left': -$(this).scrollLeft()})
+    }
+    if(prevTop !== currentTop) {
+      prevTop = currentTop;
+      $('.left-timeLine').css({'top': -$(this).scrollTop() + marginTop})
+    }
+  });
+</script>
 
 </body>
 </html>
