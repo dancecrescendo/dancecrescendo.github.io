@@ -74,7 +74,7 @@ $(document).ready(function(){
   var flag_Acro = false;
 
 
-  $('.ballet-class, .balletCo-class, .streetJazz-class, .jazz-class, .tap-class, .contemporary-class, .lyrical-class, .pointe-class, .hiphop-class, .stretch-class, .acro-class, .pre-class, .pre-class > p, .trackA-class, .trackA-class > p, .trackB-class, .trackB-class > p').click(function(){
+  $('.ballet-class, .balletCo-class, .streetJazz-class, .jazz-class, .tap-class, .contemporary-class, .lyrical-class, .pointe-class, .hiphop-class, .stretch-class, .acro-class, .pre-class, .pre-class > p, .pre-class > p > b, .trackA-class, .trackA-class > p, .trackA-class > p > b,.trackB-class, .trackB-class > p, .trackB-class > p > b').click(function(){
 
     var target = $(event.target);
 
@@ -180,7 +180,7 @@ $(document).ready(function(){
         visible_otherSchedules('.acro-class')
         flag_Acro = false;
       }    
-    }else if(target.is('.pre-class, .pre-class > p')){
+    }else if(target.is('.pre-class, .pre-class > p, .pre-class > p > b')){
       if(flag_Pre == false){
         visible_itsSchedule('.pre-class');
         inVisible_otherSchedules('.pre-class');
@@ -189,7 +189,7 @@ $(document).ready(function(){
         visible_otherSchedules('.pre-class');
         flag_Pre = false;
       }     
-    }else if(target.is('.trackA-class, .trackA-class > p')){
+    }else if(target.is('.trackA-class, .trackA-class > p, .trackA-class > p > b')){
       if(flag_trackA == false){
         visible_itsSchedule('.trackA-class');
         inVisible_otherSchedules('.trackA-class');
@@ -198,7 +198,7 @@ $(document).ready(function(){
         visible_otherSchedules('.trackA-class');
         flag_trackA = false;
       }   
-    }else if(target.is('.trackB-class, .trackB-class > p')){
+    }else if(target.is('.trackB-class, .trackB-class > p, .trackB-class > p > b')){
       if(flag_trackB == false){
         visible_itsSchedule('.trackB-class');
         inVisible_otherSchedules('.trackB-class');
