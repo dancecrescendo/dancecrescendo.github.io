@@ -2483,25 +2483,7 @@
 </div>
 
 <!-- jQuery: Set the fixed row and column on the browser -->
-<script>
-  var prevTop = 0;
-  var prevLeft = 0;
-  var marginTop = 61; //The parameter of top margin for timeline column
-
-  $(window).scroll(function(event){
-    var currentTop = $(this).scrollTop();
-    var currentLeft = $(this).scrollLeft();
-    
-    if(prevLeft !== currentLeft) {
-      prevLeft = currentLeft;
-      $('.header-days').css({'left': -$(this).scrollLeft()})
-    }
-    if(prevTop !== currentTop) {
-      prevTop = currentTop;
-      $('.left-timeLine').css({'top': -$(this).scrollTop() + marginTop})
-    }
-  });
-</script>
+<script src="js/fixed_Menus.js"></script>
 
 </body>
 </html>

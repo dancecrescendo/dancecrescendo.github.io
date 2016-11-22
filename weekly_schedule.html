@@ -91,6 +91,29 @@
     border: 1px solid gray;
   }
 
+  .level-label:hover{
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+
+  /* Alert Bar CSS */
+  .alert{
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    margin-bottom: 0;
+    opacity: 0.98;
+    z-index: 5;
+  }
+  .close{
+    /*color: black !important;*/
+    opacity: 0.5;
+  }
+  .onClass > p{
+    color: black;
+    margin: 0;
+  }
+
   /* Level distributions of classes*/
   .pre-class{
     background-color: #ff9ccb;
@@ -108,8 +131,14 @@
   .jazz-class{
     background-color: #c1987c;
   }
+  .streetJazz-class{
+    background-color: #ffb400;
+  }
   .ballet-class{
     background-color: #8AC0F8;
+  }
+  .balletCo-class{
+    background-color: #d8d6d7;
   }
   .hiphop-class{
     background-color: #d1ffad;
@@ -138,12 +167,6 @@
   .lyrical-class{
     background-color: #ffffff;
   }
-  .balletCo-class{
-    background-color: #d8d6d7;
-  }
-  .streetJazz-class{
-    background-color: #ffb400;
-  }
   .rental{
     background-color: #fff2a6;
   }
@@ -170,30 +193,13 @@
   .table-hover tbody tr:hover {
     background: lightgray;
   }
-
-  /* Alert Bar CSS */
-  .alert{
-    text-align: center;
-    position: fixed;
-    width: 100%;
-    margin-bottom: 0;
-    opacity: 0.98;
-    z-index: 5;
-  }
-  .close{
-    /*color: black !important;*/
-    opacity: 0.5;
-  }
-  .onClass > p{
-    margin: 0;
-  }
 </style>
 
 
 <div class="container">
   <div class="alert alert-danger alert-dismissable">
       <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-      <strong>Notice!</strong> This is a new schedule that takes effect beginning January 2017. If you want to see the current schedule, <a href="weekly_schedul(sec half of 2016).html"><b>Click Here!</b></a>
+      <strong>Notice!</strong> This is a new schedule that takes effect beginning January 2017. If you want to see the current schedule, <a href="weekly_schedule(sec half of 2016).html"><b>Click Here!</b></a>
   </div>
   <div class="header-days">
     <table id="" class="table table-bordered table-condensed table-hover">
@@ -2731,108 +2737,11 @@
     </table>
   </div>
 </div>
-
 <!-- jQuery: Set the fixed row and column on the browser -->
-<script>
-  var prevTop = 0;
-  var prevLeft = 0;
-  var marginTop = 61; //The parameter of top margin for timeline column
+<script src="js/fixed_Menus.js"></script>
 
-  /* Calculate the coordinates during scrolling and set the menu on the proper location */
-  $(window).scroll(function(event){
-    var currentTop = $(this).scrollTop();
-    var currentLeft = $(this).scrollLeft();
-    
-    if(prevLeft !== currentLeft) {
-      prevLeft = currentLeft;
-      $('.header-days').css({'left': -$(this).scrollLeft()})
-    }
-    if(prevTop !== currentTop) {
-      prevTop = currentTop;
-      $('.left-timeLine').css({'top': -$(this).scrollTop() + marginTop})
-    }
-  });
-
-  /* Background colors from css*/
-  var pre_bgColor = $('.pre-class').css('background-color');
-  var trackA_bgColor = $('.trackA-class').css('background-color');
-  var trackB_bgColor = $('.trackB-class').css('background-color');
-
-  function visible_itsSchedule(className, bg_color){
-    $('.'+className).css({'opacity': '1', 'color': 'black'});
-  }
-
-  function inVisible_itsSchedule(className, bg_color){
-    $('.'+className).css({'opacity': '0.2','color': 'lightgray'});
-  }
-
-  /* Set the schedules visible when its clicked */
-  function visible_otherSchedules(className, bg_color){
-    // $('.'+className).css({'background-color': bg_color});
-    // $('.'+className+ " > p").css({'visibility': 'visible'});
-    $('.pre-class, .trackA-class, .trackB-class').not('.'+className).css({'opacity': '1', 'color': 'black'});
-    
-  }
-
-  /* Set the schedules invisible when its clicked */
-  function inVisible_otherSchedules(className, bg_color){
-    // $('.'+className).css({'background-color': 'transparent'});
-    // $('.'+className+ " > p").css({'visibility': 'hidden'});
-    $('.pre-class, .trackA-class, .trackB-class').not('.'+className).css({'opacity': '0.2','color': 'lightgray'});
-  }
-
-
-
-  //Flag: whether clicked or not by class level
-  var preClicked = false;
-  var trackAclicked = false;
-  var trackBclicked = false;
-
-  
-  // $(".ballet-class").click(function(){
-  //   event.stopPropagation();
-  // });
-
-
-  /* Pre Class show/hidden func */
-  $(".pre-class").click(function(){
-    if(preClicked == false){
-      visible_itsSchedule('pre-class', pre_bgColor);
-      inVisible_otherSchedules('pre-class', pre_bgColor);
-      preClicked = true;
-      trackAclicked = false, trackBclicked = false;
-    }else{
-      visible_otherSchedules('pre-class', pre_bgColor);
-      preClicked = false;
-    }
-  });
-
-  /* Track A Class show/hidden func */
-  $(".trackA-class").click(function(){
-    if(trackAclicked == false){
-      visible_itsSchedule('trackA-class', trackA_bgColor);
-      inVisible_otherSchedules('trackA-class', trackA_bgColor);
-      trackAclicked = true;
-      preClicked = false, trackBclicked = false;
-    }else{
-      visible_otherSchedules('trackA-class', trackA_bgColor);
-      trackAclicked = false;
-    }
-  });
-
-  /* Track B Class show/hidden func */
-  $(".trackB-class").click(function(){
-    if(trackBclicked == false){
-      visible_itsSchedule('trackB-class', trackB_bgColor);
-      inVisible_otherSchedules('trackB-class', trackB_bgColor);
-      trackBclicked = true;
-      preClicked = false, trackAclicked = false;
-    }else{
-      visible_otherSchedules('trackB-class', trackB_bgColor);
-      trackBclicked = false;
-    }
-  });
-</script>
+<!-- jQuery: Show/Hide selected classes or levels -->
+<script src="js/showHideSchedule.js"></script>
 
 </body>
 </html>
