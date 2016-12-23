@@ -118,6 +118,9 @@
   .pre-class{
     background-color: #ff9ccb;
   }
+  .kids-class{
+    background-color: #9cfe95;
+  }
   .trackA-class{
     background-color: #85ebff;
   }
@@ -168,9 +171,6 @@
   .rental{
     background-color: #fff2a6;
   }
-  .class-border{
-    border: 2px solid black !important;
-  }
   .border-day{
     border-left: 3px double gray !important;
   }
@@ -182,6 +182,9 @@
   }
   .border-hour3{
     border-bottom: 2px dashed gray !important;
+  }
+  .class-border{
+    border: 2px solid black !important;
   }
   .table-hover tbody tr td:hover {
     color:inherit;
@@ -355,11 +358,7 @@
       <td></td>
       <!-- Sunday -->
       <td class="border-day"></td>
-      <td class="onClass pre-class class-border" rowspan="4">
-        <div class="level-label tap-class"></div>
-        <p><b>Pre Tap</b><br>
-        9:00-10:00</p>
-      </td>
+      <td></td>
       <td></td>
       <td></td>
       <td></td>
@@ -404,7 +403,7 @@
       <td></td>
       <!-- Sunday -->
       <td class="border-day"></td>
-      <!-- <td></td> -->
+      <td></td>
       <td></td>
       <td></td>
       <td></td>
@@ -450,7 +449,7 @@
       <td></td>
       <!-- Sunday -->
       <td class="border-day"></td>
-      <!-- <td></td> -->
+      <td></td>
       <td></td>
       <td></td>
       <td></td>
@@ -495,7 +494,7 @@
       <td class="border-hour1"></td>
       <!-- Sunday -->
       <td class="border-day border-hour1"></td>
-      <!-- <td class="border-hour1"></td> -->
+      <td class="border-hour1"></td>
       <td class="border-hour1"></td>
       <td class="border-hour1"></td>
       <td class="border-hour1"></td>
@@ -634,8 +633,10 @@
       <td class="border-day"></td>
       <td class="onClass pre-class class-border" rowspan="4">
         <div class="level-label ballet-class"></div>
-        <p><b>Pre Ballet</b><br>
-        10:30-11:30</p>
+        <p><b>Ballet</b><br>
+        10:30-11:30<br>
+        (Pre)</p>
+
       </td>
       <td></td>
       <td></td>
@@ -1104,11 +1105,11 @@
       <td></td>
       <!-- Sunday -->
       <td class="border-day"></td>
-      <td class="onClass trackB-class class-border" rowspan="6">
+      <td class="onClass kids-class class-border" rowspan="6">
         <div class="level-label stretch-class"></div>
         <p><b>Stretch / <br> Conditioning</b><br>
         1:00-2:30<br>
-        (Track B)</p>
+        (Kids)</p>
       </td>
       <td></td>
       <!-- <td></td> -->
@@ -1625,23 +1626,24 @@
     <tr>
       <!-- Monday -->
       <td class="border-day"></td>
+      <td></td>
+      <td></td>
+      <td></td>
       <td class="onClass trackB-class class-border" rowspan="5">
         <div class="level-label jazz-class"></div>
         <p><b>Jazz</b><br>
         4:00-5:15<br>
         (Track B)</p>
       </td>
-      <td></td>
-      <td></td>
-      <td></td>
       <!-- Tuesday -->
       <td class="border-day"></td>
       <td></td>
       <td></td>
       <td class="onClass pre-class class-border" rowspan="2">
         <div class="level-label tap-class"></div>
-        <p><b>Pre Tap</b><br>
-        4:00-4:30</p>
+        <p><b>Tap</b><br>
+        4:00-4:30<br>
+        (Pre)</p>
       </td>
       <td class="onClass trackB-class class-border" rowspan="4">
         <div class="level-label acro-class"></div>
@@ -1671,11 +1673,11 @@
         (Track B)</p>
       </td>
       <!-- Thursday -->
-      <td class="onClass trackA-class class-border" rowspan="4">
-        <div class="level-label jazz-class"></div>
-        <p><b>Jazz</b><br>
-        4:00-5:00<br>
-        (Track A)</p>
+      <td class="onClass trackB-class class-border" rowspan="6">
+        <div class="level-label ballet-class"></div>
+        <p><b>Ballet</b><br>
+        4:00-5:30<br>
+        (Track B)</p>
       </td>
       <td class="onClass trackA-class class-border" rowspan="6">
         <div class="level-label ballet-class"></div>
@@ -1690,12 +1692,7 @@
         4:00-5:00<br>
         (Track A)</p>
       </td>
-      <td class="onClass trackB-class class-border" rowspan="6">
-        <div class="level-label ballet-class"></div>
-        <p><b>Ballet</b><br>
-        4:00-5:30<br>
-        (Track B)</p>
-      </td>
+      <td></td>
       <!-- Friday -->
       <td class="border-day"></td>
       <td></td>
@@ -1719,10 +1716,10 @@
     <tr>
       <!-- Monday -->
       <td class="border-day"></td>
+      <td></td>
+      <td></td>
+      <td></td>
       <!-- <td></td> -->
-      <td></td>
-      <td></td>
-      <td></td>
       <!-- Tuesday -->
       <td class="border-day"></td>
       <td></td>
@@ -1745,7 +1742,7 @@
       <!-- <td></td> -->
       <td></td>
       <!-- <td></td> -->
-      <!-- <td></td> -->
+      <td></td>
       <!-- Friday -->
       <td class="border-day"></td>
       <td></td>
@@ -1770,18 +1767,19 @@
     <tr>
       <!-- Monday -->
       <td class="border-day"></td>
+      <td></td>
+      <td></td>
+      <td></td>
       <!-- <td></td> -->
-      <td></td>
-      <td></td>
-      <td></td>
       <!-- Tuesday -->
       <td class="border-day"></td>
       <td></td>
       <td></td>
       <td class="onClass pre-class class-border" rowspan="2">
         <div class="level-label ballet-class"></div>
-        <p><b>Pre Ballet</b><br>
-        4:30-5:00</p>
+        <p><b>Ballet</b><br>
+        4:30-5:00<br>
+        (Pre)</p>
       </td>
       <!-- <td></td> -->
       <!-- Wednesday -->
@@ -1795,7 +1793,7 @@
       <!-- <td></td> -->
       <td></td>
       <!-- <td></td> -->
-      <!-- <td></td> -->
+      <td></td>
       <!-- Friday -->
       <td class="border-day"></td>
       <td></td>
@@ -1819,10 +1817,10 @@
     <tr>
       <!-- Monday -->
       <td class="border-day border-hour2"></td>
+      <td class="border-hour2"></td>
+      <td class="border-hour2"></td>
+      <td class="border-hour2"></td>
       <!-- <td class="border-hour2"></td> -->
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
       <!-- Tuesday -->
       <td class="border-day border-hour2"></td>
       <td class="border-hour2"></td>
@@ -1840,7 +1838,7 @@
       <!-- <td class="border-hour2"></td> -->
       <td class="border-hour2"></td>
       <!-- <td class="border-hour2"></td> -->
-      <!-- <td class="border-hour2"></td> -->
+      <td class="border-hour2"></td>
       <!-- Friday -->
       <td class="border-day border-hour2"></td>
       <td class="border-hour2"></td>
@@ -1865,17 +1863,12 @@
     <tr>
       <!-- Monday -->
       <td class="border-day"></td>
+      <td></td>
+      <td></td>
+      <td></td>
       <!-- <td></td> -->
-      <td></td>
-      <td></td>
-      <td></td>
       <!-- Tuesday -->
-      <td class="onClass trackB-class class-border" rowspan="6">
-        <div class="level-label ballet-class"></div>
-        <p><b>Ballet</b><br>
-        5:00-6:30<br>
-        (Track B)</p>
-      </td>
+      <td class="border-day"></td>
       <td></td>
       <td></td>
       <td class="onClass trackA-class class-border" rowspan="4">
@@ -1884,7 +1877,12 @@
         5:00-6:00<br>
         (Track A)</p>
       </td>
-      <td></td>
+      <td class="onClass trackB-class class-border" rowspan="6">
+        <div class="level-label ballet-class"></div>
+        <p><b>Ballet</b><br>
+        5:00-6:30<br>
+        (Track B)</p>
+      </td>
       <!-- Wednesday -->
       <td class="border-day"></td>
       <td class="onClass trackA-class class-border" rowspan="4">
@@ -1902,16 +1900,16 @@
       </td>
       <!-- <td></td> -->
       <!-- Thursday -->
+      <!-- <td class="border-day"></td> -->
+      <!-- <td></td> -->
+      <td></td>
+      <td></td>
       <td class="onClass trackA-class class-border" rowspan="4">
         <div class="level-label acro-class"></div>
         <p><b>Acro</b><br>
         5:00-6:00<br>
         (Track A)</p>
       </td>
-      <!-- <td></td> -->
-      <td></td>
-      <!-- <td></td> -->
-      <td></td>
       <!-- Friday -->
       <td class="border-day"></td>
       <td></td>
@@ -1936,21 +1934,21 @@
     <tr>
       <!-- Monday -->
       <td class="border-day"></td>
+      <td></td>
+      <td></td>
+      <td></td>
       <td class="onClass trackB-class class-border" rowspan="4">
         <div class="level-label contemporary-class"></div>
         <p><b>Contemporary</b><br>
         5:15-6:15<br>
         (Track B)</p>
       </td>
-      <td></td>
-      <td></td>
-      <td></td>
       <!-- Tuesday -->
-      <!-- <td class="border-day"></td> -->
+      <td class="border-day"></td>
       <td></td>
       <td></td>
       <!-- <td></td> -->
-      <td></td>
+      <!-- <td></td> -->
       <!-- Wednesday -->
       <td class="border-day"></td>
       <!-- <td></td> -->
@@ -1961,8 +1959,8 @@
       <!-- <td class="border-day"></td> -->
       <!-- <td></td> -->
       <td></td>
-      <!-- <td></td> -->
       <td></td>
+      <!-- <td></td> -->
       <!-- Friday -->
       <td class="border-day"></td>
       <td></td>
@@ -1986,22 +1984,22 @@
     <!-- 05:30 PM -->
     <tr>
       <!-- Monday -->
-      <td class="onClass trackA-class class-border" rowspan="4">
+      <td class="onClass kids-class class-border" rowspan="4">
         <div class="level-label hiphop-class"></div>
         <p><b>Boys Only<br>Hip Hop</b><br>
         5:30-6:30<br>
-        (Track A)</p>
+        (Kids)</p>
       </td>
+      <td></td>
+      <td></td>
+      <td></td>
       <!-- <td></td> -->
-      <td></td>
-      <td></td>
-      <td></td>
       <!-- Tuesday -->
-      <!-- <td class="border-day"></td> -->
+      <td class="border-day"></td>
       <td></td>
       <td></td>
       <!-- <td></td> -->
-      <td></td>
+      <!-- <td></td> -->
       <!-- Wednesday -->
       <td class="border-day"></td>
       <!-- <td></td> -->
@@ -2009,7 +2007,7 @@
       <!-- <td></td> -->
       <td></td>
       <!-- Thursday -->
-      <!-- <td class="border-day"></td> -->
+      <td class="border-day"></td>
       <td class="onClass trackA-class class-border" rowspan="6">
         <div class="level-label contemporary-class"></div>
         <p><b>Contemporary</b><br>
@@ -2018,12 +2016,7 @@
       </td>
       <td></td>
       <td></td>
-      <td></td><!-- <td class="onClass pre-class class-border" rowspan="2">
-        <div class="level-label pointe-class"></div>
-        <p><b>Pre Pointe</b><br>
-        5:30-6:00<br>
-        (Track B)</p>
-      </td> -->
+      <!-- <td></td> -->
       <!-- Friday -->
       <td class="border-day"></td>
       <td></td>
@@ -2047,16 +2040,16 @@
     <tr>
       <!-- Monday -->
       <!-- <td class="border-day border-hour3"></td> -->
+      <td class="border-hour3"></td>
+      <td class="border-hour3"></td>
+      <td class="border-hour3"></td>
       <!-- <td class="border-hour3"></td> -->
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
       <!-- Tuesday -->
-      <!-- <td class="border-day border-hour3"></td> -->
+      <td class="border-day border-hour3"></td>
       <td class="border-hour3"></td>
       <td class="border-hour3"></td>
       <!-- <td class="border-hour3"></td> -->
-      <td class="border-hour3"></td>
+      <!-- <td class="border-hour3"></td> -->
       <!-- Wednesday -->
       <td class="border-day border-hour3"></td>
       <!-- <td class="border-hour3"></td> -->
@@ -2064,11 +2057,11 @@
       <!-- <td class="border-hour3"></td> -->
       <td class="border-hour3"></td>
       <!-- Thursday -->
-      <!-- <td class="border-day border-hour3"></td> -->
+      <td class="border-day border-hour3"></td>
       <!-- <td class="border-hour3"></td> -->
       <td class="border-hour3"></td>
       <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
+      <!-- <td class="border-hour3"></td> -->
       <!-- Friday -->
       <td class="border-day border-hour3"></td>
       <td class="border-hour3"></td>
@@ -2093,29 +2086,29 @@
     <tr>
       <!-- Monday -->
       <!-- <td class="border-day"></td> -->
+      <td></td>
+      <td></td>
+      <td></td>
       <!-- <td></td> -->
-      <td></td>
-      <td></td>
-      <td></td>
       <!-- Tuesday -->
-      <!-- <td class="border-day"></td> -->
+      <td class="border-day"></td>
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
+      <!-- <td></td> -->
       <!-- Wednesday -->
-      <td class="onClass trackA-class class-border" rowspan="4">
+      <td class="border-day"></td><!-- <td class="onClass trackA-class class-border" rowspan="4">
         <div class="level-label hiphop-class"></div>
         <p><b>Hip Hop</b><br>
         6:00-7:00<br>
         (Track A)</p>
-      </td>
+      </td> -->
       <td></td>
-      <td class="onClass trackB-class class-border" rowspan="6">
+      <td class="onClass kids-class class-border" rowspan="6">
         <div class="level-label stretch-class"></div>
         <p><b>Stretch / <br> Conditioning</b><br>
         6:00-7:30<br>
-        (Track B)</p>
+        (Kids)</p>
       </td>
       <td class="onClass trackA-class class-border" rowspan="6">
         <div class="level-label ballet-class"></div>
@@ -2123,19 +2116,9 @@
         6:00-7:30<br>
         (Track A)</p>
       </td>
-      <td class="onClass trackA-class class-border" rowspan="4">
-        <div class="level-label jazz-class"></div>
-        <p><b>Jazz</b><br>
-        6:00-7:00<br>
-        (Track A)</p>
-      </td>
+      <td></td>
       <!-- Thursday -->
-      <td class="onClass trackA-class class-border" rowspan="3">
-        <div class="level-label contemporary-class"></div>
-        <p><b>Contemporary</b><br>
-        6:00-6:45<br>
-        (Track A)</p>
-      </td>
+      <td class="border-day"></td>
       <!-- <td></td> -->
       <td class="onClass trackB-class class-border" rowspan="4">
         <div class="level-label hiphop-class"></div>
@@ -2143,13 +2126,18 @@
         6:00-7:00<br>
         (Track B)</p>
       </td>
+      <td class="onClass trackA-class class-border" rowspan="3">
+        <div class="level-label contemporary-class"></div>
+        <p><b>Contemporary</b><br>
+        6:00-6:45<br>
+        (Track A)</p>
+      </td>
       <td class="onClass trackB-class class-border" rowspan="4">
         <div class="level-label jazz-class"></div>
         <p><b>Jazz</b><br>
         6:00-7:00<br>
         (Track B)</p>
       </td>
-      <td></td>
       <!-- Friday -->
       <td class="border-day"></td>
       <td></td>
@@ -2181,31 +2169,26 @@
         (Track A)</p>
       </td>
       <td></td>
-      <td class="onClass trackA-class class-border" rowspan="4">
-        <div class="level-label tap-class"></div>
-        <p><b>Tap</b><br>
-        6:15-7:15<br>
-        (Track A)</p>
-      </td>
+      <td></td>
       <td></td>
       <!-- Tuesday -->
-      <!-- <td class="border-day"></td> -->
+      <td class="border-day"></td>
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
+      <!-- <td></td> -->
       <!-- Wednesday -->
-      <!-- <td class="border-day"></td> -->
+      <td class="border-day"></td>
       <td></td>
       <!-- <td></td> -->
       <!-- <td></td> -->
-      <!-- <td></td> -->
+      <td></td>
       <!-- Thursday -->
-      <!-- <td class="border-day"></td> -->
+      <td class="border-day"></td>
       <!-- <td></td> -->
       <!-- <td></td> -->
       <!-- <td></td> -->
-      <td></td>
+      <!-- <td></td> -->
       <!-- Friday -->
       <td class="border-day"></td>
       <td></td>
@@ -2232,7 +2215,7 @@
       <td class="border-day"></td>
       <!-- <td></td> -->
       <td></td>
-      <!-- <td></td> -->
+      <td></td>
       <td></td>
       <!-- Tuesday -->
       <td class="border-day"></td><!-- <td class="onClass pre-class class-border" rowspan="2">
@@ -2250,17 +2233,17 @@
       </td>
       <td></td>
       <!-- Wednesday -->
-      <!-- <td class="border-day"></td> -->
+      <td class="border-day"></td>
       <td></td>
       <!-- <td></td> -->
       <!-- <td></td> -->
-      <!-- <td></td> -->
+      <td></td>
       <!-- Thursday -->
-      <!-- <td class="border-day"></td> -->
+      <td class="border-day"></td>
       <!-- <td></td> -->
       <!-- <td></td> -->
       <!-- <td></td> -->
-      <td></td>
+      <!-- <td></td> -->
       <!-- Friday -->
       <td class="border-day"></td>
       <td></td>
@@ -2287,7 +2270,7 @@
       <td class="border-day border-hour1"></td>
       <!-- <td class="border-hour1"></td> -->
       <td class="border-hour1"></td>
-      <!-- <td class="border-hour1"></td> -->
+      <td class="border-hour1"></td>
       <td class="border-hour1"></td>
       <!-- Tuesday -->
       <td class="border-day border-hour1"></td>
@@ -2296,17 +2279,17 @@
       <!-- <td class="border-hour1"></td> -->
       <td class="border-hour1"></td>
       <!-- Wednesday -->
-      <!-- <td class="border-day border-hour1"></td> -->
+      <td class="border-day border-hour1"></td>
       <td class="border-hour1"></td>
       <!-- <td class="border-hour1"></td> -->
       <!-- <td class="border-hour1"></td> -->
-      <!-- <td class="border-hour1"></td> -->
+      <td class="border-hour1"></td>
       <!-- Thursday -->
       <td class="border-day border-hour1"></td>
       <!-- <td class="border-hour1"></td> -->
       <!-- <td class="border-hour1"></td> -->
-      <!-- <td class="border-hour1"></td> -->
       <td class="border-hour1"></td>
+      <!-- <td class="border-hour1"></td> -->
       <!-- Friday -->
       <td class="border-day border-hour1"></td>
       <td class="border-hour1"></td>
@@ -2333,7 +2316,7 @@
       <td class="border-day"></td>
       <!-- <td></td> -->
       <td></td>
-      <!-- <td></td> -->
+      <td></td>
       <td></td>
       <!-- Tuesday -->
       <td class="border-day"></td>
@@ -2346,12 +2329,7 @@
       <td></td>
       <!-- <td></td> -->
       <!-- <td></td> -->
-      <td class="onClass trackB-class class-border" rowspan="4">
-        <div class="level-label jazz-class"></div>
-        <p><b>Jazz</b><br>
-        7:00-8:00<br>
-        (Track B)</p>
-      </td>
+      <td></td>
       <!-- Thursday -->
       <td class="border-day"></td><!-- <td class="onClass trackB-class class-border" rowspan="4">
         <div class="level-label acro-class"></div>
@@ -2401,7 +2379,7 @@
       <td></td>
       <!-- <td></td> -->
       <!-- <td></td> -->
-      <!-- <td></td> -->
+      <td></td>
       <!-- Thursday -->
       <td class="border-day"></td>
       <td></td>
@@ -2452,7 +2430,7 @@
         7:30-9:00<br>
         (Track A)</p>
       </td>
-      <!-- <td></td> -->
+      <td></td>
       <!-- Thursday -->
       <td class="border-day"></td>
       <td></td>
@@ -2498,7 +2476,7 @@
       <td class="border-hour2"></td>
       <td class="border-hour2"></td>
       <!-- <td class="border-hour2"></td> -->
-      <!-- <td class="border-hour2"></td> -->
+      <td class="border-hour2"></td>
       <!-- Thursday -->
       <td class="border-day border-hour2"></td>
       <td class="border-hour2"></td>
@@ -2751,7 +2729,7 @@
       <td class="border-day"></td>
       <td></td>
       <td></td>
-      <td colspan="2" style="text-align: right;"><i>Last updated: 12/22/2016</i></td>
+      <td colspan="2" style="text-align: right;"><i>Last updated: 12/23/2016</i></td>
       <!-- <td></td> -->
     </tr>
     </table>
