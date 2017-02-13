@@ -1,2745 +1,2085 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title> Crescendo Dance Academy - Weekly Schedule </title>
-  <!-- Boostrap CSS -->
-  <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
+<html lang="en">
 
+<head>
+  <title> Crescendo Dance Academy - Weekly Students Schedule</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Boostrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
   <!-- jQuery JS -->
   <script src="js/jquery.min.js"></script>
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
-
   <!-- Boostrap JS -->
   <script src="js/bootstrap.min.js"></script>
   <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+  <!-- jQuery: Set the fixed row and column on the browser -->
+  <script src="js/fixed_Menus.js"></script>
+  <!-- jQuery: Show/Hide selected classes or levels -->
+  <script src="js/showHideSchedule.js"></script>
+  <!-- jQuery: Schedule Generator -->
+  <script src="js/schedule_Generator.js"></script>
+  <!-- Local CSS -->
+  <link href="css/styles.css" rel="stylesheet">
 </head>
+
 <body>
-
-<style>
-  h2{
-    /*text-align:center;*/
-  }
-  table{
-    font-size: 1.2rem;
-    text-align: center;
-    border-collapse: collapse;
-    /*white-space: nowrap;*/ /* Does not affect, since the width was fixed */
-  }
-  th{
-    text-align: center;
-    text-transform: uppercase;
-  }
-  th, td{
-    white-space:nowrap;
-    vertical-align: middle !important;
-    /*padding: 1px;*/
-    max-width: 100px;
-    min-width: 100px;
-  }
-  tr, th, td{
-    height: 32px !important;
-    min-height: 32px !important;
-  }
-  .container{
-    width: 100%;
-    padding: 0;
-  }
-  .timeLine{
-    min-width: 70px !important;
-    max-width: 70px !important;
-    background-color: white;
-  }
-  .head-topLeft {
-    background: white;
-    position: fixed;
-    left: 0;
-    min-width: 71px !important;
-    max-width: 71px !important;
-  }
-  .header-days {
-    position: fixed;
-    margin-left: 69px;
-    z-index: 4;
-  }
-  .left-timeLine {
-    top: 61px; /* You should also change the 'marginTop' in jQuery, if you change this parameter*/
-    position: fixed;
-    z-index: 3;
-  }
-  .right-schedule {
-    /*background: white;*/
-    margin-top: 60px;
-    margin-left: 70px;
-  }
-  .row-days{
-    background-color: black;
-    color: #D4AF37;
-  }
-  .row-studio{
-    background-color: white;
-  }
-
-  /* The label represents the level of class*/
-  .level-label{
-    position: relative;
-    float: right;
-    /*right: -2px;*/
-    top: -5px;
-    height: 15px;
-    width: 15px;
-    border: 1px solid gray;
-  }
-
-  .level-label:hover{
-    -webkit-transform: scale(1.2);
-    transform: scale(1.2);
-  }
-
-  /* Alert Bar CSS */
-  .alert{
-    text-align: center;
-    position: fixed;
-    width: 100%;
-    margin-bottom: 0;
-    opacity: 0.98;
-    z-index: 5;
-  }
-  .close{
-    /*color: black !important;*/
-    opacity: 0.5;
-  }
-  .onClass > p{
-    color: black;
-    margin: 0;
-  }
-
-  /* Level distributions of classes*/
-  .pre-class{
-    background-color: #ff9ccb;
-  }
-  .kids-class{
-    background-color: #9cfe95;
-  }
-  .trackA-class{
-    background-color: #85ebff;
-  }
-  .trackB-class{
-    background-color: #fffba2;
-  }
-
-  /* Color distributions of classes*/
-  .jazz-class{
-    background-color: #c1987c;
-  }
-  .streetJazz-class{
-    background-color: #ffb400;
-  }
-  .ballet-class{
-    background-color: #8AC0F8;
-  }
-  .balletCo-class{
-    background-color: #d8d6d7;
-  }
-  .hiphop-class{
-    background-color: #d1ffad;
-  }
-  .tap-class{
-    background-color: red;
-  }
-  .theater-class{
-    background-color: #E1D34F;
-  }
-  .contemporary-class{
-    background-color: #98F4B6;
-  }
-  .acro-class{
-    background-color: #FF8484;
-  }
-  .danceWithMe-class{
-    background-color: #ffa8c7;
-  }
-  .stretch-class{
-    background-color: #9099EC;
-  }
-  .pointe-class{
-    background-color: #C895F8;
-  }
-  .lyrical-class{
-    background-color: #ffffff;
-  }
-  .rental{
-    background-color: #fff2a6;
-  }
-  .border-day{
-    border-left: 3px double gray !important;
-  }
-  .border-hour1{
-    border-bottom: 2px dashed gray !important;
-  }
-  .border-hour2{
-    border-bottom: 2px dashed gray !important;
-  }
-  .border-hour3{
-    border-bottom: 2px dashed gray !important;
-  }
-  .class-border{
-    border: 2px solid black !important;
-  }
-  .table-hover tbody tr td:hover {
-    color:inherit;
-    -webkit-filter: drop-shadow(5px 5px 3px gray);
-    /*filter:invert(100%);*/
-  }
-  .table-hover tbody tr:hover {
-    background: lightgray;
-  }
-</style>
-
-
-<div class="container">
-  <!-- <div class="alert alert-danger alert-dismissable">
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-      <strong>Notice!</strong> This is a new schedule that takes effect beginning January 2017. If you want to see the current schedule, <a href="weekly_schedule(sec half of 2016).html"><b>Click Here!</b></a>
-  </div> -->
-  <div class="header-days">
-    <table id="" class="table table-bordered table-condensed table-hover">
-      <thead>
-        <tr class="row-days">
-          <th class="head-topLeft"></th>
-          <th colspan="5">Monday</th> 
-          <th colspan="5">Tuesday</th> 
-          <th colspan="5">Wednesday</th> 
-          <th colspan="5">Thursday</th> 
-          <th colspan="5">Friday</th> 
-          <th colspan="5">Saturday</th> 
-          <th colspan="5">Sunday</th>
-        </tr>
-        <tr class="row-studio">
-          <th class="head-topLeft"></th>
-          <!-- Monday -->
-          <th class="border-day"> Studio 1 </th>
-          <th> Studio 2 </th>
-          <th> Studio 3 </th>
-          <th> Studio 4 </th>
-          <th> Studio 5 </th>
-          <!-- Tuesday -->
-          <th class="border-day"> Studio 1 </th>
-          <th> Studio 2 </th>
-          <th> Studio 3 </th>
-          <th> Studio 4 </th>
-          <th> Studio 5 </th>
-          <!-- Wednesday -->
-          <th class="border-day"> Studio 1 </th>
-          <th> Studio 2 </th>
-          <th> Studio 3 </th>
-          <th> Studio 4 </th>
-          <th> Studio 5 </th>
-          <!-- Thursday -->
-          <th class="border-day"> Studio 1 </th>
-          <th> Studio 2 </th>
-          <th> Studio 3 </th>
-          <th> Studio 4 </th>
-          <th> Studio 5 </th>
-          <!-- Friday -->
-          <th class="border-day"> Studio 1 </th>
-          <th> Studio 2 </th>
-          <th> Studio 3 </th>
-          <th> Studio 4 </th>
-          <th> Studio 5 </th>
-          <!-- Saturday -->
-          <th class="border-day"> Studio 1 </th>
-          <th> Studio 2 </th>
-          <th> Studio 3 </th>
-          <th> Studio 4 </th>
-          <th> Studio 5 </th>
-          <!-- Sunday -->
-          <th class="border-day"> Studio 1 </th>
-          <th> Studio 2 </th>
-          <th> Studio 3 </th>
-          <th> Studio 4 </th>
-          <th> Studio 5 </th>
-        </tr>
-      </thead>
-    </table>
+  <div id="studentScheduleContainer" class="container">
+    <!-- Notice Bar -->
+    <div id="notice-container"></div>
+    <div class="header-days">
+      <table id="top_tbl" class="table table-bordered table-condensed table-hover">
+        <thead>
+          <tr id="row-days">
+            <th class="head-topLeft"></th>
+            <th colspan="5">Monday</th>
+            <th colspan="5">Tuesday</th>
+            <th colspan="5">Wednesday</th>
+            <th colspan="5">Thursday</th>
+            <th colspan="5">Friday</th>
+            <th colspan="5">Saturday</th>
+            <th colspan="5">Sunday</th>
+          </tr>
+          <tr id="row-studio">
+            <th class="head-topLeft"></th>
+            <th class="border-day Monday">Stuidio 1</th>
+            <th>Stuidio 2</th>
+            <th>Stuidio 3</th>
+            <th>Stuidio 4</th>
+            <th>Stuidio 5</th>
+            <th class="border-day Tuesday">Stuidio 1</th>
+            <th>Stuidio 2</th>
+            <th>Stuidio 3</th>
+            <th>Stuidio 4</th>
+            <th>Stuidio 5</th>
+            <th class="border-day Wednesday">Stuidio 1</th>
+            <th>Stuidio 2</th>
+            <th>Stuidio 3</th>
+            <th>Stuidio 4</th>
+            <th>Stuidio 5</th>
+            <th class="border-day Thursday">Stuidio 1</th>
+            <th>Stuidio 2</th>
+            <th>Stuidio 3</th>
+            <th>Stuidio 4</th>
+            <th>Stuidio 5</th>
+            <th class="border-day Friday">Stuidio 1</th>
+            <th>Stuidio 2</th>
+            <th>Stuidio 3</th>
+            <th>Stuidio 4</th>
+            <th>Stuidio 5</th>
+            <th class="border-day Saturday">Stuidio 1</th>
+            <th>Stuidio 2</th>
+            <th>Stuidio 3</th>
+            <th>Stuidio 4</th>
+            <th>Stuidio 5</th>
+            <th class="border-day Sunday">Stuidio 1</th>
+            <th>Stuidio 2</th>
+            <th>Stuidio 3</th>
+            <th>Stuidio 4</th>
+            <th>Stuidio 5</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="left-timeLine">
+      <table id="timeline_tbl" class="table table-bordered table-condensed">
+        <tbody>
+          <tr>
+            <td class="timeLine">9:00 AM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">9:15 AM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">9:30 AM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">9:45 AM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">10:00 AM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">10:15 AM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">10:30 AM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">10:45 AM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">11:00 AM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">11:15 AM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">11:30 AM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">11:45 AM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">12:00 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">12:15 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">12:30 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">12:45 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">1:00 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">1:15 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">1:30 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">1:45 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">2:00 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">2:15 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">2:30 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">2:45 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">3:00 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">3:15 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">3:30 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">3:45 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">4:00 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">4:15 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">4:30 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">4:45 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">5:00 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">5:15 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">5:30 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">5:45 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">6:00 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">6:15 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">6:30 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">6:45 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">7:00 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">7:15 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">7:30 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">7:45 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">8:00 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">8:15 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">8:30 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">8:45 PM</td>
+          </tr>
+          <tr>
+            <td class="timeLine">9:00 PM</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="right-schedule">
+      <table id="schedule_tbl" class="table table-bordered table-condensed table-hover">
+        <tbody>
+          <tr class="h_9 m_00">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2 onClass class-border normal-class" rowspan="4">
+              <div class="level-label tap-class"></div>
+              <p><b>Tap</b><br> 9:00-10:00
+                <br>
+              </p>
+            </td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_9 m_15">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_9 m_30">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_9 m_45">
+            <td class="Monday studio1 border-day border-hour"></td>
+            <td class="Monday studio2 border-hour"></td>
+            <td class="Monday studio3 border-hour"></td>
+            <td class="Monday studio4 border-hour"></td>
+            <td class="Monday studio5 border-hour"></td>
+            <td class="Tuesday studio1 border-day border-hour"></td>
+            <td class="Tuesday studio2 border-hour"></td>
+            <td class="Tuesday studio3 border-hour"></td>
+            <td class="Tuesday studio4 border-hour"></td>
+            <td class="Tuesday studio5 border-hour"></td>
+            <td class="Wednesday studio1 border-day border-hour"></td>
+            <td class="Wednesday studio2 border-hour"></td>
+            <td class="Wednesday studio3 border-hour"></td>
+            <td class="Wednesday studio4 border-hour"></td>
+            <td class="Wednesday studio5 border-hour"></td>
+            <td class="Thursday studio1 border-day border-hour"></td>
+            <td class="Thursday studio2 border-hour"></td>
+            <td class="Thursday studio3 border-hour"></td>
+            <td class="Thursday studio4 border-hour"></td>
+            <td class="Thursday studio5 border-hour"></td>
+            <td class="Friday studio1 border-day border-hour"></td>
+            <td class="Friday studio2 border-hour"></td>
+            <td class="Friday studio3 border-hour"></td>
+            <td class="Friday studio4 border-hour"></td>
+            <td class="Friday studio5 border-hour"></td>
+            <td class="Saturday studio1 border-day border-hour"></td>
+            <td class="Saturday studio2 border-hour"></td>
+            <td class="Saturday studio3 border-hour"></td>
+            <td class="Saturday studio4 border-hour"></td>
+            <td class="Saturday studio5 border-hour"></td>
+            <td class="Sunday studio1 border-day border-hour"></td>
+            <td class="Sunday studio3 border-hour"></td>
+            <td class="Sunday studio4 border-hour"></td>
+            <td class="Sunday studio5 border-hour"></td>
+          </tr>
+          <tr class="h_10 m_00">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_10 m_15">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_10 m_30">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2 onClass class-border pre-class" rowspan="3">
+              <div class="level-label ballet-class"></div>
+              <p><b>Ballet</b><br> 10:30-11:15
+                <br> (Pre)
+              </p>
+            </td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_10 m_45">
+            <td class="Monday studio1 border-day border-hour"></td>
+            <td class="Monday studio2 border-hour"></td>
+            <td class="Monday studio3 border-hour"></td>
+            <td class="Monday studio4 border-hour"></td>
+            <td class="Monday studio5 border-hour"></td>
+            <td class="Tuesday studio1 border-day border-hour"></td>
+            <td class="Tuesday studio2 border-hour"></td>
+            <td class="Tuesday studio3 border-hour"></td>
+            <td class="Tuesday studio4 border-hour"></td>
+            <td class="Tuesday studio5 border-hour"></td>
+            <td class="Wednesday studio1 border-day border-hour"></td>
+            <td class="Wednesday studio2 border-hour"></td>
+            <td class="Wednesday studio3 border-hour"></td>
+            <td class="Wednesday studio4 border-hour"></td>
+            <td class="Wednesday studio5 border-hour"></td>
+            <td class="Thursday studio1 border-day border-hour"></td>
+            <td class="Thursday studio2 border-hour"></td>
+            <td class="Thursday studio3 border-hour"></td>
+            <td class="Thursday studio4 border-hour"></td>
+            <td class="Thursday studio5 border-hour"></td>
+            <td class="Friday studio1 border-day border-hour"></td>
+            <td class="Friday studio2 border-hour"></td>
+            <td class="Friday studio3 border-hour"></td>
+            <td class="Friday studio4 border-hour"></td>
+            <td class="Friday studio5 border-hour"></td>
+            <td class="Saturday studio1 border-day border-hour"></td>
+            <td class="Saturday studio2 border-hour"></td>
+            <td class="Saturday studio3 border-hour"></td>
+            <td class="Saturday studio4 border-hour"></td>
+            <td class="Saturday studio5 border-hour"></td>
+            <td class="Sunday studio1 border-day border-hour"></td>
+            <td class="Sunday studio3 border-hour"></td>
+            <td class="Sunday studio4 border-hour"></td>
+            <td class="Sunday studio5 border-hour"></td>
+          </tr>
+          <tr class="h_11 m_00">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_11 m_15">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5 onClass class-border trackA-class" rowspan="4">
+              <div class="level-label ballet-class"></div>
+              <p><b>Ballet</b><br> 11:15-12:15
+                <br> (Track A)
+              </p>
+            </td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_11 m_30">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_11 m_45">
+            <td class="Monday studio1 border-day border-hour"></td>
+            <td class="Monday studio2 border-hour"></td>
+            <td class="Monday studio3 border-hour"></td>
+            <td class="Monday studio4 border-hour"></td>
+            <td class="Monday studio5 border-hour"></td>
+            <td class="Tuesday studio1 border-day border-hour"></td>
+            <td class="Tuesday studio2 border-hour"></td>
+            <td class="Tuesday studio3 border-hour"></td>
+            <td class="Tuesday studio4 border-hour"></td>
+            <td class="Tuesday studio5 border-hour"></td>
+            <td class="Wednesday studio1 border-day border-hour"></td>
+            <td class="Wednesday studio2 border-hour"></td>
+            <td class="Wednesday studio3 border-hour"></td>
+            <td class="Wednesday studio4 border-hour"></td>
+            <td class="Wednesday studio5 border-hour"></td>
+            <td class="Thursday studio1 border-day border-hour"></td>
+            <td class="Thursday studio2 border-hour"></td>
+            <td class="Thursday studio3 border-hour"></td>
+            <td class="Thursday studio4 border-hour"></td>
+            <td class="Thursday studio5 border-hour"></td>
+            <td class="Friday studio1 border-day border-hour"></td>
+            <td class="Friday studio2 border-hour"></td>
+            <td class="Friday studio3 border-hour"></td>
+            <td class="Friday studio4 border-hour"></td>
+            <td class="Friday studio5 border-hour"></td>
+            <td class="Saturday studio1 border-day border-hour"></td>
+            <td class="Saturday studio2 border-hour"></td>
+            <td class="Saturday studio3 border-hour"></td>
+            <td class="Saturday studio4 border-hour"></td>
+            <td class="Sunday studio1 border-day border-hour"></td>
+            <td class="Sunday studio2 border-hour"></td>
+            <td class="Sunday studio3 border-hour"></td>
+            <td class="Sunday studio4 border-hour"></td>
+            <td class="Sunday studio5 border-hour"></td>
+          </tr>
+          <tr class="h_12 m_00">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2 onClass class-border trackB-class" rowspan="4">
+              <div class="level-label hiphop-class"></div>
+              <p><b>Hip Hop</b><br> 12:00-1:00
+                <br> (Track B)
+              </p>
+            </td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_12 m_15">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_12 m_30">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4 onClass class-border trackA-class" rowspan="4">
+              <div class="level-label hiphop-class"></div>
+              <p><b>Hip Hop</b><br> 12:30-1:30
+                <br> (Track A)
+              </p>
+            </td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_12 m_45">
+            <td class="Monday studio1 border-day border-hour"></td>
+            <td class="Monday studio2 border-hour"></td>
+            <td class="Monday studio3 border-hour"></td>
+            <td class="Monday studio4 border-hour"></td>
+            <td class="Monday studio5 border-hour"></td>
+            <td class="Tuesday studio1 border-day border-hour"></td>
+            <td class="Tuesday studio2 border-hour"></td>
+            <td class="Tuesday studio3 border-hour"></td>
+            <td class="Tuesday studio4 border-hour"></td>
+            <td class="Tuesday studio5 border-hour"></td>
+            <td class="Wednesday studio1 border-day border-hour"></td>
+            <td class="Wednesday studio2 border-hour"></td>
+            <td class="Wednesday studio3 border-hour"></td>
+            <td class="Wednesday studio4 border-hour"></td>
+            <td class="Wednesday studio5 border-hour"></td>
+            <td class="Thursday studio1 border-day border-hour"></td>
+            <td class="Thursday studio2 border-hour"></td>
+            <td class="Thursday studio3 border-hour"></td>
+            <td class="Thursday studio4 border-hour"></td>
+            <td class="Thursday studio5 border-hour"></td>
+            <td class="Friday studio1 border-day border-hour"></td>
+            <td class="Friday studio2 border-hour"></td>
+            <td class="Friday studio3 border-hour"></td>
+            <td class="Friday studio4 border-hour"></td>
+            <td class="Friday studio5 border-hour"></td>
+            <td class="Saturday studio1 border-day border-hour"></td>
+            <td class="Saturday studio2 border-hour"></td>
+            <td class="Saturday studio3 border-hour"></td>
+            <td class="Saturday studio4 border-hour"></td>
+            <td class="Saturday studio5 border-hour"></td>
+            <td class="Sunday studio1 border-day border-hour"></td>
+            <td class="Sunday studio3 border-hour"></td>
+            <td class="Sunday studio5 border-hour"></td>
+          </tr>
+          <tr class="h_13 m_00">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_13 m_15">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_13 m_30">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_13 m_45">
+            <td class="Monday studio1 border-day border-hour"></td>
+            <td class="Monday studio2 border-hour"></td>
+            <td class="Monday studio3 border-hour"></td>
+            <td class="Monday studio4 border-hour"></td>
+            <td class="Monday studio5 border-hour"></td>
+            <td class="Tuesday studio1 border-day border-hour"></td>
+            <td class="Tuesday studio2 border-hour"></td>
+            <td class="Tuesday studio3 border-hour"></td>
+            <td class="Tuesday studio4 border-hour"></td>
+            <td class="Tuesday studio5 border-hour"></td>
+            <td class="Wednesday studio1 border-day border-hour"></td>
+            <td class="Wednesday studio2 border-hour"></td>
+            <td class="Wednesday studio3 border-hour"></td>
+            <td class="Wednesday studio4 border-hour"></td>
+            <td class="Wednesday studio5 border-hour"></td>
+            <td class="Thursday studio1 border-day border-hour"></td>
+            <td class="Thursday studio2 border-hour"></td>
+            <td class="Thursday studio3 border-hour"></td>
+            <td class="Thursday studio4 border-hour"></td>
+            <td class="Thursday studio5 border-hour"></td>
+            <td class="Friday studio1 border-day border-hour"></td>
+            <td class="Friday studio2 border-hour"></td>
+            <td class="Friday studio3 border-hour"></td>
+            <td class="Friday studio4 border-hour"></td>
+            <td class="Friday studio5 border-hour"></td>
+            <td class="Saturday studio1 border-day border-hour"></td>
+            <td class="Saturday studio2 border-hour"></td>
+            <td class="Saturday studio3 border-hour"></td>
+            <td class="Saturday studio4 border-hour"></td>
+            <td class="Saturday studio5 border-hour"></td>
+            <td class="Sunday studio1 border-day border-hour"></td>
+            <td class="Sunday studio2 border-hour"></td>
+            <td class="Sunday studio3 border-hour"></td>
+            <td class="Sunday studio4 border-hour"></td>
+            <td class="Sunday studio5 border-hour"></td>
+          </tr>
+          <tr class="h_14 m_00">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_14 m_15">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_14 m_30">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_14 m_45">
+            <td class="Monday studio1 border-day border-hour"></td>
+            <td class="Monday studio2 border-hour"></td>
+            <td class="Monday studio3 border-hour"></td>
+            <td class="Monday studio4 border-hour"></td>
+            <td class="Monday studio5 border-hour"></td>
+            <td class="Tuesday studio1 border-day border-hour"></td>
+            <td class="Tuesday studio2 border-hour"></td>
+            <td class="Tuesday studio3 border-hour"></td>
+            <td class="Tuesday studio4 border-hour"></td>
+            <td class="Tuesday studio5 border-hour"></td>
+            <td class="Wednesday studio1 border-day border-hour"></td>
+            <td class="Wednesday studio2 border-hour"></td>
+            <td class="Wednesday studio3 border-hour"></td>
+            <td class="Wednesday studio4 border-hour"></td>
+            <td class="Wednesday studio5 border-hour"></td>
+            <td class="Thursday studio1 border-day border-hour"></td>
+            <td class="Thursday studio2 border-hour"></td>
+            <td class="Thursday studio3 border-hour"></td>
+            <td class="Thursday studio4 border-hour"></td>
+            <td class="Thursday studio5 border-hour"></td>
+            <td class="Friday studio1 border-day border-hour"></td>
+            <td class="Friday studio2 border-hour"></td>
+            <td class="Friday studio3 border-hour"></td>
+            <td class="Friday studio4 border-hour"></td>
+            <td class="Friday studio5 border-hour"></td>
+            <td class="Saturday studio1 border-day border-hour"></td>
+            <td class="Saturday studio2 border-hour"></td>
+            <td class="Saturday studio3 border-hour"></td>
+            <td class="Saturday studio4 border-hour"></td>
+            <td class="Saturday studio5 border-hour"></td>
+            <td class="Sunday studio1 border-day border-hour"></td>
+            <td class="Sunday studio2 border-hour"></td>
+            <td class="Sunday studio3 border-hour"></td>
+            <td class="Sunday studio4 border-hour"></td>
+            <td class="Sunday studio5 border-hour"></td>
+          </tr>
+          <tr class="h_15 m_00">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 onClass class-border trackB-class" rowspan="4">
+              <div class="level-label hiphop-class"></div>
+              <p><b>Hip Hop</b><br> 3:00-4:00
+                <br> (Track B)
+              </p>
+            </td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_15 m_15">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_15 m_30">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_15 m_45">
+            <td class="Monday studio1 border-day border-hour"></td>
+            <td class="Monday studio2 border-hour"></td>
+            <td class="Monday studio3 border-hour"></td>
+            <td class="Monday studio4 border-hour"></td>
+            <td class="Monday studio5 border-hour"></td>
+            <td class="Tuesday studio1 border-day border-hour"></td>
+            <td class="Tuesday studio2 border-hour"></td>
+            <td class="Tuesday studio3 border-hour"></td>
+            <td class="Tuesday studio4 border-hour"></td>
+            <td class="Tuesday studio5 border-hour"></td>
+            <td class="Wednesday studio2 border-hour"></td>
+            <td class="Wednesday studio3 border-hour"></td>
+            <td class="Wednesday studio4 border-hour"></td>
+            <td class="Wednesday studio5 border-hour"></td>
+            <td class="Thursday studio1 border-day border-hour"></td>
+            <td class="Thursday studio2 border-hour"></td>
+            <td class="Thursday studio3 border-hour"></td>
+            <td class="Thursday studio4 border-hour"></td>
+            <td class="Thursday studio5 border-hour"></td>
+            <td class="Friday studio1 border-day border-hour"></td>
+            <td class="Friday studio2 border-hour"></td>
+            <td class="Friday studio3 border-hour"></td>
+            <td class="Friday studio4 border-hour"></td>
+            <td class="Friday studio5 border-hour"></td>
+            <td class="Saturday studio1 border-day border-hour"></td>
+            <td class="Saturday studio2 border-hour"></td>
+            <td class="Saturday studio3 border-hour"></td>
+            <td class="Saturday studio4 border-hour"></td>
+            <td class="Saturday studio5 border-hour"></td>
+            <td class="Sunday studio1 border-day border-hour"></td>
+            <td class="Sunday studio2 border-hour"></td>
+            <td class="Sunday studio3 border-hour"></td>
+            <td class="Sunday studio4 border-hour"></td>
+            <td class="Sunday studio5 border-hour"></td>
+          </tr>
+          <tr class="h_16 m_00">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5 onClass class-border trackB-class" rowspan="5">
+              <div class="level-label jazz-class"></div>
+              <p><b>Jazz</b><br> 4:00-5:15
+                <br> (Track B)
+              </p>
+            </td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4 onClass class-border pre-class" rowspan="2">
+              <div class="level-label tap-class"></div>
+              <p><b>Pre Tap</b><br> 4:00-4:30
+                <br> (Pre)
+              </p>
+            </td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 onClass class-border trackA-class" rowspan="4">
+              <div class="level-label hiphop-class"></div>
+              <p><b>Hip Hop</b><br> 4:00-5:00
+                <br> (Track A)
+              </p>
+            </td>
+            <td class="Wednesday studio2 onClass class-border trackA-class" rowspan="4">
+              <div class="level-label ballet-class"></div>
+              <p><b>Ballet</b><br> 4:00-5:00
+                <br> (Track A)
+              </p>
+            </td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 onClass class-border trackB-class" rowspan="6">
+              <div class="level-label ballet-class"></div>
+              <p><b>Ballet</b><br> 4:00-5:30
+                <br> (Track B)
+              </p>
+            </td>
+            <td class="Thursday studio2 onClass class-border trackA-class" rowspan="6">
+              <div class="level-label ballet-class"></div>
+              <p><b>Ballet</b><br> 4:00-5:30
+                <br> (Track A)
+              </p>
+            </td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4 onClass class-border trackA-class" rowspan="4">
+              <div class="level-label hiphop-class"></div>
+              <p><b>Hip Hop</b><br> 4:00-5:00
+                <br> (Track A)
+              </p>
+            </td>
+            <td class="Thursday studio5 onClass class-border trackA-class" rowspan="4">
+              <div class="level-label acro-class"></div>
+              <p><b>Acro</b><br> 4:00-5:00
+                <br> (Track A)
+              </p>
+            </td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5 onClass class-border trackB-class" rowspan="6">
+              <div class="level-label ballet-class"></div>
+              <p><b>Ballet</b><br> 4:00-5:30
+                <br> (Track B)
+              </p>
+            </td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_16 m_15">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4 onClass class-border trackA-class" rowspan="3">
+              <div class="level-label tap-class"></div>
+              <p><b>Tap</b><br> 4:15-5:00
+                <br> (Track A)
+              </p>
+            </td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_16 m_30">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4 onClass class-border pre-class" rowspan="2">
+              <div class="level-label ballet-class"></div>
+              <p><b>Pre Ballet</b><br> 4:30-5:00
+                <br> (Pre)
+              </p>
+            </td>
+            <td class="Tuesday studio5 onClass class-border trackB-class" rowspan="6">
+              <div class="level-label ballet-class"></div>
+              <p><b>Ballet</b><br> 4:30-6:00
+                <br> (Track B)
+              </p>
+            </td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_16 m_45">
+            <td class="Monday studio1 border-day border-hour"></td>
+            <td class="Monday studio2 border-hour"></td>
+            <td class="Monday studio3 border-hour"></td>
+            <td class="Monday studio4 border-hour"></td>
+            <td class="Tuesday studio1 border-day border-hour"></td>
+            <td class="Tuesday studio2 border-hour"></td>
+            <td class="Tuesday studio3 border-hour"></td>
+            <td class="Wednesday studio3 border-hour"></td>
+            <td class="Wednesday studio5 border-hour"></td>
+            <td class="Thursday studio3 border-hour"></td>
+            <td class="Friday studio1 border-day border-hour"></td>
+            <td class="Friday studio2 border-hour"></td>
+            <td class="Friday studio3 border-hour"></td>
+            <td class="Friday studio4 border-hour"></td>
+            <td class="Saturday studio1 border-day border-hour"></td>
+            <td class="Saturday studio2 border-hour"></td>
+            <td class="Saturday studio3 border-hour"></td>
+            <td class="Saturday studio4 border-hour"></td>
+            <td class="Saturday studio5 border-hour"></td>
+            <td class="Sunday studio1 border-day border-hour"></td>
+            <td class="Sunday studio2 border-hour"></td>
+            <td class="Sunday studio3 border-hour"></td>
+            <td class="Sunday studio4 border-hour"></td>
+            <td class="Sunday studio5 border-hour"></td>
+          </tr>
+          <tr class="h_17 m_00">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2 onClass class-border trackA-class" rowspan="4">
+              <div class="level-label ballet-class"></div>
+              <p><b>Ballet</b><br> 5:00-6:00
+                <br> (Track A)
+              </p>
+            </td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2 onClass class-border trackA-class" rowspan="4">
+              <div class="level-label lyrical-class"></div>
+              <p><b>Lyrical</b><br> 5:00-6:00
+                <br> (Track A)
+              </p>
+            </td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4 onClass class-border trackA-class" rowspan="4">
+              <div class="level-label jazz-class"></div>
+              <p><b>Jazz</b><br> 5:00-6:00
+                <br> (Track A)
+              </p>
+            </td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4 onClass class-border trackB-class" rowspan="6">
+              <div class="level-label hiphop-class"></div>
+              <p><b>Hip Hop</b><br> 5:00-6:30
+                <br> (Track B)
+              </p>
+            </td>
+            <td class="Thursday studio5 onClass class-border trackA-class" rowspan="4">
+              <div class="level-label acro-class"></div>
+              <p><b>Acro</b><br> 5:00-6:00
+                <br> (Track A)
+              </p>
+            </td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_17 m_15">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5 onClass class-border trackB-class" rowspan="4">
+              <div class="level-label contemporary-class"></div>
+              <p><b>Contemporary</b><br> 5:15-6:15
+                <br> (Track B)
+              </p>
+            </td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_17 m_30">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4 onClass class-border kids-class" rowspan="4">
+              <div class="level-label hiphop-class"></div>
+              <p><b>Boys Only <br> Hip Hop</b><br> 5:30-6:30
+                <br> (Kids)
+              </p>
+            </td>
+            <td class="Tuesday studio1 onClass class-border trackB-class" rowspan="4">
+              <div class="level-label acro-class"></div>
+              <p><b>Acro</b><br> 5:30-6:30
+                <br> (Track B)
+              </p>
+            </td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2 onClass class-border trackB-class" rowspan="4">
+              <div class="level-label jazz-class"></div>
+              <p><b>Jazz</b><br> 5:30-6:30
+                <br> (Track B)
+              </p>
+            </td>
+            <td class="Thursday studio3 onClass class-border trackA-class" rowspan="6">
+              <div class="level-label contemporary-class"></div>
+              <p><b>Contemporary</b><br> 5:30-7:00
+                <br> (Track A)
+              </p>
+            </td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_17 m_45">
+            <td class="Monday studio1 border-day border-hour"></td>
+            <td class="Monday studio2 border-hour"></td>
+            <td class="Monday studio3 border-hour"></td>
+            <td class="Tuesday studio3 border-hour"></td>
+            <td class="Tuesday studio4 border-hour"></td>
+            <td class="Wednesday studio1 border-day border-hour"></td>
+            <td class="Wednesday studio3 border-hour"></td>
+            <td class="Wednesday studio5 border-hour"></td>
+            <td class="Thursday studio1 border-day border-hour"></td>
+            <td class="Friday studio1 border-day border-hour"></td>
+            <td class="Friday studio2 border-hour"></td>
+            <td class="Friday studio3 border-hour"></td>
+            <td class="Friday studio4 border-hour"></td>
+            <td class="Friday studio5 border-hour"></td>
+            <td class="Saturday studio1 border-day border-hour"></td>
+            <td class="Saturday studio2 border-hour"></td>
+            <td class="Saturday studio3 border-hour"></td>
+            <td class="Saturday studio4 border-hour"></td>
+            <td class="Saturday studio5 border-hour"></td>
+            <td class="Sunday studio1 border-day border-hour"></td>
+            <td class="Sunday studio2 border-hour"></td>
+            <td class="Sunday studio3 border-hour"></td>
+            <td class="Sunday studio4 border-hour"></td>
+            <td class="Sunday studio5 border-hour"></td>
+          </tr>
+          <tr class="h_18 m_00">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2 onClass class-border normal-class" rowspan="6">
+              <div class="level-label stretch-class"></div>
+              <p><b>Stretch / <br> Conditioning</b><br> 6:00-7:30
+                <br>
+              </p>
+            </td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio5 onClass class-border trackA-class" rowspan="3">
+              <div class="level-label contemporary-class"></div>
+              <p><b>Contemporary</b><br> 6:00-6:45
+                <br> (Track A)
+              </p>
+            </td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_18 m_15">
+            <td class="Monday studio1 onClass class-border trackA-class" rowspan="3">
+              <div class="level-label jazz-class"></div>
+              <p><b>Jazz</b><br> 6:15-7:00
+                <br> (Track A)
+              </p>
+            </td>
+            <td class="Monday studio2 onClass class-border normal-class" rowspan="4">
+              <div class="level-label tap-class"></div>
+              <p><b>Tap</b><br> 6:15-7:15
+                <br>
+              </p>
+            </td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_18 m_30">
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_18 m_45">
+            <td class="Monday studio3 border-hour"></td>
+            <td class="Monday studio4 border-hour"></td>
+            <td class="Monday studio5 border-hour"></td>
+            <td class="Tuesday studio1 border-day border-hour"></td>
+            <td class="Tuesday studio2 border-hour"></td>
+            <td class="Tuesday studio3 border-hour"></td>
+            <td class="Tuesday studio4 border-hour"></td>
+            <td class="Tuesday studio5 border-hour"></td>
+            <td class="Wednesday studio1 border-day border-hour"></td>
+            <td class="Wednesday studio3 border-hour"></td>
+            <td class="Wednesday studio4 border-hour"></td>
+            <td class="Wednesday studio5 border-hour"></td>
+            <td class="Thursday studio1 border-day border-hour"></td>
+            <td class="Thursday studio2 border-hour"></td>
+            <td class="Thursday studio4 border-hour"></td>
+            <td class="Thursday studio5 border-hour"></td>
+            <td class="Friday studio1 border-day border-hour"></td>
+            <td class="Friday studio2 border-hour"></td>
+            <td class="Friday studio3 border-hour"></td>
+            <td class="Friday studio4 border-hour"></td>
+            <td class="Friday studio5 border-hour"></td>
+            <td class="Saturday studio1 border-day border-hour"></td>
+            <td class="Saturday studio2 border-hour"></td>
+            <td class="Saturday studio3 border-hour"></td>
+            <td class="Saturday studio4 border-hour"></td>
+            <td class="Saturday studio5 border-hour"></td>
+            <td class="Sunday studio1 border-day border-hour"></td>
+            <td class="Sunday studio2 border-hour"></td>
+            <td class="Sunday studio3 border-hour"></td>
+            <td class="Sunday studio4 border-hour"></td>
+            <td class="Sunday studio5 border-hour"></td>
+          </tr>
+          <tr class="h_19 m_00">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_19 m_15">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_19 m_30">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2 onClass class-border trackB-class" rowspan="2">
+              <div class="level-label contemporary-class"></div>
+              <p><b>Contemporary</b><br> 7:30-8:00
+                <br> (Track B)
+              </p>
+            </td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_19 m_45">
+            <td class="Monday studio1 border-day border-hour"></td>
+            <td class="Monday studio2 border-hour"></td>
+            <td class="Monday studio3 border-hour"></td>
+            <td class="Monday studio4 border-hour"></td>
+            <td class="Monday studio5 border-hour"></td>
+            <td class="Tuesday studio1 border-day border-hour"></td>
+            <td class="Tuesday studio2 border-hour"></td>
+            <td class="Tuesday studio3 border-hour"></td>
+            <td class="Tuesday studio4 border-hour"></td>
+            <td class="Tuesday studio5 border-hour"></td>
+            <td class="Wednesday studio1 border-day border-hour"></td>
+            <td class="Wednesday studio3 border-hour"></td>
+            <td class="Wednesday studio4 border-hour"></td>
+            <td class="Wednesday studio5 border-hour"></td>
+            <td class="Thursday studio1 border-day border-hour"></td>
+            <td class="Thursday studio2 border-hour"></td>
+            <td class="Thursday studio3 border-hour"></td>
+            <td class="Thursday studio4 border-hour"></td>
+            <td class="Thursday studio5 border-hour"></td>
+            <td class="Friday studio1 border-day border-hour"></td>
+            <td class="Friday studio2 border-hour"></td>
+            <td class="Friday studio3 border-hour"></td>
+            <td class="Friday studio4 border-hour"></td>
+            <td class="Friday studio5 border-hour"></td>
+            <td class="Saturday studio1 border-day border-hour"></td>
+            <td class="Saturday studio2 border-hour"></td>
+            <td class="Saturday studio3 border-hour"></td>
+            <td class="Saturday studio4 border-hour"></td>
+            <td class="Saturday studio5 border-hour"></td>
+            <td class="Sunday studio1 border-day border-hour"></td>
+            <td class="Sunday studio2 border-hour"></td>
+            <td class="Sunday studio3 border-hour"></td>
+            <td class="Sunday studio4 border-hour"></td>
+            <td class="Sunday studio5 border-hour"></td>
+          </tr>
+          <tr class="h_20 m_00">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_20 m_15">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_20 m_30">
+            <td class="Monday studio1 border-day"></td>
+            <td class="Monday studio2"></td>
+            <td class="Monday studio3"></td>
+            <td class="Monday studio4"></td>
+            <td class="Monday studio5"></td>
+            <td class="Tuesday studio1 border-day"></td>
+            <td class="Tuesday studio2"></td>
+            <td class="Tuesday studio3"></td>
+            <td class="Tuesday studio4"></td>
+            <td class="Tuesday studio5"></td>
+            <td class="Wednesday studio1 border-day"></td>
+            <td class="Wednesday studio2"></td>
+            <td class="Wednesday studio3"></td>
+            <td class="Wednesday studio4"></td>
+            <td class="Wednesday studio5"></td>
+            <td class="Thursday studio1 border-day"></td>
+            <td class="Thursday studio2"></td>
+            <td class="Thursday studio3"></td>
+            <td class="Thursday studio4"></td>
+            <td class="Thursday studio5"></td>
+            <td class="Friday studio1 border-day"></td>
+            <td class="Friday studio2"></td>
+            <td class="Friday studio3"></td>
+            <td class="Friday studio4"></td>
+            <td class="Friday studio5"></td>
+            <td class="Saturday studio1 border-day"></td>
+            <td class="Saturday studio2"></td>
+            <td class="Saturday studio3"></td>
+            <td class="Saturday studio4"></td>
+            <td class="Saturday studio5"></td>
+            <td class="Sunday studio1 border-day"></td>
+            <td class="Sunday studio2"></td>
+            <td class="Sunday studio3"></td>
+            <td class="Sunday studio4"></td>
+            <td class="Sunday studio5"></td>
+          </tr>
+          <tr class="h_20 m_45">
+            <td class="Monday studio1 border-day border-hour"></td>
+            <td class="Monday studio2 border-hour"></td>
+            <td class="Monday studio3 border-hour"></td>
+            <td class="Monday studio4 border-hour"></td>
+            <td class="Monday studio5 border-hour"></td>
+            <td class="Tuesday studio1 border-day border-hour"></td>
+            <td class="Tuesday studio2 border-hour"></td>
+            <td class="Tuesday studio3 border-hour"></td>
+            <td class="Tuesday studio4 border-hour"></td>
+            <td class="Tuesday studio5 border-hour"></td>
+            <td class="Wednesday studio1 border-day border-hour"></td>
+            <td class="Wednesday studio2 border-hour"></td>
+            <td class="Wednesday studio3 border-hour"></td>
+            <td class="Wednesday studio4 border-hour"></td>
+            <td class="Wednesday studio5 border-hour"></td>
+            <td class="Thursday studio1 border-day border-hour"></td>
+            <td class="Thursday studio2 border-hour"></td>
+            <td class="Thursday studio3 border-hour"></td>
+            <td class="Thursday studio4 border-hour"></td>
+            <td class="Thursday studio5 border-hour"></td>
+            <td class="Friday studio1 border-day border-hour"></td>
+            <td class="Friday studio2 border-hour"></td>
+            <td class="Friday studio3 border-hour"></td>
+            <td class="Friday studio4 border-hour"></td>
+            <td class="Friday studio5 border-hour"></td>
+            <td class="Saturday studio1 border-day border-hour"></td>
+            <td class="Saturday studio2 border-hour"></td>
+            <td class="Saturday studio3 border-hour"></td>
+            <td class="Saturday studio4 border-hour"></td>
+            <td class="Saturday studio5 border-hour"></td>
+            <td class="Sunday studio1 border-day border-hour"></td>
+            <td class="Sunday studio2 border-hour"></td>
+            <td class="Sunday studio3 border-hour"></td>
+            <td class="Sunday studio4 border-hour"></td>
+            <td class="Sunday studio5 border-hour"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-  <div class="left-timeLine">
-    <table id="" class="table table-bordered table-condensed">
-      <tr><td class="timeLine"> 09:00 AM </td></tr>
-      <tr><td class="timeLine"> 09:15 AM </td></tr>
-      <tr><td class="timeLine"> 09:30 AM </td></tr>
-      <tr><td class="timeLine"> 09:45 AM </td></tr>
-      <tr><td class="timeLine"> 10:00 AM </td></tr>
-      <tr><td class="timeLine"> 10:15 AM </td></tr>
-      <tr><td class="timeLine"> 10:30 AM </td></tr>
-      <tr><td class="timeLine"> 10:45 AM </td></tr>
-      <tr><td class="timeLine"> 11:00 AM </td></tr>
-      <tr><td class="timeLine"> 11:15 AM </td></tr>
-      <tr><td class="timeLine"> 11:30 AM </td></tr>
-      <tr><td class="timeLine"> 11:45 PM </td></tr>
-      <tr><td class="timeLine"> 12:00 PM </td></tr>
-      <tr><td class="timeLine"> 12:15 PM </td></tr>
-      <tr><td class="timeLine"> 12:30 PM </td></tr>
-      <tr><td class="timeLine"> 12:45 PM </td></tr>
-      <tr><td class="timeLine"> 01:00 PM </td></tr>
-      <tr><td class="timeLine"> 01:15 PM </td></tr>
-      <tr><td class="timeLine"> 01:30 PM </td></tr>
-      <tr><td class="timeLine"> 01:45 PM </td></tr>
-      <tr><td class="timeLine"> 02:00 PM </td></tr>
-      <tr><td class="timeLine"> 02:15 PM </td></tr>
-      <tr><td class="timeLine"> 02:30 PM </td></tr>
-      <tr><td class="timeLine"> 02:45 PM </td></tr>
-      <tr><td class="timeLine"> 03:00 PM </td></tr>
-      <tr><td class="timeLine"> 03:15 PM </td></tr>
-      <tr><td class="timeLine"> 03:30 PM </td></tr>
-      <tr><td class="timeLine"> 03:45 PM </td></tr>
-      <tr><td class="timeLine"> 04:00 PM </td></tr>
-      <tr><td class="timeLine"> 04:15 PM </td></tr>
-      <tr><td class="timeLine"> 04:30 PM </td></tr>
-      <tr><td class="timeLine"> 04:45 PM </td></tr>
-      <tr><td class="timeLine"> 05:00 PM </td></tr>
-      <tr><td class="timeLine"> 05:15 PM </td></tr>
-      <tr><td class="timeLine"> 05:30 PM </td></tr>
-      <tr><td class="timeLine"> 05:45 PM </td></tr>
-      <tr><td class="timeLine"> 06:00 PM </td></tr>
-      <tr><td class="timeLine"> 06:15 PM </td></tr>
-      <tr><td class="timeLine"> 06:30 PM </td></tr>
-      <tr><td class="timeLine"> 06:45 PM </td></tr>
-      <tr><td class="timeLine"> 07:00 PM </td></tr>
-      <tr><td class="timeLine"> 07:15 PM </td></tr>
-      <tr><td class="timeLine"> 07:30 PM </td></tr>
-      <tr><td class="timeLine"> 07:45 PM </td></tr>
-      <tr><td class="timeLine"> 08:00 PM </td></tr>
-      <tr><td class="timeLine"> 08:15 PM </td></tr>
-      <tr><td class="timeLine"> 08:30 PM </td></tr>
-      <tr><td class="timeLine"> 08:45 PM </td></tr>
-      <tr><td class="timeLine"> 09:00 PM </td></tr>
-    </table>
-  </div>
-  <div class="right-schedule">
-    <table id="" class="table table-bordered table-condensed table-hover">
-    <!-- 09:00 AM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>      
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <!-- 09:15 AM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    <!-- 09:30 AM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <!-- 09:45 AM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Tuesday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Wednesday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Thursday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Friday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Saturday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Sunday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-    </tr>
-
-    <!-- 10:00 AM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <!-- 10:15 AM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    <!-- 10:30 AM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td class="onClass pre-class class-border" rowspan="4">
-        <div class="level-label ballet-class"></div>
-        <p><b>Ballet</b><br>
-        10:30-11:30<br>
-        (Pre)</p>
-
-      </td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    <!-- 10:45 AM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Tuesday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Wednesday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Thursday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Friday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Saturday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Sunday -->
-      <td class="border-day border-hour2"></td>
-      <!-- <td class="border-hour2"></td> -->
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-    </tr>
-    <!-- 11:00 AM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <!-- <td></td> -->
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <!-- 11:15 AM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="onClass trackA-class class-border" rowspan="4">
-        <div class="level-label ballet-class"></div>
-        <p><b>Ballet</b><br>
-        11:15-12:15<br>
-        (Track A)</p>
-      </td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <!-- <td></td> -->
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    <!-- 11:30 AM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <!-- <td class="border-day"></td> -->
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <!-- 11:45 AM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <!-- Tuesday -->
-      <td class="border-day border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <!-- Wednesday -->
-      <td class="border-day border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <!-- Thursday -->
-      <td class="border-day border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <!-- Friday -->
-      <td class="border-day border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <!-- Saturday -->
-      <!-- <td class="border-hour3 border-hour3"></td> -->
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <!-- Sunday -->
-      <td class="border-day border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-    </tr>
-    <!-- 12:00 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <!-- <td class="border-day"></td> -->
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="onClass trackB-class class-border" rowspan="4">
-        <div class="level-label hiphop-class"></div>
-        <p><b>Hip Hop</b><br>
-        12:00-1:00<br>
-        (Track B)</p>
-      </td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <!-- 12:15 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <!-- <td class="border-day"></td> -->
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    <!-- 12:30 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <!-- <td class="border-day"></td> -->
-      <td></td>
-      <td></td>
-      <td class="onClass trackA-class class-border" rowspan="4">
-        <div class="level-label hiphop-class"></div>
-        <p><b>Hip Hop</b><br>
-        12:30-1:30<br>
-        (Track A)</p>
-      </td>
-      <td></td>
-    </tr>
-    <!-- 12:45 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Tuesday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Wednesday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Thursday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Friday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Saturday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Sunday -->
-      <!-- <td class="border-day border-hour1"></td> -->
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- <td class="border-hour1"></td> -->
-      <td class="border-hour1"></td>
-    </tr>
-    <!-- 01:00 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td class="onClass kids-class class-border" rowspan="6">
-        <div class="level-label stretch-class"></div>
-        <p><b>Stretch / <br> Conditioning</b><br>
-        1:00-2:30<br>
-        (Kids)</p>
-      </td>
-      <td></td>
-      <!-- <td></td> -->
-      <td></td>
-    </tr>
-    <!-- 01:15 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <!-- <td></td> -->
-      <td></td>
-      <!-- <td></td> -->
-      <td></td>
-    </tr>
-
-    <!-- 01:30 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <!-- <td></td> -->
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <!-- 01:45 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Tuesday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Wednesday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Thursday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Friday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Saturday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Sunday -->
-      <td class="border-day border-hour2"></td>
-      <!-- <td class="border-hour2"></td> -->
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-    </tr>
-    <!-- 02:00 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <!-- <td></td> -->
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <!-- 02:15 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <!-- <td></td> -->
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    <!-- 02:30 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <!-- 02:45 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <!-- Tuesday -->
-      <td class="border-day border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <!-- Wednesday -->
-      <td class="border-day border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <!-- Thursday -->
-      <td class="border-day border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <!-- Friday -->
-      <td class="border-day border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <!-- Saturday -->
-      <td class="border-day border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <!-- Sunday -->
-      <td class="border-day border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-    </tr>
-
-    <!-- 03:00 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="onClass trackB-class class-border" rowspan="4">
-        <div class="level-label hiphop-class"></div>
-        <p><b>Hip Hop</b><br>
-        3:00-4:00<br>
-        (Track B)</p>
-      </td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    <!-- 03:15 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <!-- <td class="border-day"></td> -->
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    <!-- 03:30 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <!-- <td class="border-day"></td> -->
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    <!-- 03:45 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Tuesday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Wednesday -->
-      <!-- <td class="border-day border-hour1"></td> -->
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Thursday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Friday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Saturday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Sunday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-    </tr>
-
-    <!-- 04:00 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td class="onClass trackB-class class-border" rowspan="5">
-        <div class="level-label jazz-class"></div>
-        <p><b>Jazz</b><br>
-        4:00-5:15<br>
-        (Track B)</p>
-      </td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td class="onClass pre-class class-border" rowspan="2">
-        <div class="level-label tap-class"></div>
-        <p><b>Tap</b><br>
-        4:00-4:30<br>
-        (Pre)</p>
-      </td>
-      <td class="onClass trackB-class class-border" rowspan="4">
-        <div class="level-label acro-class"></div>
-        <p><b>Acro</b><br>
-        4:00-5:00<br>
-        (Track B)</p>
-      </td>
-      <!-- Wednesday -->
-      <td class="onClass trackA-class class-border" rowspan="4">
-        <div class="level-label hiphop-class"></div>
-        <p><b>Hip Hop</b><br>
-        4:00-5:00<br>
-        (Track A)</p>
-      </td>
-      <td class="onClass trackA-class class-border" rowspan="4">
-        <div class="level-label ballet-class"></div>
-        <p><b>Ballet</b><br>
-        4:00-5:00<br>
-        (Track A)</p>
-      </td>
-      <td></td>
-      <td></td>
-      <td class="onClass trackB-class class-border" rowspan="6">
-        <div class="level-label ballet-class"></div>
-        <p><b>Ballet</b><br>
-        4:00-5:30<br>
-        (Track B)</p>
-      </td>
-      <!-- Thursday -->
-      <td class="onClass trackB-class class-border" rowspan="6">
-        <div class="level-label ballet-class"></div>
-        <p><b>Ballet</b><br>
-        4:00-5:30<br>
-        (Track B)</p>
-      </td>
-      <td class="onClass trackA-class class-border" rowspan="6">
-        <div class="level-label ballet-class"></div>
-        <p><b>Ballet</b><br>
-        4:00-5:30<br>
-        (Track A)</p>
-      </td>
-      <td></td>
-      <td class="onClass trackA-class class-border" rowspan="4">
-        <div class="level-label hiphop-class"></div>
-        <p><b>Hip Hop</b><br>
-        4:00-5:00<br>
-        (Track A)</p>
-      </td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <!-- 04:15 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- <td></td> -->
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <!-- <td></td> -->
-      <!-- <td></td> -->
-      <!-- Wednesday -->
-      <!-- <td class="border-day"></td> -->
-      <!-- <td></td> -->
-      <td></td>
-      <td class="onClass trackA-class class-border" rowspan="3">
-        <div class="level-label tap-class"></div>
-        <p><b>Tap</b><br>
-        4:15-5:00<br>
-        (Track A)</p>
-      </td>
-      <!-- <td></td> -->
-      <!-- Thursday -->
-      <!-- <td class="border-day"></td> -->
-      <!-- <td></td> -->
-      <td></td>
-      <!-- <td></td> -->
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    <!-- 04:30 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- <td></td> -->
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td class="onClass pre-class class-border" rowspan="2">
-        <div class="level-label ballet-class"></div>
-        <p><b>Ballet</b><br>
-        4:30-5:00<br>
-        (Pre)</p>
-      </td>
-      <!-- <td></td> -->
-      <!-- Wednesday -->
-      <!-- <td class="border-day"></td> -->
-      <!-- <td></td> -->
-      <td></td>
-      <!-- <td></td> -->
-      <!-- <td></td> -->
-      <!-- Thursday -->
-      <!-- <td class="border-day"></td> -->
-      <!-- <td></td> -->
-      <td></td>
-      <!-- <td></td> -->
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <!-- 04:45 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- <td class="border-hour2"></td> -->
-      <!-- Tuesday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- <td class="border-hour2"></td> -->
-      <!-- <td class="border-hour2"></td> -->
-      <!-- Wednesday -->
-      <!-- <td class="border-day border-hour2"></td> -->
-      <!-- <td class="border-hour2"></td> -->
-      <td class="border-hour2"></td>
-      <!-- <td class="border-hour2"></td> -->
-      <!-- <td class="border-hour2"></td> -->
-      <!-- Thursday -->
-      <!-- <td class="border-day border-hour2"></td> -->
-      <!-- <td class="border-hour2"></td> -->
-      <td class="border-hour2"></td>
-      <!-- <td class="border-hour2"></td> -->
-      <td class="border-hour2"></td>
-      <!-- Friday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Saturday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Sunday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-    </tr>
-
-    <!-- 05:00 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- <td></td> -->
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td class="onClass trackA-class class-border" rowspan="4">
-        <div class="level-label ballet-class"></div>
-        <p><b>Ballet</b><br>
-        5:00-6:00<br>
-        (Track A)</p>
-      </td>
-      <td class="onClass trackB-class class-border" rowspan="6">
-        <div class="level-label ballet-class"></div>
-        <p><b>Ballet</b><br>
-        5:00-6:30<br>
-        (Track B)</p>
-      </td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td class="onClass trackA-class class-border" rowspan="4">
-        <div class="level-label lyrical-class"></div>
-        <p><b>Lyrical</b><br>
-        5:00-6:00<br>
-        (Track A)</p>
-      </td>
-      <td></td>
-      <td class="onClass trackA-class class-border" rowspan="4">
-        <div class="level-label jazz-class"></div>
-        <p><b>Jazz</b><br>
-        5:00-6:00<br>
-        (Track A)</p>
-      </td>
-      <!-- <td></td> -->
-      <!-- Thursday -->
-      <!-- <td class="border-day"></td> -->
-      <!-- <td></td> -->
-      <td></td>
-      <td></td>
-      <td class="onClass trackA-class class-border" rowspan="4">
-        <div class="level-label acro-class"></div>
-        <p><b>Acro</b><br>
-        5:00-6:00<br>
-        (Track A)</p>
-      </td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    <!-- 05:15 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td class="onClass trackB-class class-border" rowspan="4">
-        <div class="level-label contemporary-class"></div>
-        <p><b>Contemporary</b><br>
-        5:15-6:15<br>
-        (Track B)</p>
-      </td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <!-- <td></td> -->
-      <!-- <td></td> -->
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <!-- <td></td> -->
-      <td></td>
-      <!-- <td></td> -->
-      <!-- <td></td> -->
-      <!-- Thursday -->
-      <!-- <td class="border-day"></td> -->
-      <!-- <td></td> -->
-      <td></td>
-      <td></td>
-      <!-- <td></td> -->
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    <!-- 05:30 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="onClass kids-class class-border" rowspan="4">
-        <div class="level-label hiphop-class"></div>
-        <p><b>Boys Only<br>Hip Hop</b><br>
-        5:30-6:30<br>
-        (Kids)</p>
-      </td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- <td></td> -->
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <!-- <td></td> -->
-      <!-- <td></td> -->
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <!-- <td></td> -->
-      <td></td>
-      <!-- <td></td> -->
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td class="onClass trackA-class class-border" rowspan="6">
-        <div class="level-label contemporary-class"></div>
-        <p><b>Contemporary</b><br>
-        5:30-7:00<br>
-        (Track A)</p>
-      </td>
-      <td></td>
-      <td></td>
-      <!-- <td></td> -->
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>      
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <!-- 05:45 PM -->
-    <tr>
-      <!-- Monday -->
-      <!-- <td class="border-day border-hour3"></td> -->
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <!-- <td class="border-hour3"></td> -->
-      <!-- Tuesday -->
-      <td class="border-day border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <!-- <td class="border-hour3"></td> -->
-      <!-- <td class="border-hour3"></td> -->
-      <!-- Wednesday -->
-      <td class="border-day border-hour3"></td>
-      <!-- <td class="border-hour3"></td> -->
-      <td class="border-hour3"></td>
-      <!-- <td class="border-hour3"></td> -->
-      <td class="border-hour3"></td>
-      <!-- Thursday -->
-      <td class="border-day border-hour3"></td>
-      <!-- <td class="border-hour3"></td> -->
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <!-- <td class="border-hour3"></td> -->
-      <!-- Friday -->
-      <td class="border-day border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <!-- Saturday -->
-      <td class="border-day border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <!-- Sunday -->
-      <td class="border-day border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-      <td class="border-hour3"></td>
-    </tr>
-    
-    <!-- 06:00 PM -->
-    <tr>
-      <!-- Monday -->
-      <!-- <td class="border-day"></td> -->
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- <td></td> -->
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- <td></td> -->
-      <!-- Wednesday -->
-      <td class="border-day"></td><!-- <td class="onClass trackA-class class-border" rowspan="4">
-        <div class="level-label hiphop-class"></div>
-        <p><b>Hip Hop</b><br>
-        6:00-7:00<br>
-        (Track A)</p>
-      </td> -->
-      <td></td>
-      <td class="onClass kids-class class-border" rowspan="6">
-        <div class="level-label stretch-class"></div>
-        <p><b>Stretch / <br> Conditioning</b><br>
-        6:00-7:30<br>
-        (Kids)</p>
-      </td>
-      <td class="onClass trackA-class class-border" rowspan="6">
-        <div class="level-label ballet-class"></div>
-        <p><b>Ballet</b><br>
-        6:00-7:30<br>
-        (Track A)</p>
-      </td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <!-- <td></td> -->
-      <td class="onClass trackB-class class-border" rowspan="4">
-        <div class="level-label hiphop-class"></div>
-        <p><b>Hip Hop</b><br>
-        6:00-7:00<br>
-        (Track B)</p>
-      </td>
-      <td class="onClass trackA-class class-border" rowspan="3">
-        <div class="level-label contemporary-class"></div>
-        <p><b>Contemporary</b><br>
-        6:00-6:45<br>
-        (Track A)</p>
-      </td>
-      <td class="onClass trackB-class class-border" rowspan="4">
-        <div class="level-label jazz-class"></div>
-        <p><b>Jazz</b><br>
-        6:00-7:00<br>
-        (Track B)</p>
-      </td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    <!-- 06:15 PM -->
-    <tr>
-      <!-- Monday -->
-      <!-- <td class="border-day"></td> -->
-      <td class="onClass trackA-class class-border" rowspan="4">
-        <div class="level-label jazz-class"></div>
-        <p><b>Jazz</b><br>
-        6:15-7:15<br>
-        (Track A)</p>
-      </td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- <td></td> -->
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <!-- <td></td> -->
-      <!-- <td></td> -->
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <!-- <td></td> -->
-      <!-- <td></td> -->
-      <!-- <td></td> -->
-      <!-- <td></td> -->
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    <!-- 06:30 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <!-- <td></td> -->
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td><!-- <td class="onClass pre-class class-border" rowspan="2">
-        <div class="level-label pointe-class"></div>
-        <p><b>Pre Pointe</b><br>
-        6:30-7:00</p>
-      </td> -->
-      <td></td>
-      <td></td>
-      <td class="onClass trackB-class class-border" rowspan="4">
-        <div class="level-label lyrical-class"></div>
-        <p><b>Lyrical</b><br>
-        6:30-7:30<br>
-        (Track B)</p>
-      </td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <!-- <td></td> -->
-      <!-- <td></td> -->
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <!-- <td></td> -->
-      <!-- <td></td> -->
-      <!-- <td></td> -->
-      <!-- <td></td> -->
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    
-    <!-- 06:45 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day border-hour1"></td>
-      <!-- <td class="border-hour1"></td> -->
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Tuesday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- <td class="border-hour1"></td> -->
-      <td class="border-hour1"></td>
-      <!-- Wednesday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- <td class="border-hour1"></td> -->
-      <!-- <td class="border-hour1"></td> -->
-      <td class="border-hour1"></td>
-      <!-- Thursday -->
-      <td class="border-day border-hour1"></td>
-      <!-- <td class="border-hour1"></td> -->
-      <!-- <td class="border-hour1"></td> -->
-      <td class="border-hour1"></td>
-      <!-- <td class="border-hour1"></td> -->
-      <!-- Friday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Saturday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <!-- Sunday -->
-      <td class="border-day border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-      <td class="border-hour1"></td>
-    </tr>
-
-    <!-- 07:00 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <!-- <td></td> -->
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <!-- <td></td> -->
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <!-- <td></td> -->
-      <!-- <td></td> -->
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td><!-- <td class="onClass trackB-class class-border" rowspan="4">
-        <div class="level-label acro-class"></div>
-        <p><b>Acro</b><br>
-        7:00-8:00<br>
-        (Track B)</p>
-      </td> -->
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <!-- 07:15 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <!-- <td></td> -->
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <!-- <td></td> -->
-      <!-- <td></td> -->
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    <!-- 07:30 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td class="onClass trackA-class class-border" rowspan="6">
-        <div class="level-label contemporary-class"></div>
-        <p><b>Contemporary</b><br>
-        7:30-9:00<br>
-        (Track A)</p>
-      </td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    
-    <!-- 07:45 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Tuesday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Wednesday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- <td class="border-hour2"></td> -->
-      <td class="border-hour2"></td>
-      <!-- Thursday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Friday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Saturday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <!-- Sunday -->
-      <td class="border-day border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-      <td class="border-hour2"></td>
-    </tr>
-
-    <!-- 08:00 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <!-- <td></td> -->
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    <!-- 08:15 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <!-- <td></td> -->
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    <!-- 08:30 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <!-- <td></td> -->
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    
-    <!-- 08:45 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <!-- <td></td> -->
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    <!-- 09:00 PM -->
-    <tr>
-      <!-- Monday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Tuesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Wednesday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Thursday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Friday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Saturday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <!-- Sunday -->
-      <td class="border-day"></td>
-      <td></td>
-      <td></td>
-      <td colspan="2" style="text-align: right;"><i>Last updated: 12/23/2016</i></td>
-      <!-- <td></td> -->
-    </tr>
-    </table>
-  </div>
-</div>
-<!-- jQuery: Set the fixed row and column on the browser -->
-<script src="js/fixed_Menus.js"></script>
-
-<!-- jQuery: Show/Hide selected classes or levels -->
-<script src="js/showHideSchedule.js"></script>
-
 </body>
+
 </html>
