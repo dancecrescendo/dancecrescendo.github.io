@@ -1,0 +1,225 @@
+#top_tbl,
+#left-timeLine,
+#studentScheduleContainer table {
+  font-size: 1.2rem;
+  text-align: center;
+  border-collapse: collapse;
+  /*white-space: nowrap;*/
+  /* Does not affect, since the width was fixed */
+}
+
+#studentScheduleContainer th {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#studentScheduleContainer th,
+#studentScheduleContainer td {
+  white-space: nowrap;
+  vertical-align: middle !important;
+  /*padding: 1px;*/
+  max-width: 100px;
+  min-width: 100px;
+}
+
+#studentScheduleContainer tr,
+#studentScheduleContainer th,
+#studentScheduleContainer td {
+  height: 32px !important;
+  min-height: 32px !important;
+}
+
+#studentScheduleContainer.container {
+  width: 100%;
+  padding: 0;
+}
+
+.timeLine {
+  min-width: 70px !important;
+  max-width: 70px !important;
+  background-color: white;
+}
+
+.head-topLeft {
+  background: white;
+  position: fixed;
+  left: 0;
+  min-width: 71px !important;
+  max-width: 71px !important;
+}
+
+.header-days {
+  position: fixed;
+  margin-left: 69px;
+  z-index: 4;
+}
+
+.left-timeLine {
+  top: 61px;
+  /* You should also change the 'marginTop' in jQuery, if you change this parameter*/
+  position: fixed;
+  z-index: 3;
+}
+
+.right-schedule {
+  /*background: white;*/
+  margin-top: 60px;
+  margin-left: 70px;
+}
+
+#row-days {
+  background-color: rgba(22, 22, 22, 1);
+  color: #D4AF37;
+}
+
+#row-studio {
+  background-color: white;
+}
+
+
+/* The label represents the level of class*/
+
+.level-label {
+  position: relative;
+  float: right;
+  /*right: -2px;*/
+  top: -5px;
+  height: 15px;
+  width: 15px;
+  border: 1px solid gray;
+}
+
+.level-label:hover {
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+}
+
+
+/* Alert Bar CSS */
+
+.alert {
+  text-align: center;
+  position: fixed;
+  width: 100%;
+  margin-bottom: 0;
+  opacity: 0.98;
+  z-index: 5;
+}
+
+.close {
+  /*color: black !important;*/
+  opacity: 0.5;
+}
+
+.onClass>p {
+  color: black;
+  margin: 0;
+}
+
+
+/* Level distributions of classes*/
+
+.pre-class {
+  background-color: #ff9ccb;
+}
+
+.normal-class {
+  background-color: lightgray;
+}
+
+.kids-class {
+  background-color: #9cfe95;
+}
+
+.trackA-class {
+  background-color: #85ebff;
+}
+
+.trackB-class {
+  background-color: #fffba2;
+}
+
+
+/* Color distributions of classes*/
+
+.jazz-class {
+  background-color: #c1987c;
+}
+
+.streetJazz-class {
+  background-color: #ffb400;
+}
+
+.ballet-class {
+  background-color: #8AC0F8;
+}
+
+.balletCo-class {
+  background-color: #d8d6d7;
+}
+
+.hiphop-class {
+  background-color: #d1ffad;
+}
+
+.tap-class {
+  background-color: red;
+}
+
+.contemporary-class {
+  background-color: #98F4B6;
+}
+
+.acro-class {
+  background-color: #FF8484;
+}
+
+.danceWithMe-class {
+  background-color: #ffa8c7;
+}
+
+.stretch-class {
+  background-color: #E1D34F;
+}
+
+.pointe-class {
+  background-color: #C895F8;
+}
+
+.lyrical-class {
+  background-color: #ffffff;
+}
+
+.rehearsal {
+  background-color: #fff2a6;
+}
+
+.border-day {
+  border-left: 3px double gray !important;
+}
+
+.border-hour {
+  border-bottom: 2px dashed gray !important;
+}
+
+.border-hour2 {
+  border-bottom: 2px dashed gray !important;
+}
+
+.border-hour3 {
+  border-bottom: 2px dashed gray !important;
+}
+
+.class-border {
+  border: 2px solid black !important;
+}
+
+.table-hover tbody tr td:hover {
+  color: inherit;
+  -webkit-filter: drop-shadow(5px 5px 3px gray);
+  /*filter:invert(100%);*/
+}
+
+.table-hover tbody tr:hover {
+  background: lightgray;
+}
