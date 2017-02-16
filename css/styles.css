@@ -120,11 +120,11 @@
 /* Level distributions of classes*/
 
 .pre-class {
-  background-color: #ff9ccb;
+  background-color: #ff9cfd;
 }
 
 .normal-class {
-  background-color: lightgray;
+  background-color: #ff9393;
 }
 
 .kids-class {
