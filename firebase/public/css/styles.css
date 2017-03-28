@@ -1,0 +1,295 @@
+body {
+  font-size: 14px;
+}
+
+.input-row {
+  text-align: left;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+textarea.form-control {
+  resize: none;
+  height: 54px;
+}
+
+.display-flex {
+  display: flex;
+}
+
+label {
+  /*width: 6em;*/
+  opacity: 0.5;
+  font-size: .8em;
+}
+
+#input-label {
+  /* A color label input */
+  height: 54px;
+}
+
+
+/* home */
+
+header#home {
+  position: relative;
+  height: 300px;
+  /*background-image: linear-gradient(#ff9d2f, #ff6126);*/
+  background-image: linear-gradient(#33e3d4, #a4fff8);
+  border-bottom-left-radius: 50% 20%;
+  border-bottom-right-radius: 50% 20%;
+}
+
+header#home h1 {
+  margin: 0;
+  padding: 50px 0 25px;
+  font: 44px "Arial";
+  text-align: center;
+  color: white;
+  text-shadow: 1px 1px 1px gray;
+}
+
+header#home button.btn {
+  /* Default font-size is 14px */
+  font-size: 12px;
+}
+
+section#home-section {
+  padding-top: 50px;
+  text-align: center;
+  border-bottom-left-radius: 50% 20%;
+  border-bottom-right-radius: 50% 20%;
+}
+
+
+/* Init */
+
+.loader {
+  /* Loading div box */
+  border: 16px solid #f3f3f3;
+  /* Light grey */
+  border-top: 16px solid #3498db;
+  /* Blue */
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  animation: spin 2s linear infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+@keyframes spin {
+  /* Loading animation */
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* Display */
+
+#display-box .navbar-brand,
+#setting-box .navbar-brand {
+  background-image: url(../../img/logo_black.png);
+  /* Navbar logo */
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-right: 0;
+  width: 125px;
+}
+
+#display-body,
+#setting-body {
+  padding-top: 70px;
+}
+
+.overFlowHidden {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bottom-space {
+  margin-bottom: 8rem;
+}
+
+.grid-vertical-center {
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+#sub-menu ul.dropdown-menu {
+  /* Re-locate dropdown menu postion */
+  left: auto;
+  right: 15px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+
+/* Add Modal */
+
+.display-label.form-control[disabled] {
+  cursor: auto;
+}
+
+.display-label[disabled] {
+  background-color: white;
+}
+
+.display-label-main {
+  padding: 1px 2px;
+  height: 30px;
+  width: 5rem;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: initial;
+}
+
+
+/* Setting */
+
+#setting-body .panel-group .row {
+  margin-bottom: 10px;
+}
+
+#setting-body .panel-group .panel-title a {
+  text-decoration: none;
+}
+
+#setModal-box .input-group-btn:last-child>.btn {
+  height: 34px;
+}
+
+#setModal-box #set-modal .modal-body .label-colorBox {
+  padding: 1px;
+  width: 32px;
+}
+
+#setting-body .panel-heading .badge,
+.badge {
+  background-color: darkblue;
+}
+
+#setting-body .panel-collapse .list-indent {
+  /* Indentation for text in collapsed list */
+  padding-left: 4rem;
+}
+
+#setting-body .panel-heading>.panel-title span.panel-title-input {
+  vertical-align: middle;
+}
+
+
+/* Arrow for setting list */
+
+#setting-body .panel-heading .panel-title>a:before {
+  font-family: 'Glyphicons Halflings';
+  /* ▽ */
+  content: "\e259";
+  font-size: 16px;
+  vertical-align: middle;
+  color: lightgray;
+}
+
+#setting-body .panel-heading .panel-title>a.collapsed:before {
+  font-family: 'Glyphicons Halflings';
+  /* ▷ */
+  content: "\e258";
+  font-size: 16px;
+  vertical-align: middle;
+  color: lightgray;
+}
+
+#setting-body .panel-heading .panel-title>a:hover:before,
+#setting-body .panel-heading .panel-title>a.collapsed:hover:before {
+  /* When hovered */
+  color: black;
+  text-shadow: 1px 1px 1px lightgray;
+}
+
+#setModal-box #set-modal .modal-body span.add-setting-element {
+  /* + in setting modal */
+  cursor: cell;
+  margin-top: 1rem;
+  opacity: .9;
+}
+
+#setModal-box #set-modal .modal-body span.add-setting-element:hover {
+  text-shadow: 2px 2px 2px lightgray;
+}
+
+
+/* General */
+
+
+/* Set for class name */
+
+.text-pre-line {
+  white-space: pre-line;
+}
+
+
+/* Control btns: modify, remove*/
+
+.ctrlBtnGroup>a {
+  color: lightgray;
+}
+
+
+/* Modify button */
+
+#setting-box .ctrlBtnGroup>a:nth-child(1):hover,
+#display-box .ctrlBtnGroup>a:nth-child(1):hover {
+  color: gray;
+}
+
+
+/* Remove button */
+
+#display-box .ctrlBtnGroup>a:nth-child(2):hover {
+  color: red;
+}
+
+#setModal-box .modal-body .input-group-btn .rm-btn:hover {
+  background: red;
+  opacity: 0.8;
+}
+
+
+/* Float btn for adding new class */
+
+.float-btn {
+  border-radius: 50%;
+  padding: 12px;
+  opacity: 0.9;
+  width: 5rem;
+  height: 5rem;
+  top: calc(100% - 7rem);
+  left: calc(100% - 7rem);
+  z-index: 10;
+  position: fixed;
+}
+
+/*.float-btn:hover,
+.float-btn:focus {
+  border-radius: 50%;*/
+}
+
+.float-btn>.glyphicon {
+  top: 0;
+}

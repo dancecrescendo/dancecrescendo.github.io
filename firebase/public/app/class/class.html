@@ -1,0 +1,290 @@
+<div id="display-box">
+  <div class="navbar navbar-default navbar-fixed-top" ng-controller="NavCtrl">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#crescendoNavbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+        <a class="navbar-brand" href="https://www.crescendodanceacademy.com/" title="Go to Crescendo Homepage"></a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="crescendoNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="active text-center"><a href="/class">Class</a></li>
+          <li class="text-center"><a href="/setting">Setting</a></li>
+          <li class="dropdown text-center">
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sign Out <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li ng-click="signOutFromApp()" class="cursor-pointer text-center">Sign Out - Manager</li>
+              <li role="separator" class="divider"></li>
+              <li ng-click="logOutFromGoogle()" class="cursor-pointer text-center">Log Out - Google</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ClassCtrl: Displaying current classes -->
+  <div ng-controller="ClassCtrl" ng-init="load()">
+    <!-- Loading Status -->
+    <div class="loader" ng-if="!loadSuccess"></div>
+
+    <!-- display-body Begin -->
+    <div id="display-body" ng-if="loadSuccess">
+      <!-- New Class btn -->
+      <button type="button" class="btn btn-info float-btn" data-toggle="modal" data-target="#add-modal" ng-click="initNewClass()">
+              <span class="glyphicon glyphicon-plus" title="New Class" aria-hidden="true"></span>
+            </button>
+      <div class="container">
+        <div class="row" id="sub-menu">
+          <div class="col-xs-5 col-sm-6 col-sm-offset-1 text-left">
+            <h2>Schedules</h2>
+          </div>
+          <div class="col-xs-7 col-sm-4 text-right" style="margin-top: 20px; margin-bottom: 10px;">
+
+            <!-- DropDown Menu: filter -->
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a ng-click="filterHandler('latest')" class="cursor-pointer">Latest</a></li>
+              <li><a ng-click="filterHandler('day')" class="cursor-pointer">Days</a></li>
+              <li><a ng-click="filterHandler('type')" class="cursor-pointer">Class Type</a></li>
+              <li><a ng-click="filterHandler('level')" class="cursor-pointer">Class Level</a></li>
+              <li><a ng-click="filterHandler('studio')" class="cursor-pointer">Studio</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter by days or types -->
+      <div class="container bottom-space" ng-if="filter">
+        <!-- Filter by days -->
+        <ul class="list-group" ng-repeat="(sort, data) in displayingSortedClass">
+          <li class="list-group-item list-group-item-warning col-xs-12" style="margin-top: 2rem;">
+            <strong><span ng-if="studioFilter">Studio </span>{{sort}}</strong>
+            <span class="badge">{{data.length}}</span>
+          </li>
+
+          <li id="{{info.$id}}" class="list-group-item col-xs-12 col-sm-6" ng-repeat="info in data">
+            <div class="row">
+              <div class="col-xs-3 text-center">
+                <input ng-model="info.label" class="form-control display-label display-label-main" type="color" name="label" disabled/>
+              </div>
+              <div class="col-xs-5 grid-vertical-center">
+                <strong class="text-pre-line">{{ info.name }}</strong>
+              </div>
+              <div class="col-xs-4 text-right ctrlBtnGroup">
+                <a href="" data-toggle="modal" data-target="#add-modal" ng-click="initModify(this.info)"><span class="glyphicon glyphicon-pencil" title="Modify" aria-hidden="true"></span></a>
+                <a href="" ng-click="removeClass(this.info.$id)"><span class="glyphicon glyphicon-remove" title="Remove" aria-hidden="true"></span></a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-3 text-center overFlowHidden">
+                {{info.type}}
+              </div>
+              <div class="col-xs-9">
+                {{info.day + ", " +getTime(info.hour, info.min, info.ampm, info.duration)}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-3 text-center overFlowHidden">
+                {{info.level}}
+              </div>
+              <div class="col-xs-9">
+                {{"Studio " + info.studio }}
+              </div>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+
+
+      <!-- Filter by latest adding -->
+      <div class="container bottom-space" ng-if="!filter">
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-warning col-xs-12" style="margin-top: 2rem;">
+            <strong>Crescendo Classes</strong>
+            <span class="badge">{{latest.length}}</span>
+          </li>
+
+          <li id="{{info.$id}}" class="list-group-item col-xs-12 col-sm-6" ng-repeat="info in latest track by $index">
+            <div class="row">
+              <div class="col-xs-3 text-center">
+                <input ng-model="info.label" class="form-control display-label display-label-main" type="color" name="label" disabled/>
+              </div>
+              <div class="col-xs-5 grid-vertical-center">
+                <strong class="text-pre-line">{{ info.name }}</strong>
+              </div>
+              <div class="col-xs-4 text-right ctrlBtnGroup">
+                <a href="" data-toggle="modal" data-target="#add-modal" ng-click="initModify(this.info)"><span class="glyphicon glyphicon-pencil" title="Modify" aria-hidden="true"></span></a>
+                <a href="" ng-click="removeClass(this.info.$id)"><span class="glyphicon glyphicon-remove" title="Remove" aria-hidden="true"></span></a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-3 text-center overFlowHidden">
+                {{info.type}}
+              </div>
+              <div class="col-xs-9">
+                {{info.day + ", " +getTime(info.hour, info.min, info.ampm, info.duration)}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-3 text-center overFlowHidden">
+                {{info.level}}
+              </div>
+              <div class="col-xs-9">
+                {{"Studio " + info.studio }}
+              </div>
+            </div>
+          </li>
+        </ul>
+        <!-- list-group-item End -->
+        <!-- list-group End -->
+      </div>
+      <!-- container End -->
+    </div>
+
+    <div id="addModal-box">
+      <div class="container">
+        <div id="add-modal" class="modal fade" role="dialog" aria-labelledby="add-modal-label">
+          <div class="modal-dialog" role="documnet">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="add-modal-label" ng-if="!update">New Class</h4>
+                <h4 class="modal-title" id="add-modal-label" ng-if="update">Modify Class</h4>
+              </div>
+              <!-- modal-header End -->
+              
+              <!-- Form -->
+              <form id="input-form" name="classForm" class="" ng-submit="submitClass()" novalidate>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="control-label col-xs-2 col-xs-offset-1" for="input-label">Label</label>
+                      <label class="control-label col-xs-8" for="input-name">Class Name</label>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-2 col-xs-offset-1">
+                        <input ng-model="info.label" ng-init="info.label='#ffffff'" class="form-control display-label" type="color" name="label"
+                          id="input-label" disabled/>
+                      </div>
+                      <!--<div class="col-xs-8" ng-class="{'has-error': classForm.name.$invalid && classForm.name.$dirty}">-->
+                      <div class="col-xs-8" ng-class="">
+                        <textarea ng-model="info.name" ng-keydown="nameCtrl($event)" class="form-control " name="name" id="input-name" rows="2" placeholder="Max: 12 columns by 2 rows"
+                          required></textarea>
+                      </div>
+                    </div>
+                    <!--<div class="alert alert-success align-center" ng-show="classForm.name.$error.maxlength">error</div>-->
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="control-label col-xs-5 col-xs-offset-1" for="input-type">Type</label>
+                      <label class="control-label col-xs-5" for="input-level">Level</label>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-5 col-xs-offset-1">
+                        <select ng-model="info.type" class="form-control " name="type" id="input-type" ng-change="setTypeColor(info.type)" required>
+                      <option value="" disabled selected></option>
+                      <option value="{{data}}" ng-repeat="data in set.type">{{data}}</option>
+                    </select>
+                      </div>
+                      <div class="col-xs-5">
+                        <select ng-model="info.level" class="form-control " name="level" id="input-level" required>
+                      <option value="" disabled selected></option>
+                      <option value="{{data}}" ng-repeat="data in set.level">{{data}}</option>
+                    </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="control-label col-xs-4 col-xs-offset-1" for="input-day">Day</label>
+                      <label class="control-label col-xs-4" for="input-duration">Duration</label>
+                      <label class="control-label col-xs-2" for="input-studio">Studio</label>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-4 col-xs-offset-1">
+                        <select ng-model="info.day" class="form-control " name="day" id="input-day" required>
+                      <option value="" disabled selected></option>
+                      <option value="{{data}}" ng-repeat="data in set.day">{{data}}</option>
+                    </select>
+                      </div>
+                      <div class="col-xs-4">
+                        <select ng-model="info.duration" class="form-control " name="duration" id="input-duration" required>
+                      <option value="" disabled selected></option>
+                      <option value="{{data}}" ng-repeat="data in set.duration">{{data}} minutes</option>
+                    </select>
+                      </div>
+                      <div class="col-xs-2">
+                        <select ng-model="info.studio" class="form-control" name="studio" id="input-studio" required>
+                      <option value="" disabled selected></option>
+                      <option value="{{data}}" ng-repeat="data in set.studio">{{data}}</option>
+                    </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="control-label col-xs-4 col-xs-offset-1" for="input-hour">Begin Hour</label>
+                      <label class="control-label col-xs-4" for="input-min">Minutes</label>
+                      <label class="control-label col-xs-2" for="input-ampm">AM/PM</label>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-4 col-xs-offset-1">
+                        <select ng-model="info.hour" class="form-control " name="hour" id="input-hour" required>
+                      <option value="" disabled selected></option>
+                      <option value="{{data}}" ng-repeat="data in hours">{{data}}</option>
+                    </select>
+                      </div>
+                      <div class="col-xs-4">
+                        <select ng-model="info.min" class="form-control " name="min" id="input-min" required>
+                      <option value="" disabled selected></option>
+                      <option value="{{data}}" ng-repeat="data in mins">{{data}}</option>
+                    </select>
+                      </div>
+                      <div class="col-xs-2">
+                        <select ng-model="info.ampm" class="form-control " name="ampm" id="input-ampm" required>
+                      <option value="" disabled selected></option>
+                      <option value="{{data}}" ng-repeat="data in ampm">{{data}}</option>
+
+                    </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- modal-body End -->
+
+                <div class="modal-footer">
+                  <div class="form-group">
+                    <div class="col-xs-6 text-left">
+                      <button id="close-modal" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button id="clear-modal" type="button" class="btn btn-secondary" ng-click="resetForm()">Clear</button>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                      <button type="submit" class="btn btn-primary" ng-disabled="classForm.$invalid" ng-if="!update">Save changes</button>
+                      <button type="submit" class="btn btn-primary" ng-disabled="classForm.$invalid" ng-if="update">Update changes</button>
+                    </div>
+                  </div>
+                </div>
+                <!-- modal-footer End -->
+              </form>
+              <!-- input-form End -->
+            </div>
+            <!-- modal-content End -->
+          </div>
+          <!-- modal-dialog End -->
+        </div>
+        <!-- add-modal End -->
+      </div>
+    </div>
+    <!-- addModal-box End -->
+  </div>
+</div>
+<!-- display-box End -->

@@ -1,3 +1,29 @@
+/* index */
+
+header.home {
+  position: relative;
+  height: 300px;
+  /*background-image: linear-gradient(#ff9d2f, #ff6126);*/
+  background-image: linear-gradient(#33e3d4, #a4fff8);
+  border-bottom-left-radius: 50% 20%;
+  border-bottom-right-radius: 50% 20%;
+}
+
+header.home>h1 {
+  margin: 0;
+  padding: 100px 0;
+  font: 44px "Arial";
+  text-align: center;
+  color: white;
+}
+
+section.home {
+  padding-top: 50px;
+  text-align: center;
+  border-bottom-left-radius: 50% 20%;
+  border-bottom-right-radius: 50% 20%;
+}
+
 #top_tbl,
 #left-timeLine,
 #studentScheduleContainer table {
@@ -48,20 +74,20 @@
   max-width: 71px !important;
 }
 
-.header-days {
+#header-days {
   position: fixed;
   margin-left: 69px;
   z-index: 4;
 }
 
-.left-timeLine {
+#left-timeLine {
   top: 61px;
   /* You should also change the 'marginTop' in jQuery, if you change this parameter*/
   position: fixed;
   z-index: 3;
 }
 
-.right-schedule {
+#right-schedule {
   /*background: white;*/
   margin-top: 60px;
   margin-left: 70px;
@@ -76,6 +102,11 @@
   background-color: white;
 }
 
+.className-label>b {
+  /* It makes the title as two line when user input \n */
+  white-space: pre-line;
+}
+
 
 /* The label represents the level of class*/
 
@@ -87,13 +118,49 @@
   height: 15px;
   width: 15px;
   border: 1px solid gray;
+  cursor: pointer;
+  z-index: 1;
 }
-
+.onClass>p:hover,
 .level-label:hover {
-  -webkit-transform: scale(1.2);
-  transform: scale(1.2);
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
 }
 
+.level-label:after,
+.onClass>p:after {
+  font-size: 15px;
+  padding: 2px;
+  display: none;
+  position: absolute;
+  text-align: center;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -ms-border-radius: 2px;
+}
+
+.level-label:after{
+  content: "Filtering by Class";
+  width: 120px;  
+  top: -23px;
+  right: -8px;
+  background-color: #afe1ec;
+  border: 1px solid #6a77d8;
+}
+
+.onClass>p:after {
+  content: "Filtering by Level";
+  width: 120px;
+  left: -16px;
+  background-color: #fef4c5;
+  border: 1px solid #d4b943;
+}
+
+.level-label:hover:after,
+.onClass>p:hover:after {
+  display: block;
+}
 
 /* Alert Bar CSS */
 
@@ -114,84 +181,7 @@
 .onClass>p {
   color: black;
   margin: 0;
-}
-
-
-/* Level distributions of classes*/
-
-.pre-class {
-  background-color: #ff9cfd;
-}
-
-.normal-class {
-  background-color: #ff9393;
-}
-
-.kids-class {
-  background-color: #9cfe95;
-}
-
-.trackA-class {
-  background-color: #85ebff;
-}
-
-.trackB-class {
-  background-color: #fffba2;
-}
-
-
-/* Color distributions of classes*/
-
-.jazz-class {
-  background-color: #c1987c;
-}
-
-.streetJazz-class {
-  background-color: #ffb400;
-}
-
-.ballet-class {
-  background-color: #8AC0F8;
-}
-
-.balletCo-class {
-  background-color: #d8d6d7;
-}
-
-.hiphop-class {
-  background-color: #d1ffad;
-}
-
-.tap-class {
-  background-color: red;
-}
-
-.contemporary-class {
-  background-color: #98F4B6;
-}
-
-.acro-class {
-  background-color: #FF8484;
-}
-
-.danceWithMe-class {
-  background-color: #ffa8c7;
-}
-
-.stretch-class {
-  background-color: #E1D34F;
-}
-
-.pointe-class {
-  background-color: #C895F8;
-}
-
-.lyrical-class {
-  background-color: #ffffff;
-}
-
-.rehearsal {
-  background-color: #fff2a6;
+  cursor: pointer;
 }
 
 .border-day {
@@ -199,14 +189,6 @@
 }
 
 .border-hour {
-  border-bottom: 2px dashed gray !important;
-}
-
-.border-hour2 {
-  border-bottom: 2px dashed gray !important;
-}
-
-.border-hour3 {
   border-bottom: 2px dashed gray !important;
 }
 

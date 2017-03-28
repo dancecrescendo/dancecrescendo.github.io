@@ -1,39 +1,41 @@
   const classSorts = [
-      // ClassLevels
-      "pre",
-      "kids",
-      "normal",
-      "trackA",
-      "trackB",
+    // ClassLevels
+    "pre",
+    "kids",
+    "normal",
+    "tracka",
+    "trackb",
 
-      // ClassNames
-      "ballet",
-      "jazz",
-      "tap",
-      "contemporary",
-      "lyrical",
-      "hiphop",
-      "stretch",
-      "acro"
-    ],
-    num_Level = 5, //Number of levels
-    num_Class = classSorts.length - num_Level; //Number of Class sorts
+    // ClassNames
+    "ballet",
+    "jazz",
+    "tap",
+    "contemporary",
+    "lyrical",
+    "hiphop",
+    "stretch",
+    "acro",
+    "rehearsal"
+  ];
+  const num_Level = 5; //Number of levels
+  const num_Class = classSorts.length - num_Level; //Number of Class sorts
 
   // Global Variable: Containes object of all sort of classes
-  var classObjects = [],
-    executedClass_Name, executedClass_Key, executedClass_Base;
+  var classObjects = [];
+  var executedClass_Name;
+  var executedClass_Key;
+  var executedClass_Base;
 
   // Adding sort of classe objects into array
   function set_ClassObjects() {
     classSorts.forEach(function (element) {
       classObjects.push({
         name: `.${element}-class`,
-        // bgColor: "",
         flag: false
       });
     });
   }
-  
+
   // Get the index of object array contains className
   function get_IdxinObjectArray(className) {
     return classObjects.findIndex(obj => obj.name === `.${className}`);
@@ -42,8 +44,8 @@
 
   // Opacity Controller
   function set_Opacity(event) {
-    const target = event.target, //For label of each class sorts
-      currentTarget = event.currentTarget; // For the level of each class
+    const target = event.target; //For label of each class sorts
+    const currentTarget = event.currentTarget; // For the level of each class
 
     let selected, baseClass, key_Object, classes;
 
@@ -113,7 +115,9 @@
 
   // Controller
   $(document).ready(function () {
-    $('.onClass').click(function (event) {
+    $(document).on('click', '.onClass', function (event){
       set_Opacity(event);
     });
   })
+
+  

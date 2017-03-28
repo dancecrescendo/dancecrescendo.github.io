@@ -1,0 +1,14 @@
+{
+  "rules": {
+    "class": {
+	    ".read": true,
+  	  ".write": "auth != null",
+      ".indexOn": ["day","dayIdx","type"]
+    },
+    "setting":{
+      ".read": true,
+      ".write": "auth != null",
+      ".indexOn": ["auth"]
+    }
+  }
+}

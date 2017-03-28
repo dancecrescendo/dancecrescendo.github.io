@@ -13,11 +13,11 @@ $(document).ready(function(){
     
     if(prevLeft !== currentLeft) {
       prevLeft = currentLeft;
-      $('.header-days').css({'left': -$(this).scrollLeft()})
+      $('#header-days').css({'left': -$(this).scrollLeft()})
     }
     if(prevTop !== currentTop) {
       prevTop = currentTop;
-      $('.left-timeLine').css({'top': -$(this).scrollTop() + marginTop})
+      $('#left-timeLine').css({'top': -$(this).scrollTop() + marginTop})
     }
   });
 })

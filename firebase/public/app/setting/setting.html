@@ -1,0 +1,251 @@
+<div id="setting-box">
+  <div class="navbar navbar-default navbar-fixed-top" ng-controller="NavCtrl">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#crescendoNavbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+        <a class="navbar-brand" href="https://www.crescendodanceacademy.com/"></a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="crescendoNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="text-center"><a href="/class">Class</a></li>
+          <li class="active text-center"><a href="/setting">Setting</a></li>
+          <li class="dropdown text-center">
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sign Out <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li ng-click="signOutFromApp()" class="cursor-pointer text-center">Sign Out - Manager</li>
+              <li role="separator" class="divider"></li>
+              <li ng-click="logOutFromGoogle()" class="cursor-pointer text-center">Log Out - Google</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div ng-controller="SettingCtrl" ng-init="load()">
+    <!-- Loading Status -->
+    <div class="loader" ng-if="!loadSuccess"></div>
+
+    <!-- setting-body Begin -->
+    <div id="setting-body" ng-if="loadSuccess">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+            <h2>Setting</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="container" style="margin-top: 2rem;">
+        <div class="row">
+          <div class="col-xs-12 col-sm-offset-1 col-sm-10">
+            <div class="panel-group">
+              <div class="row">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a class="collapsed" data-toggle="collapse" href="#auth-list" target="_self">
+                        <span class="panel-title-input">Authorized Users</span>
+                        <span class="badge">{{objects.auth.array.length}}</span>
+                      </a>
+                      <span class="pull-right ctrlBtnGroup">
+                  <a ng-click="modalInit(objects.auth)">
+                    <span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#set-modal" title="Modify" aria-hidden="true"></span>
+                      </a>
+                      </span>
+                    </h4>
+                  </div>
+
+                  <div id="auth-list" class="panel-collapse collapse">
+                    <ul class="list-group">
+                      <li class="list-group-item list-indent" ng-repeat="elem in objects.auth.array">{{elem}}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a class="collapsed" data-toggle="collapse" href="#lv-list" target="_self">
+                        <span class="panel-title-input">Levels of Class</span>
+                        <span class="badge">{{objects.level.array.length}}</span>
+                      </a>
+                      <span class="pull-right ctrlBtnGroup">
+                  <a ng-click="modalInit(objects.level)"><span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#set-modal" title="Modify" aria-hidden="true"></span></a>
+                      </span>
+                    </h4>
+                  </div>
+
+                  <div id="lv-list" class="panel-collapse collapse">
+                    <ul class="list-group">
+                      <li class="list-group-item list-indent" ng-repeat="elem in objects.level.array">{{elem}}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a class="collapsed" data-toggle="collapse" href="#type-list" target="_self">
+                        <span class="panel-title-input">Types of class</span>
+                        <span class="badge">{{objects.type.array.length}}</span>
+                      </a>
+                      <span class="pull-right ctrlBtnGroup">
+                    <a ng-click="modalInit(objects.type)">
+                      <span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#set-modal" title="Modify" aria-hidden="true"></span>
+                      </a>
+                      </span>
+                    </h4>
+                  </div>
+
+                  <div id="type-list" class="panel-collapse collapse">
+                    <ul class="list-group">
+                      <li class="list-group-item list-indent" ng-repeat="elem in objects.type.array">{{elem}}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a class="collapsed" data-toggle="collapse" href="#duration-list" target="_self">
+                        <span class="panel-title-input">Durations of Class</span>
+                        <span class="badge">{{objects.duration.array.length}}</span>
+                      </a>
+                      <span class="pull-right ctrlBtnGroup">
+                  <a ng-click="modalInit(objects.duration)"><span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#set-modal" title="Modify" aria-hidden="true"></span></a>
+                      </span>
+                    </h4>
+                  </div>
+
+                  <div id="duration-list" class="panel-collapse collapse">
+                    <ul class="list-group">
+                      <li class="list-group-item list-indent" ng-repeat="elem in objects.duration.array">{{elem}} minutes</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a class="collapsed" data-toggle="collapse" href="#day-list" target="_self">
+                        <span class="panel-title-input">Operation Days</span>
+                        <span class="badge">{{objects.day.array.length}}</span>
+                      </a>
+                      <span class="pull-right ctrlBtnGroup">
+                  <a ng-click="modalInit(objects.day)"><span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#set-modal" title="Modify" aria-hidden="true"></span></a>
+                      </span>
+                    </h4>
+                  </div>
+
+                  <div id="day-list" class="panel-collapse collapse">
+                    <ul class="list-group">
+                      <li class="list-group-item list-indent" ng-repeat="elem in objects.day.array">{{elem}}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a class="collapsed" data-toggle="collapse" href="#studio-list" target="_self">
+                        <span class="panel-title-input">Number of Studios</span>
+                        <span class="badge">{{objects.studio.array.length}}</span>
+                      </a>
+                      <span class="pull-right ctrlBtnGroup">
+                  <a ng-click="modalInit(objects.studio)"><span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#set-modal" title="Modify" aria-hidden="true"></span></a>
+                      </span>
+                    </h4>
+                  </div>
+
+                  <div id="studio-list" class="panel-collapse collapse">
+                    <ul class="list-group">
+                      <li class="list-group-item list-indent" ng-repeat="elem in objects.studio.array">{{elem}}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- setting-body End -->
+
+    <!-- setModal-box Begin -->
+    <div id="setModal-box">
+      <div class="container">
+        <div id="set-modal" class="modal fade" role="dialog" aria-labelledby="set-modal-label">
+          <div class="modal-dialog" role="documnet">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="set-modal-label">Edit Setting</h4>
+              </div>
+
+              <form id="setting-form" name="settingForm" class="" ng-submit="submitSetting()">
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-xs-10 col-xs-offset-1" ng-repeat="target in cloneArray track by $index">
+                      <div class="input-group">
+                        <span class="input-group-btn" ng-if="targetId === 'level' || targetId === 'type'">
+                          <input type="color" class="form-control label-colorBox" ng-model="colors[$index]" ng-change="trackChanges($index, colors)">
+                        </span>
+
+                        <input type="text" class="form-control" ng-model="cloneArray[$index]" ng-change="trackChanges($index, cloneArray)">
+
+                        <span ng-click="deleteElement($index, cloneArray)" class="input-group-btn">
+                          <button class="btn btn-default rm-btn" type="button">
+                            <span class="glyphicon glyphicon-trash" title="Remove" aria-hidden="true"></span>
+                        </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row text-center">
+                    <span ng-click="addElement($index, cloneArray)" class="add-setting-element glyphicon glyphicon-plus" title="Add" aria-hidden="true"
+                      style="font-size: 20px;"></span>
+                  </div>
+                </div>
+
+
+                <div class="modal-footer">
+                  <div class="form-group">
+                    <div class="col-xs-6 text-left">
+                      <button id="close-modal" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                      <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- setModal-box End -->
+  </div>
+</div>
+<!-- setting-box End -->
