@@ -1,8 +1,8 @@
 'use strict'
 
-const url = `https://crescendoschedulizer.firebaseio.com/class.json?orderBy="dayIdx"&print=pretty`;
+const url_full_schedule = `https://crescendoschedulizer.firebaseio.com/class.json?orderBy="dayIdx"&print=pretty`;
 const url_ballet = `https://crescendoschedulizer.firebaseio.com/class.json?orderBy=%22type%22&equalTo=%22Ballet%22&print=pretty`;
-const setting = `https://crescendoschedulizer.firebaseio.com/setting.json`;
+const url_setting = `https://crescendoschedulizer.firebaseio.com/setting.json`;
 
 
 // Get Json from 
@@ -34,7 +34,7 @@ function retrieve_Class(json) {
       const cls = parsed_Json[element];
       add_Class(cls);
 
-      if(index === num_Class - 1) {
+      if (index === num_Class - 1) {
         // Resolve the promise, if all the class has been added
         resolve();
       }
@@ -43,7 +43,7 @@ function retrieve_Class(json) {
 
   // Retrieve setting data from DB
   async.then(() => {
-    get_Json(setting, retrieve_Setting);
+    get_Json(url_setting, retrieve_Setting);
   });
 
 }
@@ -80,5 +80,7 @@ function get_splitValue(string) {
   return string.split(",");
 }
 
-// 
-get_Json(url, retrieve_Class);
+// initialize the class info and setting from DB
+function init_Class_full() {
+  get_Json(url_full_schedule, retrieve_Class);
+}
