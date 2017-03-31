@@ -519,12 +519,14 @@ function create_rowspan_sub_mobile(type) {
   // Through all day
   DAYS_ARR.forEach(function (element) {
     const day_query = document.querySelectorAll(`#schedule-${type}-mobile-body > tr.${element}`);
-    const num_query = query.length;
+    const num_query = day_query.length;
+
     // If any schedule on the day
     if (num_query > 0) {
+
       // If only one schedule on this day
-      if ((num_query === 1) && (day_query[0].rowIndex !== tr_Tags.length)) {
-        day_query[i].classList.add('day-border-bottom');
+      if ((num_query === 1) && (day_query[0].rowIndex !== tr_Tags.length)) {        
+        day_query[0].classList.add('day-border-bottom');
       } else if (num_query > 1) {
         // If more than one schedule on this day
         let i = 0;
@@ -533,6 +535,8 @@ function create_rowspan_sub_mobile(type) {
             day_query[i].firstChild.rowSpan = (num_query).toString();
           } else { // Remove all element after rowspan
             day_query[i].firstChild.remove();
+
+            // When last class of this day and also not the last class of whole class
             if ((i === (num_query - 1)) && (day_query[i].rowIndex !== tr_Tags.length)) {
               day_query[i].classList.add('day-border-bottom');
             }
