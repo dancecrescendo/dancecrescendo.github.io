@@ -58,7 +58,7 @@
 
       // When clicking levels of classes
     } else if (currentTarget.className.includes("onClass")) {
-      selected = currentTarget.classList[4],
+      selected = currentTarget.classList[3],
         baseClass = "onClass",
         key_Object = get_IdxinObjectArray(selected),
         classes = document.querySelectorAll(`.${baseClass}:not(.${selected})`);
