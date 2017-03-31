@@ -512,6 +512,7 @@ function get_SortedInsertRowIdx(type, dayIdx, hour) {
   return result;
 }
 
+// Rowspan the column of same day in mobile sub schedule
 function create_rowspan_sub_mobile(type) {
   const tr_Tags = document.querySelectorAll(`#schedule-${type}-mobile-body > tr`);
 
@@ -521,15 +522,19 @@ function create_rowspan_sub_mobile(type) {
     const num_query = query.length;
 
     // If any schedule on the day
-    if (num_query !== 0 && num_query > 1) {
-      let i = 0;
-      for (i; i < num_query; i++) {
-        if (i === 0) { // Rowspan first element
-          query[i].firstChild.rowSpan = (num_query).toString();
-        } else { // Remove all element after rowspan
-          query[i].firstChild.remove();
-          if(i === (num_query - 1)) {
-            query[i].classList.add('day-border-bottom');
+    if (num_query !== 0) {
+      if (num_query === 1) {
+        query[0].classList.add('day-border-bottom');
+      } else if (num_query > 1) {
+        let i = 0;
+        for (i; i < num_query; i++) {
+          if (i === 0) { // Rowspan first element
+            query[i].firstChild.rowSpan = (num_query).toString();
+          } else { // Remove all element after rowspan
+            query[i].firstChild.remove();
+            if (i === (num_query - 1)) {
+              query[i].classList.add('day-border-bottom');
+            }
           }
         }
       }
