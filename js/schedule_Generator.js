@@ -528,6 +528,9 @@ function create_rowspan_sub_mobile(type) {
           query[i].firstChild.rowSpan = (num_query).toString();
         } else { // Remove all element after rowspan
           query[i].firstChild.remove();
+          if(i === (num_query - 1)) {
+            query[i].classList.add('day-border-bottom');
+          }
         }
       }
     }
