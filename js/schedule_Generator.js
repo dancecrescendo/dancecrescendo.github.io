@@ -518,28 +518,30 @@ function create_rowspan_sub_mobile(type) {
 
   // Through all day
   DAYS_ARR.forEach(function (element) {
-    const query = document.querySelectorAll(`#schedule-${type}-mobile-body > tr.${element}`);
+    const day_query = document.querySelectorAll(`#schedule-${type}-mobile-body > tr.${element}`);
     const num_query = query.length;
-
     // If any schedule on the day
-    if (num_query !== 0) {
-      if (num_query === 1) {
-        query[0].classList.add('day-border-bottom');
+    if (num_query > 0) {
+      // If only one schedule on this day
+      if ((num_query === 1) && (day_query[0].rowIndex !== tr_Tags.length)) {
+        day_query[i].classList.add('day-border-bottom');
       } else if (num_query > 1) {
+        // If more than one schedule on this day
         let i = 0;
         for (i; i < num_query; i++) {
           if (i === 0) { // Rowspan first element
-            query[i].firstChild.rowSpan = (num_query).toString();
+            day_query[i].firstChild.rowSpan = (num_query).toString();
           } else { // Remove all element after rowspan
-            query[i].firstChild.remove();
-            if (i === (num_query - 1)) {
-              query[i].classList.add('day-border-bottom');
+            day_query[i].firstChild.remove();
+            if ((i === (num_query - 1)) && (day_query[i].rowIndex !== tr_Tags.length)) {
+              day_query[i].classList.add('day-border-bottom');
             }
           }
         }
       }
     }
   });
+
 }
 
 // Get rounded minutes based on the interval minutes
