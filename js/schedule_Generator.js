@@ -45,7 +45,7 @@ function create_noticeBar(text, link, activate) {
 // Initialize the structure of full schedule table
 function init_BaseTable_full() {
   /* Create notice bar (param: text, link, true/false to activate link) */
-  create_noticeBar("This schedule is for the in 2017 Summer Camp beginning on June 26", "", false);
+  create_noticeBar("This schedule is for the 2017 Summer Camp beginning on June 26", "", false);
 
   /* Creates basic structure of full schedule */
   create_Structure_full();
