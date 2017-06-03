@@ -45,7 +45,7 @@ function create_noticeBar(text, link, activate) {
 // Initialize the structure of full schedule table
 function init_BaseTable_full() {
   /* Create notice bar (param: text, link, true/false to activate link) */
-  // create_noticeBar("hello", "#", true);
+  create_noticeBar("This schedule is for the in 2017 Summer Camp beginning on June 26", "", false);
 
   /* Creates basic structure of full schedule */
   create_Structure_full();
@@ -83,7 +83,6 @@ function create_Structure_full() {
 
   const header = table.createTHead();
   header.insertRow(0).id = "row-days";
-  ``
   header.insertRow(1).id = "row-studio";
 
   header_days.appendChild(table);
@@ -177,7 +176,7 @@ function create_tCol_Timeline() {
     const convertedMin = get_MinsByTimeGap(i, INTVAL_FULL);
     row.classList.add('timeLine');
     row.innerHTML = get_TimeFormat(time.hour, convertedMin, time.ampm);
-    time = get_IncreasingTime(time, INTVAL_FULL); // Increas the time
+    time = get_IncreasingTime(time, INTVAL_FULL); // Increase the time
   }
 }
 // Create <td> each rows in #right-schedule
