@@ -241,7 +241,7 @@ function create_table_classSchedule() {
   }
 }
 
-// Create empty table for sub schedule in dekstop environment
+// Create empty table for sub schedule in desktop environment
 function create_Table_Desktop_sub(type) {
   const container = document.querySelector('#subScheduleContainer');
 
@@ -374,8 +374,8 @@ function create_rowspan_full(newClass_position, day, begin_hour, begin_min, dura
 // Adds a class on the full schedule
 function add_Class_full(info) {
   const c_Name = info.name; // Translated Classname
-  const c_Type = info.type.toLowerCase();
-  const c_Level = get_ClassLevel(info.level.toLowerCase()); // Convert level
+  const c_Type = info.type.replace(" ", "").toLowerCase();
+  const c_Level = get_ClassLevel(info.level.replace(" ", "").toLowerCase()); // Convert level
   const c_daysIdx = DAYS_ARR.indexOf(info.day); // Day idx from DAYS_ARR arr
 
   // Get class begin from DB input
@@ -391,7 +391,7 @@ function add_Class_full(info) {
   // Select the position in schedule will be added
   const newClass_position = document.querySelector(`.h_${c_beginHour}.m_${get_string00(c_beginMin)}>.${info.day}.studio${info.studio}`);
 
-  // Template HTML for full scheule
+  // Template HTML for full schedule
   const template =
     `<div class="level-label ${c_Type}-class"></div>
     <p class="className-label"><b>${c_Name}</b><br> ${get_HourByTwelve(c_beginHour)}:${get_string00(c_beginMin)}-${get_HourByTwelve(c_endHour)}:${get_string00(c_endMin)}
@@ -412,14 +412,14 @@ function add_Class_full(info) {
 
   // Add classes for adding class
   // Warning: Do not switch the class sequence (showHideSchedule.js line: 61 might affected)  
-  newClass_position.classList.add("onClass", `${info.level.toLowerCase()}-class`, "class-border");
+  newClass_position.classList.add("onClass", `${info.level.replace(" ", "").toLowerCase()}-class`, "class-border");
 }
 
 // Adds a class on the sub schedule for each types in desktop environment
 function add_Class_sub(info) {
   const c_Name = info.name; // Translated Classname
-  const c_Type = info.type.toLowerCase();
-  const c_Level = get_ClassLevel(info.level.toLowerCase()); // Convert level
+  const c_Type = info.type.replace(" ", "").toLowerCase();
+  const c_Level = get_ClassLevel(info.level.replace(" ", "").toLowerCase()); // Convert level
   const c_Day = info.day; // Hold original day value
   const c_daysIdx = DAYS_ARR.indexOf(info.day); // Day idx from DAYS_ARR arr
 
@@ -457,10 +457,10 @@ function add_Class_sub(info) {
   create_rowspan_full(newClass_position, info.day, c_beginHour, c_beginMin, info.duration, info.studio, INTVAL_SUB, "sub");
 
   // Warning: Do not switch the class sequence (showHideSchedule.js line: 61 might affected)
-  newClass_position.classList.add("onClass", "class-border", `${info.level.toLowerCase()}-class`);
+  newClass_position.classList.add("onClass", "class-border", `${info.level.replace(" ", "").toLowerCase()}-class`);
 
   // Also add class into sub schedule for mobile enviroment
-  add_Class_sub_mobile(c_Name, c_Type, info.level.toLowerCase(), c_Day, c_daysIdx, c_beginHour, c_beginMin, info.ampm, c_endHour, c_endMin, c_endAMPM);
+  add_Class_sub_mobile(c_Name, c_Type, info.level.replace(" ", "").toLowerCase(), c_Day, c_daysIdx, c_beginHour, c_beginMin, info.ampm, c_endHour, c_endMin, c_endAMPM);
 }
 
 // Adds a class on the sub schedule for each types in mobile environment
@@ -620,7 +620,7 @@ function get_ClassLevel(className) {
       return "(Track B)";
       break;
     default:
-      return "";
+      return `(${className})`;
       break;
   }
 }
@@ -723,7 +723,7 @@ function retrieve_Class(json, type) {
 
     if (type !== "full") {
       // Rowspan days column in sub schedule for mobile environment
-      create_rowspan_sub_mobile(type.toLowerCase());
+      create_rowspan_sub_mobile(type.replace(" ", "").toLowerCase());
     }
   });
 
@@ -744,7 +744,7 @@ function retrieve_Setting(json, classType) {
   // Type
   if (classType === "full") { // For full Schedule
     type.forEach(function (element, index) {
-      const query = document.querySelectorAll(`.${element.toLowerCase()}-class`);
+      const query = document.querySelectorAll(`.${element.replace(" ", "").toLowerCase()}-class`);
       query.forEach(function (selected) {
         selected.style.backgroundColor = typeLabel[index];
       });
@@ -753,7 +753,7 @@ function retrieve_Setting(json, classType) {
     const typeIdx = type.indexOf(classType);
     const speicificLabel = typeLabel[typeIdx];
 
-    const query = document.querySelectorAll(`.${classType.toLowerCase()}-class`);
+    const query = document.querySelectorAll(`.${classType.replace(" ", "").toLowerCase()}-class`);
     query.forEach(function (selected) {
       selected.style.backgroundColor = speicificLabel;
     });
@@ -764,7 +764,7 @@ function retrieve_Setting(json, classType) {
   const levelLabel = get_splitValue(parsed_Json["label"]["level"]);
 
   level.forEach(function (element, index) {
-    const query = document.querySelectorAll(`.${element.toLowerCase()}-class`);
+    const query = document.querySelectorAll(`.${element.replace(" ", "").toLowerCase()}-class`);
     query.forEach(function (selected) {
       selected.style.backgroundColor = levelLabel[index];
     });
