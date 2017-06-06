@@ -375,7 +375,7 @@ function create_rowspan_full(newClass_position, day, begin_hour, begin_min, dura
 function add_Class_full(info) {
   const c_Name = info.name; // Translated Classname
   const c_Type = info.type.replace(" ", "").toLowerCase();
-  const c_Level = get_ClassLevel(info.level.replace(" ", "").toLowerCase()); // Convert level
+  const c_Level = get_ClassLevel(info.level); // Convert level
   const c_daysIdx = DAYS_ARR.indexOf(info.day); // Day idx from DAYS_ARR arr
 
   // Get class begin from DB input
@@ -419,7 +419,7 @@ function add_Class_full(info) {
 function add_Class_sub(info) {
   const c_Name = info.name; // Translated Classname
   const c_Type = info.type.replace(" ", "").toLowerCase();
-  const c_Level = get_ClassLevel(info.level.replace(" ", "").toLowerCase()); // Convert level
+  const c_Level = get_ClassLevel(info.level); // Convert level
   const c_Day = info.day; // Hold original day value
   const c_daysIdx = DAYS_ARR.indexOf(info.day); // Day idx from DAYS_ARR arr
 
