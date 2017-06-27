@@ -840,8 +840,6 @@ function opacity_Handler(event) {
 	const event_src = event.srcElement;
 	const src_class = event.srcElement.classList[0];
 
-	console.log("clicked", event_src, src_class);
-
 	if (src_class === 'className-label' || event_src.localName === 'b') {
 		let selected_class_type;
 		(event_src.localName === "b") ? selected_class_type = event.path[2].classList[3] : selected_class_type = event.path[1].classList[3];
