@@ -15,6 +15,8 @@
 // These variables will be defined after retrieving data from server
 let SCHEDULE_TYPE, SUB_TYPE, DAYS_ARR, NUM_DAYS, STUDIO_ARR, NUM_STUDIO, TYPE_ARR, TYPE_LABEL, LEVEL_ARR, LEVEL_LABEL;
 
+// These variables for the show/hide for selecting class level or type
+let ALL_TYPE_LEVEL, ACTIVE_FLAG_SHOWHIDE, PREV_SELECTED, PREV_SELECTED_IDX;
 
 // TODO: It needs to be replaced the value from server
 const BEGIN_HOUR = 9,
@@ -829,10 +831,8 @@ function retrieve_Setting(json_setting) {
  * Filtering following class level or type
  */
 
-// These variables for the show/hide for selecting class level or type
-let ALL_TYPE_LEVEL, ACTIVE_FLAG_SHOWHIDE, PREV_SELECTED, PREV_SELECTED_IDX;
 
-// Called with eventlistener which handling class filter on the full student schedule
+// Called with EventListener which handling class filter on the full student schedule
 function opacity_Handler(event) {
 	// Verify the input type or level by contained className
 	const event_target = event.target;
@@ -858,7 +858,7 @@ function opacity_Handler(event) {
 	}
 }
 
-// Set opacity of class schedule based on the user click by eventlistner
+// Set opacity of class schedule based on the user click by EventListener
 function set_Opacity_toBlur(targetClass, selected, notSelected) {
 	const idx = ALL_TYPE_LEVEL.indexOf(targetClass.replace("-class", "")); // Remove '-class'
 
@@ -905,7 +905,7 @@ function set_Opacity_toBlur(targetClass, selected, notSelected) {
 	}
 }
 
-// Eventlistner to handle clicking classes for filtering results
-(function () {
-	document.addEventListener('click', (event) => opacity_Handler(event), false);
-})();
+// EventListener to handle clicking classes for filtering results
+// (function () {
+// 	document.addEventListener('click', (event) => opacity_Handler(event), false);
+// })();
