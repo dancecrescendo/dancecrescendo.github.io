@@ -752,6 +752,8 @@ function get_Json_from_server(url, callback) {
 	}).then(function (data) {
 		// Callback the function after retrieving successfully
 		callback(data);
+	}).catch(function(err) {
+		alert("OMG " + err.message);
 	});
 }
 
