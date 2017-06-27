@@ -741,7 +741,7 @@ function get_string00(num) {
 
 // Helper: Check whether the Sub type of class is existing in list of class type from db
 function subType_Handler() {
-	return TYPE_ARR.includes(SUB_TYPE); // TODO
+	return TYPE_ARR.includes(SUB_TYPE);
 }
 
 /*
@@ -750,17 +750,37 @@ function subType_Handler() {
 
 // Async function: Get JSON data from server
 function get_Json_from_server(url, callback) {
-	// Retrieve data from server by Fetch API
-	fetch(url).then(function (response) {
-		return response.json();
-	}).then(function (data) {
-		// Callback the function after retrieving successfully
+
+	// Promise: will resolve after retrieving data from DB
+	new Promise((resolve, reject) => {
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === 4 && xhr.status === 200) {
+				resolve(xhr.responseText);
+			}
+		}
+		xhr.open('GET', url, true);
+		xhr.send();
+	}).then((data) => {
 		callback(data);
 	});
+
+
+	/**
+	 * Fetch API does not work on mobile devices
+	 */
+	// // Retrieve data from server by Fetch API
+	// fetch(url).then(function (response) {
+	// 	return response.json();
+	// }).then(function (data) {
+	// 	// Callback the function after retrieving successfully
+	// 	callback(data);
+	// });
 }
 
 // Apply class info by retrieved data from DB
 function retrieve_Class(json) {
+	json = JSON.parse(json);  // Parse json from AJAX call
 	const num_Class = Object.keys(json).length;
 
 	let promiseQ = new Promise((resolve, reject) => {
@@ -790,6 +810,8 @@ function retrieve_Class(json) {
 
 // Apply setting info by retrieved data from DB
 function retrieve_Setting(json_setting) {
+	json_setting = JSON.parse(json_setting); // Parse json from AJAX call
+	
 	// Set Global variables based on the setting retrieved from server in object
 	DAYS_ARR = json_setting.day.split(",");
 	NUM_DAYS = DAYS_ARR.length;
@@ -848,7 +870,7 @@ function opacity_Handler(event) {
 		// It may clicked with <b> tag on the className-label <p>, thus it needs to set one more step above by parentNode
 		// It cannot be used by event.path or event.srcElement. These are not standard. Only for Chrome browser
 		let selected_class_type;
-		(event_target.localName === "b") ? selected_class_type = event_target.parentNode.parentNode.classList[3] : selected_class_type = event_target.parentNode.classList[3];
+		(event_target.localName === "b") ? selected_class_type = event_target.parentNode.parentNode.classList[3]: selected_class_type = event_target.parentNode.classList[3];
 
 		const target_toSolid = document.querySelectorAll(`.onClass.${selected_class_type} > .level-label`),
 			target_toBlur = document.querySelectorAll(`.onClass:not(.${selected_class_type}) > .level-label`);
