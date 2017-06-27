@@ -77,20 +77,25 @@ function init_Crescendo_Schedule() {
 	const url_setting = `https://crescendoschedulizer.firebaseio.com/setting.json`;
 
 	// Retrieve setting from server, only if arguments are legal
-	args_checker && get_Json_from_server(url_setting, retrieve_Setting);
+	args_checker && get_Json_from_server(url_setting, retrieve_Setting); // Sus
 
 }
 
 // Prevents the illegal arguments for initializing a schedule
 function args_Handler(args) {
+	// Full Schedule Case
 	if (args.length === 1 && args[0] == 'full') {
 		SCHEDULE_TYPE = args[0];
-		SUB_TYPE = null;
+		SUB_TYPE = null; // Full schedule does not need second arg as sub type
 		return true;
+
+		// Sub Schedule Case
 	} else if (args.length === 2 && args[0] == 'sub') {
 		SCHEDULE_TYPE = args[0];
 		SUB_TYPE = args[1];
 		return true;
+
+		// Otherwise it is illegal arguments
 	} else {
 		alert(`Illegal arguments within the initializing function for the schedule`);
 		return false;
@@ -144,6 +149,7 @@ function label_Handler() {
 
 // Set bg color based on selected query
 function set_ClassBGColor(classSort, color) {
+	// Set all the selected class query's background 
 	const query = document.querySelectorAll(`.${classSort.replace(" ", "").toLowerCase()}-class`);
 	query.forEach(function (selected) {
 		selected.style.backgroundColor = color;
@@ -186,7 +192,7 @@ function create_Structure_full() {
 function create_tRow_Days() {
 	const row_Days = document.getElementById("row-days");
 
-	let i = 0
+	let i = 0;
 
 	// Create th tag as many as days + 1
 	for (i; i < NUM_DAYS + 1; i++) {
@@ -330,7 +336,7 @@ function create_Table_Desktop_sub() {
 
 	// Desktop Version Sub Schedule
 	const desktop = document.createElement('div');
-	desktop.className = "table-container table-responsive desktop-schedule"
+	desktop.className = "table-container table-responsive desktop-schedule";
 
 	const d_tbl = document.createElement('table');
 	d_tbl.id = `schedule-${SUB_TYPE.toLowerCase()}-desktop`;
@@ -433,9 +439,9 @@ function create_rowspan_full(newClass_position, day, begin_hour, begin_min, dura
 	newClass_position.rowSpan = `${rowspan}`;
 
 	// Removes <td>s after rowspan
-	let span_num = begin_min;
-	let extra_Hour = 0;
-	let i = 0,
+	let span_num = begin_min,
+		extra_Hour = 0,
+		i = 0,
 		flag = false;
 
 	for (i; i < rowspan - 1; i++) {
@@ -518,9 +524,10 @@ function add_Class_sub(info) {
 	}
 
 	// Template HTML for full scheule
-	const template = `<p class="className-label"><strong>${info.name}</strong><br>
-  ${get_HourByTwelve(c_beginHour)}:${get_string00(c_beginMin)}-${get_HourByTwelve(c_End.hour)}:${get_string00(c_End.min)}<br>
-  ${(c_Level)}</p>`;
+	const template =
+		`<p class="className-label"><strong>${info.name}</strong><br>
+		${get_HourByTwelve(c_beginHour)}:${get_string00(c_beginMin)}-${get_HourByTwelve(c_End.hour)}:${get_string00(c_End.min)}<br>
+		${(c_Level)}</p>`;
 
 	// Adds the template for new class
 	newClass_position.innerHTML = template;
@@ -680,19 +687,16 @@ function get_ClassLevel(className) {
 	switch (className) {
 		case "pre":
 			return "(Pre)";
-			// break;
 		case "kids":
 			return "(Kids)";
-			// break;
 		case "tracka":
 			return "(Track A)";
-			// break;
 		case "trackb":
 			return "(Track B)";
-			// break;
 		default:
 			return `(${className})`;
 	}
+	// break statement does not needed because it returns string before break
 }
 
 // Helper: Convert hour from 24 to 12 hour based
@@ -737,7 +741,7 @@ function get_string00(num) {
 
 // Helper: Check whether the Sub type of class is existing in list of class type from db
 function subType_Handler() {
-	return TYPE_ARR.includes(SUB_TYPE)
+	return TYPE_ARR.includes(SUB_TYPE); // TODO
 }
 
 /*
@@ -752,8 +756,6 @@ function get_Json_from_server(url, callback) {
 	}).then(function (data) {
 		// Callback the function after retrieving successfully
 		callback(data);
-	}).catch(function(err) {
-		alert("OMG " + err.message);
 	});
 }
 
@@ -804,6 +806,7 @@ function retrieve_Setting(json_setting) {
 	// Set Global variables for the show/hide DOM event
 	ALL_TYPE_LEVEL = LEVEL_ARR.concat(TYPE_ARR);
 	ALL_TYPE_LEVEL = ALL_TYPE_LEVEL.map(function (element) {
+		// Replace to lowercase and non space
 		return element.replace(" ", "").toLowerCase();
 	});
 
@@ -847,11 +850,11 @@ function opacity_Handler(event) {
 		let selected_class_type;
 		(event_target.localName === "b") ? selected_class_type = event_target.parentNode.parentNode.classList[3] : selected_class_type = event_target.parentNode.classList[3];
 
-		const target_toSolid =  document.querySelectorAll(`.onClass.${selected_class_type} > .level-label`),
+		const target_toSolid = document.querySelectorAll(`.onClass.${selected_class_type} > .level-label`),
 			target_toBlur = document.querySelectorAll(`.onClass:not(.${selected_class_type}) > .level-label`);
 		set_Opacity_toBlur(selected_class_type, target_toSolid, target_toBlur);
 
-	// When user click level label area
+		// When user click level label area
 	} else if (target_classList === 'level-label') {
 		const selected_class_level = event_target.classList[1],
 			target_toSolid = document.querySelectorAll(`.level-label.${selected_class_level}`),
@@ -866,7 +869,7 @@ function set_Opacity_toBlur(targetClass, selected, notSelected) {
 
 	// When label selected first time or again
 	if ((ACTIVE_FLAG_SHOWHIDE[idx] !== true && PREV_SELECTED === undefined) || ACTIVE_FLAG_SHOWHIDE[idx] !== true && PREV_SELECTED === targetClass) {
-		notSelected.forEach(function(tag) {
+		notSelected.forEach(function (tag) {
 			tag.parentNode.style.opacity = 0.2;
 			// tag.parentNode.classList.add('blur');
 		});
@@ -878,14 +881,14 @@ function set_Opacity_toBlur(targetClass, selected, notSelected) {
 		PREV_SELECTED = targetClass;
 		PREV_SELECTED_IDX = idx;
 
-	// When label selected after different label has been selected
-	} else if (ACTIVE_FLAG_SHOWHIDE[idx] !== true && PREV_SELECTED !== targetClass){
-		notSelected.forEach(function(tag) {
+		// When label selected after different label has been selected
+	} else if (ACTIVE_FLAG_SHOWHIDE[idx] !== true && PREV_SELECTED !== targetClass) {
+		notSelected.forEach(function (tag) {
 			tag.parentNode.style.opacity = 0.2;
 			// tag.parentNode.classList.add('blur');
 		});
 
-		selected.forEach(function(tag) {
+		selected.forEach(function (tag) {
 			tag.parentNode.style.opacity = 1;
 			// tag.parentNode.classList.remove('blur');
 		})
@@ -898,9 +901,9 @@ function set_Opacity_toBlur(targetClass, selected, notSelected) {
 		PREV_SELECTED = targetClass;
 		PREV_SELECTED_IDX = idx;
 
-	// Restore opacity
+		// Restore opacity
 	} else {
-		notSelected.forEach(function(tag) {
+		notSelected.forEach(function (tag) {
 			tag.parentNode.style.opacity = 1;
 		});
 		ACTIVE_FLAG_SHOWHIDE[PREV_SELECTED_IDX] = false;
