@@ -23,7 +23,7 @@
   <!--<script src="js/showHideSchedule.js"></script>-->
 
   <!-- The Crescendo API for generating schedule -->
-  <script src="js/crescendoAPI.js"></script>
+  <!--<script src="js/crescendoAPI.js"></script>-->
 	
 
   <!-- Local CSS -->
@@ -41,12 +41,14 @@
 	<!--<div id="subScheduleContainer"></div>-->
 
   <script>
-		alert("this");
-	create_Structure_full(); // Foundation
-	create_tRow_Days(); // Rows
-	create_tRow_Studio(); // Studios
-	create_tCol_Timeline(); // Timeline
-	create_table_classSchedule(); // Empty Class area
+		
+	fetch(`https://crescendoschedulizer.firebaseio.com/setting.json`).then(function (response) {
+		return response.json();
+	}).then(function (data) {
+		alert(data.auth);
+	}).catch(function(err) {
+		alert(err.message);
+	});
   </script>
 
 </body>
