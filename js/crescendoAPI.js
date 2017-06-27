@@ -803,11 +803,8 @@ function retrieve_Setting(json_setting) {
 		return element.replace(" ", "").toLowerCase();
 	});
 
-	NUM_TYPE = TYPE_ARR.length;
-	NUM_LEVEL = LEVEL_ARR.length;
-
 	// Array for storing whether show/hide function activated
-	ACTIVE_FLAG_SHOWHIDE = new Array(NUM_TYPE + NUM_LEVEL).fill(false);
+	ACTIVE_FLAG_SHOWHIDE = new Array(TYPE_ARR.length + LEVEL_ARR.length).fill(false);
 
 
 
@@ -833,35 +830,43 @@ function retrieve_Setting(json_setting) {
  */
 
 // These variables for the show/hide for selecting class level or type
-let ALL_TYPE_LEVEL, NUM_TYPE, NUM_LEVEL, ACTIVE_FLAG_SHOWHIDE, PREV_SELECTED, PREV_SELECTED_IDX;
+let ALL_TYPE_LEVEL, ACTIVE_FLAG_SHOWHIDE, PREV_SELECTED, PREV_SELECTED_IDX;
 
+// Called with eventlistener which handling class filter on the full student schedule
 function opacity_Handler(event) {
 	// Verify the input type or level by contained className
-	const event_src = event.srcElement;
-	const src_class = event.srcElement.classList[0];
+	const event_target = event.target;
+	const target_classList = event.target.classList[0];
 
-	if (src_class === 'className-label' || event_src.localName === 'b') {
+	// When user click class type label area
+	if (target_classList === 'className-label' || event_target.localName === 'b') {
+		// It may clicked with <b> tag on the className-label <p>, thus it needs to set one more step above by parentNode
+		// It cannot be used by event.path or event.srcElement. These are not standard. Only for Chrome browser
 		let selected_class_type;
-		(event_src.localName === "b") ? selected_class_type = event.path[2].classList[3] : selected_class_type = event.path[1].classList[3];
+		(event_target.localName === "b") ? selected_class_type = event_target.parentNode.parentNode.classList[3] : selected_class_type = event_target.parentNode.classList[3];
+
 		const target_toSolid =  document.querySelectorAll(`.onClass.${selected_class_type} > .level-label`),
 			target_toBlur = document.querySelectorAll(`.onClass:not(.${selected_class_type}) > .level-label`);
 		set_Opacity_toBlur(selected_class_type, target_toSolid, target_toBlur);
 
-	} else if (src_class === 'level-label') {
-		const selected_class_level = event_src.classList[1],
+	// When user click level label area
+	} else if (target_classList === 'level-label') {
+		const selected_class_level = event_target.classList[1],
 			target_toSolid = document.querySelectorAll(`.level-label.${selected_class_level}`),
 			target_toBlur = document.querySelectorAll(`.level-label:not(.${selected_class_level})`);
 		set_Opacity_toBlur(selected_class_level, target_toSolid, target_toBlur);
 	}
 }
 
+// Set opacity of class schedule based on the user click by eventlistner
 function set_Opacity_toBlur(targetClass, selected, notSelected) {
-	const idx = ALL_TYPE_LEVEL.indexOf(targetClass.replace("-class", ""));
+	const idx = ALL_TYPE_LEVEL.indexOf(targetClass.replace("-class", "")); // Remove '-class'
 
 	// When label selected first time or again
 	if ((ACTIVE_FLAG_SHOWHIDE[idx] !== true && PREV_SELECTED === undefined) || ACTIVE_FLAG_SHOWHIDE[idx] !== true && PREV_SELECTED === targetClass) {
 		notSelected.forEach(function(tag) {
 			tag.parentNode.style.opacity = 0.2;
+			// tag.parentNode.classList.add('blur');
 		});
 
 		// Active Flag: whether specific class has been selected or not
@@ -875,10 +880,12 @@ function set_Opacity_toBlur(targetClass, selected, notSelected) {
 	} else if (ACTIVE_FLAG_SHOWHIDE[idx] !== true && PREV_SELECTED !== targetClass){
 		notSelected.forEach(function(tag) {
 			tag.parentNode.style.opacity = 0.2;
+			// tag.parentNode.classList.add('blur');
 		});
 
 		selected.forEach(function(tag) {
 			tag.parentNode.style.opacity = 1;
+			// tag.parentNode.classList.remove('blur');
 		})
 
 		// Activated new class and deactivated prev class

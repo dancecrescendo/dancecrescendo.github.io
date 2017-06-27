@@ -133,6 +133,10 @@ section.home {
   border: 1px solid gray;
 }
 
+.blur {
+	opacity: 0.2;
+}
+
 .level-label:after,
 .className-label:after {
   font-size: 12px;
