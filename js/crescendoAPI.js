@@ -15,6 +15,7 @@
 // These variables will be defined after retrieving data from server
 let SCHEDULE_TYPE, SUB_TYPE, DAYS_ARR, NUM_DAYS, STUDIO_ARR, NUM_STUDIO, TYPE_ARR, TYPE_LABEL, LEVEL_ARR, LEVEL_LABEL;
 
+
 // TODO: It needs to be replaced the value from server
 const BEGIN_HOUR = 9,
 	END_HOUR = 9;
@@ -203,7 +204,9 @@ function create_tRow_Days() {
 function create_tRow_Studio() {
 	const row_Studios = document.getElementById("row-studio");
 
-	let i = 0, count = 1, count_Days = 0;
+	let i = 0,
+		count = 1,
+		count_Days = 0;
 
 	for (i; i < (1 + (NUM_STUDIO * NUM_DAYS)); i++) {
 
@@ -467,7 +470,7 @@ function add_Class_full(info) {
 	// Template HTML for full schedule
 	const template =
 		`<div class="level-label ${c_Type}-class"></div>
-    <p class="className-label"><b>${info.name}</b><br> ${c_beginHour}:${get_string00(c_beginMin)}-${get_HourByTwentyTwo(c_End.hour)}:${get_string00(c_End.min)}
+    <p class="className-label"><b>${info.name}</b><br> ${get_HourByTwelve(c_beginHour)}:${get_string00(c_beginMin)}-${get_HourByTwelve(c_End.hour)}:${get_string00(c_End.min)}
       <br> ${(c_Level)}
     </p>`;
 
@@ -514,7 +517,7 @@ function add_Class_sub(info) {
 
 	// Template HTML for full scheule
 	const template = `<p class="className-label"><strong>${info.name}</strong><br>
-  ${get_HourByTwentyTwo(c_beginHour)}:${get_string00(c_beginMin)}-${get_HourByTwentyTwo(c_End.hour)}:${get_string00(c_End.min)}<br>
+  ${get_HourByTwelve(c_beginHour)}:${get_string00(c_beginMin)}-${get_HourByTwelve(c_End.hour)}:${get_string00(c_End.min)}<br>
   ${(c_Level)}</p>`;
 
 	// Adds the template for new class
@@ -619,15 +622,14 @@ function getClassEnds_toObj(hour, min, ampm, duration) {
 	min = parseInt(min);
 	duration = parseInt(duration);
 
-	let end_hour;
-	let end_min;
-	let count = 0;
+	let end_hour, end_min, count = 0;
 
 	// Extract hours from duration mins
 	while (min + duration >= 60) {
 		count++;
 		duration -= 60;
 	}
+
 	end_hour = hour + count;
 	end_min = min + duration;
 
@@ -648,7 +650,7 @@ function getClassEnds_toObj(hour, min, ampm, duration) {
 
 // Get rounded minutes based on the interval minutes
 function get_roundedMin(min, intval) {
-	return (min % intval !== 0) ? min -= mod: min;
+	return (min % intval !== 0) ? min -= mod : min;
 }
 
 // Get minutes interval within an hour
@@ -785,12 +787,29 @@ function retrieve_Setting(json_setting) {
 	// Set Global variables based on the setting retrieved from server in object
 	DAYS_ARR = json_setting.day.split(",");
 	NUM_DAYS = DAYS_ARR.length;
+
 	STUDIO_ARR = json_setting.studio.split(",");
 	NUM_STUDIO = STUDIO_ARR.length;
+
 	TYPE_ARR = json_setting["type"].split(",");
 	TYPE_LABEL = json_setting["label"]["type"].split(",");
+
 	LEVEL_ARR = json_setting["level"].split(",");
 	LEVEL_LABEL = json_setting["label"]["level"].split(",");
+
+	// Set Global variables for the show/hide DOM event
+	ALL_TYPE_LEVEL = LEVEL_ARR.concat(TYPE_ARR);
+	ALL_TYPE_LEVEL = ALL_TYPE_LEVEL.map(function (element) {
+		return element.replace(" ", "").toLowerCase();
+	});
+
+	NUM_TYPE = TYPE_ARR.length;
+	NUM_LEVEL = LEVEL_ARR.length;
+
+	// Array for storing whether show/hide function activated
+	ACTIVE_FLAG_SHOWHIDE = new Array(NUM_TYPE + NUM_LEVEL).fill(false);
+
+
 
 	if (SCHEDULE_TYPE == "full") {
 		// Create a full schedule of classes
@@ -798,11 +817,90 @@ function retrieve_Setting(json_setting) {
 
 		// Set announcement bar for the full schedule
 		announcement_Handler(json_setting.notice);
+
 	} else if (SCHEDULE_TYPE == "sub") {
 		// Check whether class type is legal
 		// The reason why SUB_TYPE var checks at here is that
 		// the variable needs to compared after data retrieved from server
 		subType_Handler() ? generate_Sub_Schedule(SUB_TYPE) : alert(`Error: ${SUB_TYPE} is not existing in the list of our class types`);
 	}
-
 }
+
+
+
+/**
+ * Filtering following class level or type
+ */
+
+// These variables for the show/hide for selecting class level or type
+let ALL_TYPE_LEVEL, NUM_TYPE, NUM_LEVEL, ACTIVE_FLAG_SHOWHIDE, PREV_SELECTED, PREV_SELECTED_IDX;
+
+function opacity_Handler(event) {
+	// Verify the input type or level by contained className
+	const event_src = event.srcElement;
+	const src_class = event.srcElement.classList[0];
+
+	console.log("clicked", event_src, src_class);
+
+	if (src_class === 'className-label' || event_src.localName === 'b') {
+		let selected_class_type;
+		(event_src.localName === "b") ? selected_class_type = event.path[2].classList[3] : selected_class_type = event.path[1].classList[3];
+		const target_toSolid =  document.querySelectorAll(`.onClass.${selected_class_type} > .level-label`),
+			target_toBlur = document.querySelectorAll(`.onClass:not(.${selected_class_type}) > .level-label`);
+		set_Opacity_toBlur(selected_class_type, target_toSolid, target_toBlur);
+
+	} else if (src_class === 'level-label') {
+		const selected_class_level = event_src.classList[1],
+			target_toSolid = document.querySelectorAll(`.level-label.${selected_class_level}`),
+			target_toBlur = document.querySelectorAll(`.level-label:not(.${selected_class_level})`);
+		set_Opacity_toBlur(selected_class_level, target_toSolid, target_toBlur);
+	}
+}
+
+function set_Opacity_toBlur(targetClass, selected, notSelected) {
+	const idx = ALL_TYPE_LEVEL.indexOf(targetClass.replace("-class", ""));
+
+	// When label selected first time or again
+	if ((ACTIVE_FLAG_SHOWHIDE[idx] !== true && PREV_SELECTED === undefined) || ACTIVE_FLAG_SHOWHIDE[idx] !== true && PREV_SELECTED === targetClass) {
+		notSelected.forEach(function(tag) {
+			tag.parentNode.style.opacity = 0.2;
+		});
+
+		// Active Flag: whether specific class has been selected or not
+		ACTIVE_FLAG_SHOWHIDE[idx] = true;
+
+		// Store selected class type or level
+		PREV_SELECTED = targetClass;
+		PREV_SELECTED_IDX = idx;
+
+	// When label selected after different label has been selected
+	} else if (ACTIVE_FLAG_SHOWHIDE[idx] !== true && PREV_SELECTED !== targetClass){
+		notSelected.forEach(function(tag) {
+			tag.parentNode.style.opacity = 0.2;
+		});
+
+		selected.forEach(function(tag) {
+			tag.parentNode.style.opacity = 1;
+		})
+
+		// Activated new class and deactivated prev class
+		ACTIVE_FLAG_SHOWHIDE[idx] = true;
+		ACTIVE_FLAG_SHOWHIDE[PREV_SELECTED_IDX] = false;
+
+		// Store selected class type or level
+		PREV_SELECTED = targetClass;
+		PREV_SELECTED_IDX = idx;
+
+	// Restore opacity
+	} else {
+		notSelected.forEach(function(tag) {
+			tag.parentNode.style.opacity = 1;
+		});
+		ACTIVE_FLAG_SHOWHIDE[PREV_SELECTED_IDX] = false;
+	}
+}
+
+// Eventlistner to handle clicking classes for filtering results
+(function () {
+	document.addEventListener('click', (event) => opacity_Handler(event), false);
+})();

@@ -16,13 +16,13 @@
   <!-- Boostrap JS -->
   <script src="js/bootstrap.min.js"></script>
 
-  <!-- jQuery: Set the fixed row and column on the browser -->
+  <!-- Set the fixed row and column on the browser -->
   <script src="js/fixed_Menus.js"></script>
 
-  <!-- jQuery: Show/Hide selected classes or levels -->
-  <script src="js/showHideSchedule.js"></script>
+  <!-- Show/Hide selected classes or levels -->
+  <!--<script src="js/showHideSchedule.js"></script>-->
 
-  <!-- jQuery: Schedule Generator -->
+  <!-- The Crescendo API for generating schedule -->
   <script src="js/crescendoAPI.js"></script>
 	
 
@@ -33,11 +33,17 @@
 <body>
   <!-- Notice Bar -->
   <div id="notice-container"></div>
+	
+	<!-- Full Student Schedule Container div -->
   <div id="studentScheduleContainer"></div>
-	<div id="subScheduleContainer"></div>
+	
+	<!-- Sub Schedule Container div -->
+	<!--<div id="subScheduleContainer"></div>-->
+
   <script>
 		init_Crescendo_Schedule("full");
   </script>
+
 </body>
 
 </html>
