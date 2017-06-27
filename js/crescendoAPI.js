@@ -74,7 +74,7 @@ function generate_Sub_Schedule() {
 // Initializer of generating class schedule for Crescendo
 function init_Crescendo_Schedule() {
 	const args_checker = args_Handler(Array.from(arguments)); // Deals with arguments dynamically
-	const url_setting = `https://crescendoschedulizer.firebaseio.com/setting.json`
+	const url_setting = `https://crescendoschedulizer.firebaseio.com/setting.json`;
 
 	// Retrieve setting from server, only if arguments are legal
 	args_checker && get_Json_from_server(url_setting, retrieve_Setting);
