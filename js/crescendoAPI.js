@@ -951,7 +951,7 @@ function event_Handler() {
         if (body2.scrollTop === 0 && body2.scrollLeft === 0) {
             // For Chrome, Safari and Opera		
             if (body1.scrollTop > -1) {
-                timeLine.style.top = `${-body1.scrollTop+fixed_MarginTop}px`;
+                timeLine.style.top = `${-body1.scrollTop + fixed_MarginTop - 3}px`;
             }
 
             if (body1.scrollLeft > -1) {
@@ -960,7 +960,7 @@ function event_Handler() {
         } else if (body1.scrollTop === 0 && body1.scrollLeft === 0) {
             // Firefox and IE places the overflow at the <html> level
             if (body2.scrollTop > -1) {
-                timeLine.style.top = `${-body2.scrollTop+fixed_MarginTop}px`;
+                timeLine.style.top = `${-body2.scrollTop + fixed_MarginTop - 4}px`;
             }
             if (body2.scrollLeft > -1) {
                 headerTable.style.left = `${-body2.scrollLeft - 1}px`;
