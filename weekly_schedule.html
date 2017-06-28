@@ -2,47 +2,41 @@
 <html lang="en">
 
 <head>
-  <title> Crescendo Dance Academy - Weekly Students Schedule</title>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Crescendo Dance Academy - Weekly Students Schedule</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Boostrap CSS -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Boostrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- jQuery JS -->
-  <script src="js/jquery.min.js"></script>
+    <!-- jQuery JS -->
+    <script src="js/jquery.min.js"></script>
 
-  <!-- Boostrap JS -->
-  <script src="js/bootstrap.min.js"></script>
+    <!-- Boostrap JS -->
+    <script src="js/bootstrap.min.js"></script>
 
-  <!-- Set the fixed row and column on the browser -->
-  <script src="js/fixed_Menus.js"></script>
+    <!-- The Crescendo API for generating schedule -->
+    <script src="js/crescendoAPI.js"></script>
 
-  <!-- Show/Hide selected classes or levels -->
-  <!--<script src="js/showHideSchedule.js"></script>-->
 
-  <!-- The Crescendo API for generating schedule -->
-  <script src="js/crescendoAPI.js"></script>
-	
-
-  <!-- Local CSS -->
-  <link href="css/styles.css" rel="stylesheet">
+    <!-- Local CSS -->
+    <link href="css/styles.css" rel="stylesheet">
 </head>
 
 <body>
-  <!-- Notice Bar -->
-  <div id="notice-container"></div>
-	
-	<!-- Full Student Schedule Container div -->
-  <div id="studentScheduleContainer"></div>
-	
-	<!-- Sub Schedule Container div -->
-	<!--<div id="subScheduleContainer"></div>-->
+    <!-- Notice Bar -->
+    <div id="notice-container"></div>
 
-  <script>
-		init_Crescendo_Schedule("full");
-  </script>
+    <!-- Full Student Schedule Container div -->
+    <div id="studentScheduleContainer"></div>
+
+    <!-- Sub Schedule Container div -->
+    <!--<div id="subScheduleContainer"></div>-->
+
+    <script>
+        init_Crescendo_Schedule("full");
+    </script>
 
 </body>
 
