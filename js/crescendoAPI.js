@@ -162,7 +162,6 @@ function label_Handler() {
 
 // Set bg color based on selected query
 function set_ClassBGColor(classSort, color) {
-    console.log(classSort, typeof classSort);
     // Set all the selected class query's background 
     const query = document.querySelectorAll(`.${classSort.replace(" ", "").toLowerCase()}-class`);
     query.forEach(function (selected) {
