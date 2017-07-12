@@ -13,7 +13,7 @@
  */
 
 // These variables will be defined after retrieving data from server
-let SCHEDULE_TYPE, SUB_TYPE, DAYS_ARR, NUM_DAYS, STUDIO_ARR, NUM_STUDIO, TYPE_ARR, TYPE_LABEL, LEVEL_ARR, LEVEL_LABEL;
+let SCHEDULE_NUM, SCHEDULE_TYPE, SUB_TYPE, DAYS_ARR, NUM_DAYS, STUDIO_ARR, NUM_STUDIO, TYPE_ARR, TYPE_LABEL, LEVEL_ARR, LEVEL_LABEL, SCHEDULE_NAME, SCHEDULE_NOTICE;
 
 // These variables for the show/hide for selecting class level or type
 let ALL_TYPE_LEVEL, ACTIVE_FLAG_SHOWHIDE, PREV_SELECTED, PREV_SELECTED_IDX;
@@ -53,22 +53,32 @@ function generate_Full_Schedule() {
     create_table_classSchedule(); // Empty Class area
 
     // Url of full class info json from server
-    const url_full_schedule = `https://crescendoschedulizer.firebaseio.com/class.json?orderBy="dayIdx"&print=pretty`;
+    const url_full_schedule = `https://crescendoschedulizer.firebaseio.com/class${SCHEDULE_NUM}.json?orderBy="dayIdx"&print=pretty`;
 
     /* Modify Empty Schedule by retrieved class info from server */
-    get_Json_from_server(url_full_schedule, retrieve_Class);
+    get_Json_from_server(url_full_schedule, retrieve_Class, null);
 }
 
 // Initialize the structure of sub schedule table
 function generate_Sub_Schedule() {
-    create_Table_Desktop_sub(); // For desktop version
-    create_Table_Mobile_sub(); // For mobile version
+    // Create Menu for selecting different class schedules, only if active schedules are more than one
+    (SCHEDULE_NUM === 2) && create_Menu_Tab_sub();
+
+    create_Table_Desktop_sub(1); // For desktop version
+    create_Table_Mobile_sub(1); // For mobile version
 
     // Url of filtered class info json from server based on the sub type requested
-    const url_sub_schedule = `https://crescendoschedulizer.firebaseio.com/class.json?orderBy=%22type%22&equalTo=%22${SUB_TYPE}%22&print=pretty`;
-
+    const url_sub_schedule = `https://crescendoschedulizer.firebaseio.com/class${1}.json?orderBy=%22type%22&equalTo=%22${SUB_TYPE}%22&print=pretty`;
     /* Modify Empty Schedule by retrieved class info from server */
-    get_Json_from_server(url_sub_schedule, retrieve_Class);
+    get_Json_from_server(url_sub_schedule, retrieve_Class, 1);
+
+    if (SCHEDULE_NUM === 2) {
+        create_Table_Desktop_sub(SCHEDULE_NUM);
+        create_Table_Mobile_sub(SCHEDULE_NUM);
+
+        const url_sub_schedule2 = `https://crescendoschedulizer.firebaseio.com/class${SCHEDULE_NUM}.json?orderBy=%22type%22&equalTo=%22${SUB_TYPE}%22&print=pretty`;
+        get_Json_from_server(url_sub_schedule2, retrieve_Class, SCHEDULE_NUM);
+    }
 }
 
 // Initializer of generating class schedule for Crescendo
@@ -77,23 +87,25 @@ function init_Crescendo_Schedule() {
     const url_setting = `https://crescendoschedulizer.firebaseio.com/setting.json`;
 
     // Retrieve setting from server, only if arguments are legal
-    args_checker && get_Json_from_server(url_setting, retrieve_Setting); // Sus
+    args_checker && get_Json_from_server(url_setting, retrieve_Setting, null); // Sus
 
 }
 
 // Prevents the illegal arguments for initializing a schedule
 function args_Handler(args) {
     // Full Schedule Case
-    if (args.length === 1 && args[0] == 'full') {
-        SCHEDULE_TYPE = args[0];
+    if (args.length === 2 && args[1] == 'full' && (args[0] === 1 || args[0] === 2)) {
+        SCHEDULE_NUM = args[0];
+        SCHEDULE_TYPE = args[1];
         SUB_TYPE = null; // Full schedule does not need second arg as sub type
         event_Handler(); // Set event handler for filtering class and fixed menus, if it is full schedule
         return true;
 
         // Sub Schedule Case
-    } else if (args.length === 2 && args[0] == 'sub') {
-        SCHEDULE_TYPE = args[0];
-        SUB_TYPE = args[1];
+    } else if (args.length === 3 && args[1] == 'sub' && (args[0] === 1 || args[0] === 2)) {
+        SCHEDULE_NUM = args[0];
+        SCHEDULE_TYPE = args[1];
+        SUB_TYPE = args[2];
         return true;
 
         // Otherwise it is illegal arguments
@@ -331,9 +343,32 @@ function create_table_classSchedule() {
     }
 }
 
+// Create menu btns tab for selecting different schedules in each sub class page
+function create_Menu_Tab_sub() {
+    const root = document.querySelector('#subScheduleContainer');
+    let btns = "";
+    for (let i = 0; i < SCHEDULE_NUM; i++) {
+        btns += `<button type="button" class="btn btn-default" onclick="subScheduleSelect_Handler(${i+1})">${SCHEDULE_NAME["schedule"+(i+1)]}</button>`;
+    }
+
+    root.innerHTML = `<div class="btn-group" role="group">${btns}</div>`;
+}
+
+function subScheduleSelect_Handler(scheduleNum) {
+    const shadow = (scheduleNum === 1) ? 2 : 1;
+    document.querySelector(`#${SCHEDULE_TYPE}-${SUB_TYPE.toLowerCase()}-${scheduleNum}`).style.display = "block";
+    document.querySelector(`#${SCHEDULE_TYPE}-${SUB_TYPE.toLowerCase()}-${shadow}`).style.display = "none";
+}
+
 // Create empty table for sub schedule in desktop environment
-function create_Table_Desktop_sub() {
-    const container = document.querySelector('#subScheduleContainer');
+function create_Table_Desktop_sub(scheduleNum) {
+    const root = document.querySelector('#subScheduleContainer');
+
+    const container = document.createElement('div');
+    container.id = `${SCHEDULE_TYPE}-${SUB_TYPE.toLowerCase()}-${scheduleNum}`;
+
+    // Hide if this is second schedule in sub schedule
+    (scheduleNum === 2) && (container.style.display = "none");
 
     // Desktop Version Sub Schedule
     const desktop = document.createElement('div');
@@ -383,13 +418,17 @@ function create_Table_Desktop_sub() {
             }
         }
     }
+
     desktop.appendChild(d_tbl);
     container.appendChild(desktop);
+    root.appendChild(container);
+
 }
 
 // Create empty table for sub schedule in mobile environment
-function create_Table_Mobile_sub() {
-    const container = document.querySelector('#subScheduleContainer');
+function create_Table_Mobile_sub(scheduleNum) {
+    const container = document.querySelector(`#${SCHEDULE_TYPE}-${SUB_TYPE.toLowerCase()}-${scheduleNum}`);
+
     const type = SUB_TYPE.toLowerCase();
 
     // Mobile Version Sub Schedule
@@ -407,7 +446,7 @@ function create_Table_Mobile_sub() {
     m_tbl_header.appendChild(th_TAG.cloneNode(true)).innerHTML = "Class";
 
     const m_tbl_body = m_tbl.createTBody();
-    m_tbl_body.id = `schedule-${type}-mobile-body`;
+    m_tbl_body.id = `schedule-${type}${scheduleNum}-mobile-body`;
 
     mobile.appendChild(m_tbl);
     container.appendChild(mobile);
@@ -501,7 +540,7 @@ function add_Class_full(info) {
 }
 
 // Adds a class on the sub schedule for each types in desktop environment
-function add_Class_sub(info) {
+function add_Class_sub(info, idx) {
     const c_Type = info.type.replace(" ", "").toLowerCase();
     const c_Level = get_ClassLevel(info.level); // Convert level
 
@@ -511,10 +550,8 @@ function add_Class_sub(info) {
 
     // Get class ends by "getClassEnds_toObj" which returns object
     const c_End = getClassEnds_toObj(info.hour, info.min, info.ampm, info.duration);
-
     // Select the position where the new class will be added
-    let newClass_position = document.querySelector(`.h_${c_beginHour}.m_${get_string00(c_beginMin)}>.${info.day}`);
-
+    let newClass_position = document.querySelector(`#${SCHEDULE_TYPE}-${c_Type}-${idx} .h_${c_beginHour}.m_${get_string00(c_beginMin)}>.${info.day}`);
     // If the position is not existed or other class already on it
     if (newClass_position.classList.contains("onClass") === true || newClass_position === null) {
         // Create extra column for conflict schedule and returned new column's classname as day
@@ -540,15 +577,15 @@ function add_Class_sub(info) {
     newClass_position.classList.add("onClass", "class-border", `${info.level.replace(" ", "").toLowerCase()}-class`);
 
     // Also add class into sub schedule for mobile enviroment
-    add_Class_sub_mobile(info.name, c_Type, info.level.replace(" ", "").toLowerCase(), info.day, DAYS_ARR.indexOf(info.day), c_beginHour, c_beginMin, info.ampm, c_End);
+    add_Class_sub_mobile(info.name, c_Type, info.level.replace(" ", "").toLowerCase(), info.day, DAYS_ARR.indexOf(info.day), c_beginHour, c_beginMin, info.ampm, c_End, idx);
 }
 
 // Adds a class on the sub schedule for each types in mobile environment
-function add_Class_sub_mobile(name, type, level, day, dayIdx, begin_hour, begin_min, begin_ampm, ends) {
-    const t_body = document.getElementById(`schedule-${type}-mobile-body`);
+function add_Class_sub_mobile(name, type, level, day, dayIdx, begin_hour, begin_min, begin_ampm, ends, idx) {
+    const t_body = document.getElementById(`schedule-${type}${idx}-mobile-body`);
 
     // Get index which class has been sorted based on the day and hour
-    let insert_idx = get_SortedInsertRowIdx(type, dayIdx, begin_hour);
+    let insert_idx = get_SortedInsertRowIdx(type, dayIdx, begin_hour, idx);
 
     // Insert new row for inserting class
     const tr_mobile = t_body.insertRow(insert_idx);
@@ -571,8 +608,8 @@ function add_Class_sub_mobile(name, type, level, day, dayIdx, begin_hour, begin_
 }
 
 // Get index which the sorted location for inserting class in sub schedule in mobile
-function get_SortedInsertRowIdx(type, dayIdx, hour) {
-    const tr_Tags = document.querySelectorAll(`#schedule-${type}-mobile-body > tr`);
+function get_SortedInsertRowIdx(type, dayIdx, hour, idx) {
+    const tr_Tags = document.querySelectorAll(`#schedule-${type}${idx}-mobile-body > tr`);
     let result = 0;
 
     // Sorting class by day and time through existing <tr>s
@@ -592,12 +629,12 @@ function get_SortedInsertRowIdx(type, dayIdx, hour) {
 }
 
 // Rowspan the column of same day in mobile sub schedule
-function create_rowspan_sub_mobile(type) {
-    const tr_Tags = document.querySelectorAll(`#schedule-${type}-mobile-body > tr`);
+function create_rowspan_sub_mobile(type, idx) {
+    const tr_Tags = document.querySelectorAll(`#schedule-${type}${idx}-mobile-body > tr`);
 
     // Through all day
     DAYS_ARR.forEach(function (element) {
-        const day_query = document.querySelectorAll(`#schedule-${type}-mobile-body > tr.${element}`);
+        const day_query = document.querySelectorAll(`#schedule-${type}${idx}-mobile-body > tr.${element}`);
         const num_query = day_query.length;
 
         // If any schedule on the day
@@ -660,7 +697,7 @@ function getClassEnds_toObj(hour, min, ampm, duration) {
 
 // Get rounded minutes based on the interval minutes
 function get_roundedMin(min, intval) {
-    return (min % intval !== 0) ? min -= mod : min;
+    return (min % intval !== 0) ? min -= (min % intval) : min;
 }
 
 // Get minutes interval within an hour
@@ -750,7 +787,7 @@ function subType_Handler() {
  * */
 
 // Async function: Get JSON data from server
-function get_Json_from_server(url, callback) {
+function get_Json_from_server(url, callback, idx) {
 
     // Promise: will resolve after retrieving data from DB
     new Promise((resolve, reject) => {
@@ -763,10 +800,10 @@ function get_Json_from_server(url, callback) {
         xhr.open('GET', url, true);
         xhr.send();
     }).then((data) => {
-        callback(data);
+        callback(data, idx);
     }).catch((err) => {
-        alert(`Sorry, the schedule is temporarily undergoing maintenance. We apologize for the inconvenience.`);
-        console.log(err.message);
+        // alert(`Sorry, the schedule is temporarily undergoing maintenance. We apologize for the inconvenience.`);
+        console.log(err);
     });
 
 
@@ -783,7 +820,7 @@ function get_Json_from_server(url, callback) {
 }
 
 // Apply class info by retrieved data from DB
-function retrieve_Class(json) {
+function retrieve_Class(json, idx) {
     json = JSON.parse(json); // Parse json from AJAX call
     const num_Class = Object.keys(json).length;
 
@@ -792,22 +829,22 @@ function retrieve_Class(json) {
             const single_class_info = json[element];
 
             // Add each class depends on the schedule type
-            (SCHEDULE_TYPE == "full") ? add_Class_full(single_class_info): add_Class_sub(single_class_info);
+            (SCHEDULE_TYPE == "full") ? add_Class_full(single_class_info): add_Class_sub(single_class_info, idx);
 
             // Resolve the promise, if all the class has been added
-            index === num_Class - 1 && resolve();
+            (index === num_Class - 1) && resolve();
 
         });
 
         if (SCHEDULE_TYPE != "full") {
             // Rowspan days column in sub schedule for mobile environment
-            create_rowspan_sub_mobile(SUB_TYPE.toLowerCase());
+            create_rowspan_sub_mobile(SUB_TYPE.toLowerCase(), idx);
         }
     }).then(() => {
         label_Handler(); // Set label colors after create all the class schedule
     }).catch((err) => {
-        alert(`Sorry, the schedule is temporarily undergoing maintenance. We apologize for the inconvenience.`);
-        console.log(err.message);
+        // alert(`Sorry, the schedule is temporarily undergoing maintenance. We apologize for the inconvenience.`);
+        console.log(err);
     });
 
 }
@@ -836,6 +873,9 @@ function retrieve_Setting(json_setting) {
         return element.replace(" ", "").toLowerCase();
     });
 
+    SCHEDULE_NAME = json_setting.naming;
+    SCHEDULE_NOTICE = json_setting.notice;
+
     // Array for storing whether show/hide function activated
     ACTIVE_FLAG_SHOWHIDE = new Array(TYPE_ARR.length + LEVEL_ARR.length).fill(false);
 
@@ -846,7 +886,7 @@ function retrieve_Setting(json_setting) {
         generate_Full_Schedule();
 
         // Set announcement bar for the full schedule
-        announcement_Handler(json_setting.notice);
+        announcement_Handler(json_setting.notice["schedule" + SCHEDULE_NUM]);
 
     } else if (SCHEDULE_TYPE == "sub") {
         // Check whether class type is legal
