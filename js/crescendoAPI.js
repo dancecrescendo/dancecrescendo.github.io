@@ -123,7 +123,7 @@ function announcement_Handler(object) {
         // Make anchor empty string,if user deactivate a link 
         let link_template = "";
         if (object.link === true) { // Otherwise set anchor tag with url from server
-            link_template = `, <a href="${data[1]}" target="_blank"><b>Click Here!</b></a>`;
+            link_template = `, <a href="${data[1]}"><b>Click Here!</b></a>`;
         }
 
         const notice_Template = `  
@@ -162,6 +162,7 @@ function label_Handler() {
 
 // Set bg color based on selected query
 function set_ClassBGColor(classSort, color) {
+    console.log(classSort, typeof classSort);
     // Set all the selected class query's background 
     const query = document.querySelectorAll(`.${classSort.replace(" ", "").toLowerCase()}-class`);
     query.forEach(function (selected) {
