@@ -110,7 +110,7 @@ function args_Handler(args) {
 
         // Otherwise it is illegal arguments
     } else {
-        alert(`Illegal arguments within the initializing function for the schedule`);
+        console.error(`Illegal arguments within the initializing function for the schedule`);
         return false;
     }
 }
@@ -803,7 +803,7 @@ function get_Json_from_server(url, callback, idx) {
         callback(data, idx);
     }).catch((err) => {
         // alert(`Sorry, the schedule is temporarily undergoing maintenance. We apologize for the inconvenience.`);
-        console.log(err);
+        console.error(err);
     });
 
 
@@ -844,7 +844,7 @@ function retrieve_Class(json, idx) {
         label_Handler(); // Set label colors after create all the class schedule
     }).catch((err) => {
         // alert(`Sorry, the schedule is temporarily undergoing maintenance. We apologize for the inconvenience.`);
-        console.log(err);
+        console.error(err);
     });
 
 }
@@ -892,7 +892,7 @@ function retrieve_Setting(json_setting) {
         // Check whether class type is legal
         // The reason why SUB_TYPE var checks at here is that
         // the variable needs to compared after data retrieved from server
-        subType_Handler() ? generate_Sub_Schedule(SUB_TYPE) : alert(`Error: ${SUB_TYPE} is not existing in the list of our class types`);
+        subType_Handler() ? generate_Sub_Schedule(SUB_TYPE) : console.error(`Error: ${SUB_TYPE} is not existing in the list of our class types`);
     }
 }
 
