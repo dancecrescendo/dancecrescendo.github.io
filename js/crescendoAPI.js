@@ -297,7 +297,7 @@ function create_tRow_Schedule(row, studio, flag) {
 
             // If the row is the border of hours
             if (flag === true) {
-                // temp.classList.add('border-hour');
+                temp.classList.add('border-hour');
             }
             row.appendChild(temp);
         }
