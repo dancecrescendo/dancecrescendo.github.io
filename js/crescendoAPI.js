@@ -346,19 +346,26 @@ function create_table_classSchedule() {
 // Create menu btns tab for selecting different schedules in each sub class page
 function create_Menu_Tab_sub() {
     const root = document.querySelector('#subScheduleContainer');
-    let btns = "";
-    for (let i = 0; i < SCHEDULE_NUM; i++) {
-        btns += `<button type="button" class="btn btn-default" onclick="subScheduleSelect_Handler(${i+1})">${SCHEDULE_NAME["schedule"+(i+1)]}</button>`;
-    }
+    let btns = "", active = "active"; // Flags
 
+    for (let i = 0; i < SCHEDULE_NUM; i++) {
+        (i === 1) && (active = ""); // Set active btn for initialize sub schedule
+        btns += `<button id="schedule_btn${i+1}" type="button" class="btn btn-default ${active}" onclick="subScheduleSelect_Handler(${i+1})">${SCHEDULE_NAME["schedule"+(i+1)]}</button>`;
+    }
     root.innerHTML = `<div class="btn-group" role="group">${btns}</div>`;
 }
 
 // Set display/hide for sub schedule
 function subScheduleSelect_Handler(scheduleNum) {
     const shadow = (scheduleNum === 1) ? 2 : 1;
-    document.querySelector(`#${SCHEDULE_TYPE}-${SUB_TYPE.toLowerCase()}-${scheduleNum}`).style.display = "block";
+
+    // Hide and deactivate btn 
     document.querySelector(`#${SCHEDULE_TYPE}-${SUB_TYPE.toLowerCase()}-${shadow}`).style.display = "none";
+    document.querySelector(`#schedule_btn${shadow}`).classList.remove("active");
+
+    // Show and activate btn 
+    document.querySelector(`#${SCHEDULE_TYPE}-${SUB_TYPE.toLowerCase()}-${scheduleNum}`).style.display = "block";
+    document.querySelector(`#schedule_btn${scheduleNum}`).classList.add("active");
 }
 
 // Create empty table for sub schedule in desktop environment
