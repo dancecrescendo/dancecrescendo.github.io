@@ -297,7 +297,7 @@ function create_tRow_Schedule(row, studio, flag) {
 
             // If the row is the border of hours
             if (flag === true) {
-                temp.classList.add('border-hour');
+                // temp.classList.add('border-hour');
             }
             row.appendChild(temp);
         }
@@ -544,7 +544,6 @@ function add_Class_full(info) {
     }
 
     // Add classes for adding class
-    // Warning: Do not switch the class sequence (showHideSchedule.js line: 61 might affected)  
     newClass_position.classList.add("onClass", `${c_Level}-class`, "class-border");
 }
 
@@ -908,17 +907,21 @@ function opacity_Handler(event) {
     // Verify the input type or level by contained className
     const event_target = event.target;
     const target_classList = event.target.classList[0];
+    let target_class_idx;
 
     // When user click class type label area
     if (target_classList === 'className-label' || event_target.localName === 'b') {
         // It may clicked with <b> tag on the className-label <p>, thus it needs to set one more step above by parentNode
         // It cannot be used by event.path or event.srcElement. These are not standard. Only for Chrome browser
         let selected_class_type;
-        (event_target.localName === "b") ? selected_class_type = event_target.parentNode.parentNode.classList[3]: selected_class_type = event_target.parentNode.classList[3];
+        (event_target.localName === "b") ? selected_class_type = event_target.parentNode.parentNode.classList: selected_class_type = event_target.parentNode.classList;
+        
+        // Needs to be considered, if the class begin at 45 mins and it has one more class than other class: "border-hour"
+        (selected_class_type.contains("border-hour"))  ? target_class_idx = 4 : target_class_idx = 3;
 
-        const target_toSolid = document.querySelectorAll(`.onClass.${selected_class_type} > .level-label`),
-            target_toBlur = document.querySelectorAll(`.onClass:not(.${selected_class_type}) > .level-label`);
-        set_Opacity_toBlur(selected_class_type, target_toSolid, target_toBlur);
+        const target_toSolid = document.querySelectorAll(`.onClass.${selected_class_type[target_class_idx]} > .level-label`),
+            target_toBlur = document.querySelectorAll(`.onClass:not(.${selected_class_type[target_class_idx]}) > .level-label`);
+        set_Opacity_toBlur(selected_class_type[target_class_idx], target_toSolid, target_toBlur);
 
         // When user click level label area
     } else if (target_classList === 'level-label') {
