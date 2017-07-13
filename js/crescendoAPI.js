@@ -33,7 +33,7 @@ const INTVAL_SUB = 30;
 const NUM_tROWS_SUB = get_TableRows(INTVAL_SUB);
 
 // Global array which holding rowspan index for sub schedule 
-let ROWSPAN_IDX_ARR = [1, 1, 1, 1, 1, 1, 1];
+let ROWSPAN_IDX_ARR = [[1, 1, 1, 1, 1, 1, 1],[1, 1, 1, 1, 1, 1, 1]];
 let MOBILE_CLASS_SORT_IDX = 0;
 
 const th_TAG = document.createElement('th'); // <th></th>
@@ -69,8 +69,7 @@ function generate_Sub_Schedule() {
 
     // Url of filtered class info json from server based on the sub type requested
     const url_sub_schedule = `https://crescendoschedulizer.firebaseio.com/class${1}.json?orderBy=%22type%22&equalTo=%22${SUB_TYPE}%22&print=pretty`;
-    /* Modify Empty Schedule by retrieved class info from server */
-    get_Json_from_server(url_sub_schedule, retrieve_Class, 1);
+    get_Json_from_server(url_sub_schedule, retrieve_Class, 1); // Modify Empty Schedule by retrieved class info from server
 
     if (SCHEDULE_NUM === 2) {
         create_Table_Desktop_sub(SCHEDULE_NUM);
@@ -281,6 +280,7 @@ function create_tCol_Timeline() {
         time = get_IncreasingTime(time, INTVAL_FULL); // Increase the time
     }
 }
+
 // Create <td> each rows in #right-schedule
 function create_tRow_Schedule(row, studio, flag) {
     const td_tag = document.createElement('td');
@@ -354,6 +354,7 @@ function create_Menu_Tab_sub() {
     root.innerHTML = `<div class="btn-group" role="group">${btns}</div>`;
 }
 
+// Set display/hide for sub schedule
 function subScheduleSelect_Handler(scheduleNum) {
     const shadow = (scheduleNum === 1) ? 2 : 1;
     document.querySelector(`#${SCHEDULE_TYPE}-${SUB_TYPE.toLowerCase()}-${scheduleNum}`).style.display = "block";
@@ -422,7 +423,6 @@ function create_Table_Desktop_sub(scheduleNum) {
     desktop.appendChild(d_tbl);
     container.appendChild(desktop);
     root.appendChild(container);
-
 }
 
 // Create empty table for sub schedule in mobile environment
@@ -453,21 +453,23 @@ function create_Table_Mobile_sub(scheduleNum) {
 }
 
 // Create extra column for adding new class which conflict with the class already written on the schedule and rowspan
-function create_extraColumn(day, dayIdx, begin_hour, begin_min) {
+function create_extraColumn(day, dayIdx, begin_hour, begin_min, classType, idx) {
     // Insert one more column on that day
-    const row = document.querySelectorAll(".row_timeLine");
+    const row = document.querySelectorAll(`#${SCHEDULE_TYPE}-${classType}-${idx} .row_timeLine`);
+
     row.forEach(function (element) {
-        element.insertCell(dayIdx + 2).className = `${day + ROWSPAN_IDX_ARR[dayIdx]}`;
+        element.insertCell(dayIdx + 2).className = `${day + ROWSPAN_IDX_ARR[idx-1][dayIdx]}`;
     });
 
     // Colspan the day on <th> inserted new column
-    document.querySelector(`.${day}`).colSpan = `${ROWSPAN_IDX_ARR[dayIdx]+1}`;
+    // document.querySelector(`.${day}`).colSpan = `${ROWSPAN_IDX_ARR[idx-1][dayIdx]+1}`;
+    document.querySelector(`#${SCHEDULE_TYPE}-${classType}-${idx} .${day}`).colSpan = `${ROWSPAN_IDX_ARR[idx-1][dayIdx]+1}`;
 
     // Switch the target day
-    day = `${day+ROWSPAN_IDX_ARR[dayIdx]}`;
+    day = `${day+ROWSPAN_IDX_ARR[idx-1][dayIdx]}`;
 
     // Increase the index of rowspan for that day
-    ROWSPAN_IDX_ARR[dayIdx]++;
+    ROWSPAN_IDX_ARR[idx-1][dayIdx]++;
 
     return day;
 }
@@ -503,7 +505,7 @@ function create_rowspan_full(newClass_position, day, begin_hour, begin_min, dura
 // Adds a class on the full schedule
 function add_Class_full(info) {
     const c_Type = info.type.replace(" ", "").toLowerCase();
-    const c_Level = get_ClassLevel(info.level); // Convert level
+    const c_Level = info.level.replace(" ", "").toLowerCase(); // Convert level
 
     // Get class begin from DB input
     const c_beginHour = get_HourByTwentyTwo(parseInt(info.hour), info.ampm);
@@ -519,7 +521,7 @@ function add_Class_full(info) {
     const template =
         `<div class="level-label ${c_Type}-class"></div>
     <p class="className-label"><b>${info.name}</b><br> ${get_HourByTwelve(c_beginHour)}:${get_string00(c_beginMin)}-${get_HourByTwelve(c_End.hour)}:${get_string00(c_End.min)}
-      <br> ${(c_Level)}
+      <br> ${get_ClassLevelLabel(info.level)}
     </p>`;
 
 
@@ -536,53 +538,56 @@ function add_Class_full(info) {
 
     // Add classes for adding class
     // Warning: Do not switch the class sequence (showHideSchedule.js line: 61 might affected)  
-    newClass_position.classList.add("onClass", `${info.level.replace(" ", "").toLowerCase()}-class`, "class-border");
+    newClass_position.classList.add("onClass", `${c_Level}-class`, "class-border");
 }
 
 // Adds a class on the sub schedule for each types in desktop environment
 function add_Class_sub(info, idx) {
     const c_Type = info.type.replace(" ", "").toLowerCase();
-    const c_Level = get_ClassLevel(info.level); // Convert level
+    const c_Level = info.level.replace(" ", "").toLowerCase(); // Convert level
 
     // Get class begin from DB input
     const c_beginHour = parseInt(info.hour);
-    const c_beginMin = get_roundedMin(parseInt(info.min), INTVAL_SUB);
+    const class_BeginMin_Rounded = get_roundedMin(parseInt(info.min), INTVAL_SUB);
 
     // Get class ends by "getClassEnds_toObj" which returns object
     const c_End = getClassEnds_toObj(info.hour, info.min, info.ampm, info.duration);
+
     // Select the position where the new class will be added
-    let newClass_position = document.querySelector(`#${SCHEDULE_TYPE}-${c_Type}-${idx} .h_${c_beginHour}.m_${get_string00(c_beginMin)}>.${info.day}`);
+    let newClass_position = document.querySelector(`#${SCHEDULE_TYPE}-${c_Type}-${idx} .h_${c_beginHour}.m_${get_string00(class_BeginMin_Rounded)}>.${info.day}`);
+
     // If the position is not existed or other class already on it
     if (newClass_position.classList.contains("onClass") === true || newClass_position === null) {
         // Create extra column for conflict schedule and returned new column's classname as day
-        info.day = create_extraColumn(info.day, info.dayIdx, c_beginHour, c_beginMin);
+        const c_Day = create_extraColumn(info.day, info.dayIdx, c_beginHour, class_BeginMin_Rounded, c_Type, idx);
 
         // Select new position which new inserted column on that day
-        newClass_position = document.querySelector(`.h_${c_beginHour}.m_${get_string00(c_beginMin)}>.${info.day}`);
+        newClass_position = document.querySelector(`#${SCHEDULE_TYPE}-${c_Type}-${idx} .h_${c_beginHour}.m_${get_string00(class_BeginMin_Rounded)}>.${c_Day}`);
     }
 
     // Template HTML for full schedule
     const template =
         `<p class="className-label"><strong>${info.name}</strong><br>
-		${get_HourByTwelve(c_beginHour)}:${get_string00(c_beginMin)}-${get_HourByTwelve(c_End.hour)}:${get_string00(c_End.min)}<br>
-		${(c_Level)}</p>`;
+		${get_HourByTwelve(c_beginHour)}:${get_string00(parseInt(info.min))}-${get_HourByTwelve(c_End.hour)}:${get_string00(parseInt(info.min))}<br>
+		${get_ClassLevelLabel(info.level)}</p>`;
 
     // Adds the template for new class
     newClass_position.innerHTML = template;
 
     // Rowspan after adding new class
-    create_rowspan_full(newClass_position, info.day, c_beginHour, c_beginMin, info.duration, info.studio, INTVAL_SUB);
+    create_rowspan_full(newClass_position, info.day, c_beginHour, class_BeginMin_Rounded, info.duration, info.studio, INTVAL_SUB);
 
     // Warning: Do not switch the class sequence (showHideSchedule.js line: 61 might affected)
-    newClass_position.classList.add("onClass", "class-border", `${info.level.replace(" ", "").toLowerCase()}-class`);
+    newClass_position.classList.add("onClass", "class-border", `${c_Level}-class`);
 
-    // Also add class into sub schedule for mobile enviroment
-    add_Class_sub_mobile(info.name, c_Type, info.level.replace(" ", "").toLowerCase(), info.day, DAYS_ARR.indexOf(info.day), c_beginHour, c_beginMin, info.ampm, c_End, idx);
+    // Also add class into sub schedule for mobile environment
+    add_Class_sub_mobile(info.name, c_Type, info.level, info.day, DAYS_ARR.indexOf(info.day), c_beginHour, class_BeginMin_Rounded, info.ampm, c_End, idx);
 }
 
 // Adds a class on the sub schedule for each types in mobile environment
 function add_Class_sub_mobile(name, type, level, day, dayIdx, begin_hour, begin_min, begin_ampm, ends, idx) {
     const t_body = document.getElementById(`schedule-${type}${idx}-mobile-body`);
+    const c_Level = level.replace(" ", "").toLowerCase(); // Convert level
 
     // Get index which class has been sorted based on the day and hour
     let insert_idx = get_SortedInsertRowIdx(type, dayIdx, begin_hour, idx);
@@ -603,8 +608,8 @@ function add_Class_sub_mobile(name, type, level, day, dayIdx, begin_hour, begin_
 
     // Add name and level in third column
     const td_name = tr_mobile.insertCell(2);
-    td_name.innerHTML = `<strong>${name}</strong><br>${get_ClassLevel(level)}`;
-    td_name.className = `${level}-class`;
+    td_name.innerHTML = `<strong>${name}</strong><br>${get_ClassLevelLabel(level)}`;
+    td_name.className = `${c_Level}-class`;
 }
 
 // Get index which the sorted location for inserting class in sub schedule in mobile
@@ -721,20 +726,8 @@ function get_TableRows(timeGap) {
 
 
 // Helper: Translates class level from user input to capitalize first letter
-function get_ClassLevel(className) {
-    switch (className) {
-        case "pre":
-            return "(Pre)";
-        case "kids":
-            return "(Kids)";
-        case "tracka":
-            return "(Track A)";
-        case "trackb":
-            return "(Track B)";
-        default:
-            return `(${className})`;
-    }
-    // break statement does not needed because it returns string before break
+function get_ClassLevelLabel(className) {
+    return (className === "Normal") ? "" : `(${className})`;
 }
 
 // Helper: Convert hour from 24 to 12 hour based
