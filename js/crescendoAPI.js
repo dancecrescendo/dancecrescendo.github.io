@@ -22,7 +22,8 @@ let ALL_TYPE_LEVEL, ACTIVE_FLAG_SHOWHIDE, PREV_SELECTED, PREV_SELECTED_IDX;
 const BEGIN_HOUR = 9,
     END_HOUR = 9;
 const BEGIN_MIN = 0,
-    END_MIN = 0;
+	END_MIN = 0;
+const BEGIN_AMPM = "AM";
 
 // Full Schedule
 const INTVAL_FULL = 15;
@@ -75,7 +76,7 @@ function generate_Sub_Schedule() {
         create_Table_Desktop_sub(SCHEDULE_NUM);
         create_Table_Mobile_sub(SCHEDULE_NUM);
 
-        const url_sub_schedule2 = `https://crescendoschedulizer.firebaseio.com/class${SCHEDULE_NUM}.json?orderBy=%22type%22&equalTo=%22${SUB_TYPE}%22&print=pretty`;
+		const url_sub_schedule2 = `https://crescendoschedulizer.firebaseio.com/class${SCHEDULE_NUM}.json?orderBy=%22type%22&equalTo=%22${SUB_TYPE}%22&print=pretty`;
         get_Json_from_server(url_sub_schedule2, retrieve_Class, SCHEDULE_NUM);
     }
 }
@@ -332,14 +333,10 @@ function create_table_classSchedule() {
         } else {
             create_tRow_Schedule(row, NUM_STUDIO, false);
         }
-
-        // Increase the hour when min reaches to 60
-        min += INTVAL_FULL;
-        if (min === 60) {
-            hour++;
-            (hour === 24) ? hour = 0: hour; // Hour changes to 0, if it reaches to 24
-            min = 0;
-        }
+		
+		let nextTime = get_nextTimeBasedonIntval(hour, min, "full");
+		hour = nextTime.hour;
+		min = nextTime.min;
     }
 }
 
@@ -401,26 +398,32 @@ function create_Table_Desktop_sub(scheduleNum) {
     }
 
     const d_tbl_body = d_tbl.createTBody();
-    const interval = get_MinInterval(INTVAL_SUB);
-    let time = {
-        hour: BEGIN_HOUR,
-        min: BEGIN_MIN,
-        ampm: "AM"
-    }
+	const interval = get_MinInterval(INTVAL_SUB);
+	
+	let hour = BEGIN_HOUR;
+	let min = BEGIN_MIN;
+	let nextTime = null;
 
     i = 0;
     for (i; i < NUM_tROWS_SUB + 1; i++) {
         const row = d_tbl_body.insertRow(i);
-        const convertedMin = get_MinsByTimeGap(i, INTVAL_SUB);
-        row.className = `row_timeLine h_${time.hour} m_${convertedMin}`;
+		const convertedMin = get_MinsByTimeGap(i, INTVAL_SUB);
+		
+        row.className = `row_timeLine h_${hour} m_${convertedMin}`;
 
         let j = 0;
         for (j; j < NUM_DAYS + 1; j++) {
             const temp = row.insertCell(j);
             if (j === 0) {
-                temp.className = "timeLine";
-                temp.innerHTML = get_TimeFormat(time.hour, convertedMin, time.ampm);
-                time = get_IncreasingTime(time, INTVAL_SUB); //here
+				let thisAMPM = (hour > 12) ? "PM" : "AM";
+
+				temp.className = "timeLine";
+				temp.innerHTML = get_TimeFormat(get_HourByTwelve(hour), convertedMin, thisAMPM);
+				
+				nextTime = get_nextTimeBasedonIntval(hour, min, "sub");
+				hour = nextTime.hour;
+				min = nextTime.min;
+
             } else {
                 temp.className = DAYS_ARR[j - 1];
             }
@@ -482,7 +485,7 @@ function create_extraColumn(day, dayIdx, begin_hour, begin_min, classType, idx) 
 }
 
 // Remove <td> tags after rowspan the new class for full schedule
-function create_rowspan_full(newClass_position, day, begin_hour, begin_min, duration, studio, intval) {
+function create_rowspan(newClass_position, type, day, begin_hour, begin_min, duration, studio, intval, subSchedule_idx) {
     // Rowspan
     const rowspan = duration / intval;
     newClass_position.rowSpan = `${rowspan}`;
@@ -498,12 +501,14 @@ function create_rowspan_full(newClass_position, day, begin_hour, begin_min, dura
         if (span_num >= 60) {
             extra_Hour++;
             span_num = 0;
-        }
-
+		}
+		
+		// For the sub schedules, it may have two schedules on the same page.
+		// It should get query with div ids for preventing to rowspan wrong schedule on the other table
         if (SCHEDULE_TYPE == "sub") { // for the schedule of each type
-            document.querySelector(`.h_${get_HourByTwentyTwo(begin_hour + extra_Hour)}.m_${get_string00(span_num)}>.${day}`).remove();
+			document.querySelector(`#sub-${type}-${subSchedule_idx} .h_${get_HourByTwentyFour(begin_hour + extra_Hour)}.m_${get_string00(span_num)}>.${day}`).remove();
         } else if (SCHEDULE_TYPE == "full") { // for the full schedule
-            document.querySelector(`.h_${get_HourByTwentyTwo(begin_hour + extra_Hour)}.m_${get_string00(span_num)}>.${day}.studio${studio}`).remove();
+            document.querySelector(`.h_${get_HourByTwentyFour(begin_hour + extra_Hour)}.m_${get_string00(span_num)}>.${day}.studio${studio}`).remove();
         }
     }
 }
@@ -515,7 +520,7 @@ function add_Class_full(info) {
     const c_Level = info.level.replace(" ", "").toLowerCase(); // Convert level
 
     // Get class begin from DB input
-    const c_beginHour = get_HourByTwentyTwo(parseInt(info.hour), info.ampm);
+    const c_beginHour = get_HourByTwentyFour(parseInt(info.hour), info.ampm);
     const c_beginMin = parseInt(info.min);
 
     // Get class ends by "getClassEnds_toObj" which returns object
@@ -527,16 +532,18 @@ function add_Class_full(info) {
     // Template HTML for full schedule
     const template =
         `<div class="level-label ${c_Type}-class"></div>
-    <p class="className-label"><b>${info.name}</b><br> ${get_HourByTwelve(c_beginHour)}:${get_string00(c_beginMin)}-${get_HourByTwelve(c_End.hour)}:${get_string00(c_End.min)}
-      <br> ${get_ClassLevelLabel(info.level)}
-    </p>`;
+		<p class="className-label"><b>${info.name}</b><br>
+			${get_HourByTwelve(c_beginHour)}:${get_string00(c_beginMin)}-${get_HourByTwelve(c_End.hour)}:${get_string00(c_End.min)}
+      		<br> ${get_ClassLevelLabel(info.level)}
+		</p>`
+	;
 
 
     // Adds the template for new class
     newClass_position.innerHTML = template;
 
     // Rowspan after adding new class
-    create_rowspan_full(newClass_position, info.day, c_beginHour, c_beginMin, info.duration, info.studio, INTVAL_FULL);
+    create_rowspan(newClass_position, c_Type, info.day, c_beginHour, c_beginMin, info.duration, info.studio, INTVAL_FULL, null);
 
     // Remove border-day class, if the position contains it
     if (newClass_position.classList.contains("border-day")) {
@@ -553,11 +560,11 @@ function add_Class_sub(info, idx) {
     const c_Level = info.level.replace(" ", "").toLowerCase(); // Convert level
 
     // Get class begin from DB input
-    const c_beginHour = parseInt(info.hour);
-    const class_BeginMin_Rounded = get_roundedMin(parseInt(info.min), INTVAL_SUB);
+    const c_beginHour = get_HourByTwentyFour(parseInt(info.hour), info.ampm);	
+	const class_BeginMin_Rounded = get_roundedMin(parseInt(info.min), INTVAL_SUB);
 
     // Get class ends by "getClassEnds_toObj" which returns object
-    const c_End = getClassEnds_toObj(info.hour, info.min, info.ampm, info.duration);
+	const c_End = getClassEnds_toObj(info.hour, info.min, info.ampm, info.duration);
 
     // Select the position where the new class will be added
     let newClass_position = document.querySelector(`#${SCHEDULE_TYPE}-${c_Type}-${idx} .h_${c_beginHour}.m_${get_string00(class_BeginMin_Rounded)}>.${info.day}`);
@@ -565,23 +572,23 @@ function add_Class_sub(info, idx) {
     // If the position is not existed or other class already on it
     if (newClass_position.classList.contains("onClass") === true || newClass_position === null) {
         // Create extra column for conflict schedule and returned new column's classname as day
-        const c_Day = create_extraColumn(info.day, info.dayIdx, c_beginHour, class_BeginMin_Rounded, c_Type, idx);
+		const c_Day = create_extraColumn(info.day, info.dayIdx, c_beginHour, class_BeginMin_Rounded, c_Type, idx);
 
         // Select new position which new inserted column on that day
         newClass_position = document.querySelector(`#${SCHEDULE_TYPE}-${c_Type}-${idx} .h_${c_beginHour}.m_${get_string00(class_BeginMin_Rounded)}>.${c_Day}`);
     }
 
-    // Template HTML for full schedule
+    // Template HTML for sub schedule on desktop or tablet environment
     const template =
         `<p class="className-label"><strong>${info.name}</strong><br>
-		${get_HourByTwelve(c_beginHour)}:${get_string00(parseInt(info.min))}-${get_HourByTwelve(c_End.hour)}:${get_string00(parseInt(info.min))}<br>
+		${get_HourByTwelve(c_beginHour)}:${get_string00(parseInt(info.min))}-${get_HourByTwelve(c_End.hour)}:${get_string00(c_End.min)}<br>
 		${get_ClassLevelLabel(info.level)}</p>`;
 
     // Adds the template for new class
     newClass_position.innerHTML = template;
 
     // Rowspan after adding new class
-    create_rowspan_full(newClass_position, info.day, c_beginHour, class_BeginMin_Rounded, info.duration, info.studio, INTVAL_SUB);
+    create_rowspan(newClass_position, c_Type, info.day, c_beginHour, class_BeginMin_Rounded, info.duration, info.studio, INTVAL_SUB, idx);
 
     // Warning: Do not switch the class sequence (showHideSchedule.js line: 61 might affected)
     newClass_position.classList.add("onClass", "class-border", `${c_Level}-class`);
@@ -609,7 +616,7 @@ function add_Class_sub_mobile(name, type, level, day, dayIdx, begin_hour, begin_
 
     // Add time in second column
     const td_time = tr_mobile.insertCell(1);
-    td_time.innerHTML = `${begin_hour}:${get_string00(begin_min)} ${begin_ampm}-${ends.hour}:${get_string00(ends.min)} ${ends.ampm}`;
+    td_time.innerHTML = `${get_HourByTwelve(begin_hour)}:${get_string00(begin_min)} ${begin_ampm}-${ends.hour}:${get_string00(ends.min)} ${ends.ampm}`;
     td_time.className = 'mobile_time';
 
     // Add name and level in third column
@@ -742,7 +749,7 @@ function get_HourByTwelve(hour) {
 }
 
 // Helper: Convert hour from 12 to 24 hour based
-function get_HourByTwentyTwo(hour, ampm) {
+function get_HourByTwentyFour(hour, ampm) {
     return (ampm == "PM") ? (hour + 12) % 24 : hour;
 }
 
@@ -769,6 +776,20 @@ function get_IncreasingTime(obj, gap) {
         obj.min = 0;
     }
     return obj;
+}
+
+// Helper: Returns increased hour and min for adding class based on the 24 hours timeline
+function get_nextTimeBasedonIntval(hour, min, intvalType) {
+	// Set intval based on the schedule type
+	const intval = (intvalType === "full") ? INTVAL_FULL : INTVAL_SUB;
+	min += intval;
+
+	if (min === 60) { // When minutes reach to the 60 mins, convert it
+		hour++;
+		(hour === 24) && (hour = 0);
+		min = 0;
+	}
+	return {hour: hour, min: min};
 }
 
 // Helper: Translate double zero when num is 0
