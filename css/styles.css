@@ -76,7 +76,7 @@ section.home {
 
 #header-days {
   position: fixed;
-  margin-left: 69px;
+  margin-left: 70px;
   z-index: 4;
 }
 
@@ -90,7 +90,7 @@ section.home {
 #right-schedule {
   /*background: white;*/
   margin-top: 60px;
-  margin-left: 70px;
+  margin-left: 71px;
 }
 
 #row-days {

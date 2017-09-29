@@ -488,8 +488,8 @@ function create_extraColumn(day, dayIdx, begin_hour, begin_min, classType, idx) 
 function create_rowspan(newClass_position, type, day, begin_hour, begin_min, duration, studio, intval, subSchedule_idx) {
     // Rowspan
     const rowspan = duration / intval;
-    newClass_position.rowSpan = `${rowspan}`;
-
+	newClass_position.rowSpan = `${rowspan}`;
+	
     // Removes <td>s after rowspan
     let span_num = begin_min,
         extra_Hour = 0,
@@ -556,6 +556,16 @@ function add_Class_full(info) {
 
 // Adds a class on the sub schedule for each types in desktop environment
 function add_Class_sub(info, idx) {
+	// console.log(info.name, info.day, info.hour + ":" + info.min, info.type);
+	/*
+		TODO:
+
+		1. create_extraColumn
+		-> Implementing function when the table position is not existing
+			e.g. Class already exist between 4:00 - 5:00, but class added again at 4:30
+
+		-> Implementing creating extra column in every case
+	*/
     const c_Type = info.type.replace(" ", "").toLowerCase();
     const c_Level = info.level.replace(" ", "").toLowerCase(); // Convert level
 
@@ -563,21 +573,21 @@ function add_Class_sub(info, idx) {
     const c_beginHour = get_HourByTwentyFour(parseInt(info.hour), info.ampm);	
 	const class_BeginMin_Rounded = get_roundedMin(parseInt(info.min), INTVAL_SUB);
 
+	let c_Day = info.day;
+
     // Get class ends by "getClassEnds_toObj" which returns object
 	const c_End = getClassEnds_toObj(info.hour, info.min, info.ampm, info.duration);
 
     // Select the position where the new class will be added
-    let newClass_position = document.querySelector(`#${SCHEDULE_TYPE}-${c_Type}-${idx} .h_${c_beginHour}.m_${get_string00(class_BeginMin_Rounded)}>.${info.day}`);
+	let newClass_position = document.querySelector(`#${SCHEDULE_TYPE}-${c_Type}-${idx} .h_${c_beginHour}.m_${get_string00(class_BeginMin_Rounded)}>.${info.day}`);
 
     // If the position is not existed or other class already on it
-    if (newClass_position.classList.contains("onClass") === true || newClass_position === null) {
+    if (newClass_position.classList.contains("onClass") === true || newClass_position.classList.contains("onClass") === null || newClass_position === null) {
         // Create extra column for conflict schedule and returned new column's classname as day
-		const c_Day = create_extraColumn(info.day, info.dayIdx, c_beginHour, class_BeginMin_Rounded, c_Type, idx);
-
+		c_Day = create_extraColumn(info.day, info.dayIdx, c_beginHour, class_BeginMin_Rounded, c_Type, idx);
         // Select new position which new inserted column on that day
-        newClass_position = document.querySelector(`#${SCHEDULE_TYPE}-${c_Type}-${idx} .h_${c_beginHour}.m_${get_string00(class_BeginMin_Rounded)}>.${c_Day}`);
+		newClass_position = document.querySelector(`#${SCHEDULE_TYPE}-${c_Type}-${idx} .h_${c_beginHour}.m_${get_string00(class_BeginMin_Rounded)}>.${c_Day}`);
     }
-
     // Template HTML for sub schedule on desktop or tablet environment
     const template =
         `<p class="className-label"><strong>${info.name}</strong><br>
@@ -588,7 +598,7 @@ function add_Class_sub(info, idx) {
     newClass_position.innerHTML = template;
 
     // Rowspan after adding new class
-    create_rowspan(newClass_position, c_Type, info.day, c_beginHour, class_BeginMin_Rounded, info.duration, info.studio, INTVAL_SUB, idx);
+    create_rowspan(newClass_position, c_Type, c_Day, c_beginHour, class_BeginMin_Rounded, info.duration, info.studio, INTVAL_SUB, idx);
 
     // Warning: Do not switch the class sequence (showHideSchedule.js line: 61 might affected)
     newClass_position.classList.add("onClass", "class-border", `${c_Level}-class`);
@@ -750,7 +760,7 @@ function get_HourByTwelve(hour) {
 
 // Helper: Convert hour from 12 to 24 hour based
 function get_HourByTwentyFour(hour, ampm) {
-    return (ampm == "PM") ? (hour + 12) % 24 : hour;
+    return (ampm == "PM" && hour < 12) ? (hour + 12) % 24 : hour;
 }
 
 // Helper: Translates single digit to mins
@@ -846,8 +856,8 @@ function retrieve_Class(json, idx) {
 
     new Promise((resolve, reject) => {
         Object.keys(json).forEach(function (element, index) {
-            const single_class_info = json[element];
-
+			const single_class_info = json[element];
+			
             // Add each class depends on the schedule type
             (SCHEDULE_TYPE == "full") ? add_Class_full(single_class_info): add_Class_sub(single_class_info, idx);
 
@@ -1027,7 +1037,7 @@ function event_Handler() {
                 timeLine.style.top = `${-body2.scrollTop + fixed_MarginTop - 4}px`;
             }
             if (body2.scrollLeft > -1) {
-                headerTable.style.left = `${-body2.scrollLeft - 1}px`;
+                headerTable.style.left = `${-body2.scrollLeft}px`;
             }
         }
     }
