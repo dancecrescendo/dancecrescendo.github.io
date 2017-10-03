@@ -11,6 +11,7 @@
 /*
  * Global Variables
  */
+
 // These variables will be defined after retrieving data from server
 let SCHEDULE_NUM, SCHEDULE_TYPE, SUB_TYPE, DAYS_ARR, NUM_DAYS, STUDIO_ARR, NUM_STUDIO, TYPE_ARR, TYPE_LABEL, LEVEL_ARR, LEVEL_LABEL, SCHEDULE_NAME, SCHEDULE_NOTICE;
 
@@ -465,6 +466,28 @@ function create_Table_Mobile_sub(scheduleNum) {
 	container.appendChild(mobile);
 }
 
+// Check availabilities of cell in the range of class duration
+function check_CellSpaceAvailable(schedule_num, day, dayIdx, hour, min, duration, type, col_num) {
+	(col_num === 0) && (col_num = ""); // Column number handler: 0 -> ""
+
+	while (duration > 0) {
+		const target = document.querySelector(`#${SCHEDULE_TYPE}-${type}-${schedule_num} .h_${hour}.m_${get_string00(min)} > .${day + col_num}`);
+
+		if (target === null || target.classList.contains("onClass") === true) {
+			return true;
+		}
+
+		// Minutes
+		min += INTVAL_SUB;
+		(min === 60) && (min = 0, hour++);
+
+		// Duration
+		duration -= INTVAL_SUB;
+		(duration <= 15) && (duration = 0);
+	}
+	return false;
+}
+
 // Create extra column for adding new class which conflict with the class already written on the schedule and rowspan
 // This function only called with subschedules in each individual type
 function create_extraColumn(day, dayIdx, begin_hour, begin_min, classType, idx) {
@@ -478,7 +501,7 @@ function create_extraColumn(day, dayIdx, begin_hour, begin_min, classType, idx) 
 		} else {
 			// Otherwise adding new cell
 			element.insertCell(dayIdx + 2).className = `${day + ROWSPAN_IDX_ARR[idx-1][dayIdx]}`;
-		}		
+		}
 	});
 
 	// Colspan the day on <th> inserted new column
@@ -527,27 +550,26 @@ function create_rowspan(position, type, day, begin_hour, begin_min, duration, st
 
 }
 
-
 // Adds a class on the full schedule
 function add_Class_full(info) {
 	const c_Type = info.type.replace(" ", "").toLowerCase();
 	const c_Level = info.level.replace(" ", "").toLowerCase(); // Convert level
 
 	// Get class begin from DB input
-	const c_beginHour = get_HourByTwentyFour(parseInt(info.hour), info.ampm);
+	const c_BeginHour = get_HourByTwentyFour(parseInt(info.hour), info.ampm);
 	const c_beginMin = parseInt(info.min);
 
-	// Get class ends by "getClassEnds_toObj" which returns object
-	const c_End = getClassEnds_toObj(info.hour, info.min, info.ampm, info.duration);
+	// Get class ends by "get_ClassEnds_toObj" which returns object
+	const c_End = get_ClassEnds_toObj(info.hour, info.min, info.ampm, info.duration);
 
 	// Select the position in schedule will be added
-	const newClass_position = document.querySelector(`.h_${c_beginHour}.m_${get_string00(c_beginMin)}>.${info.day}.studio${info.studio}`);
+	const newClass_position = document.querySelector(`.h_${c_BeginHour}.m_${get_string00(c_beginMin)}>.${info.day}.studio${info.studio}`);
 
 	// Template HTML for full schedule
 	const template =
 		`<div class="level-label ${c_Type}-class"></div>
 		<p class="className-label"><b>${info.name}</b><br>
-			${get_HourByTwelve(c_beginHour)}:${get_string00(c_beginMin)}-${get_HourByTwelve(c_End.hour)}:${get_string00(c_End.min)}
+			${get_HourByTwelve(c_BeginHour)}:${get_string00(c_beginMin)}-${get_HourByTwelve(c_End.hour)}:${get_string00(c_End.min)}
       		<br> ${get_ClassLevelLabel(info.level)}
 		</p>`;
 
@@ -556,7 +578,7 @@ function add_Class_full(info) {
 	newClass_position.innerHTML = template;
 
 	// Rowspan after adding new class, only if duration is bigger than each minutes of row
-	(parseInt(info.duration) > INTVAL_FULL) && create_rowspan(newClass_position, c_Type, info.day, c_beginHour, c_beginMin, info.duration, info.studio, INTVAL_FULL, null);
+	(parseInt(info.duration) > INTVAL_FULL) && create_rowspan(newClass_position, c_Type, info.day, c_BeginHour, c_beginMin, info.duration, info.studio, INTVAL_FULL, null);
 
 	// Remove border-day class, if the position contains it
 	(newClass_position.classList.contains("border-day")) && newClass_position.classList.remove("border-day");
@@ -571,46 +593,70 @@ function add_Class_sub(info, idx) {
 	const c_Level = info.level.replace(" ", "").toLowerCase(); // Convert level
 
 	// Get class begin from DB input
-	const c_beginHour = get_HourByTwentyFour(parseInt(info.hour), info.ampm);
-	const class_BeginMin_Rounded = get_roundedMin(parseInt(info.min), INTVAL_SUB);
+	const c_BeginHour = get_HourByTwentyFour(parseInt(info.hour), info.ampm);
+	const c_BeginMin_Rounded = get_roundedMin(parseInt(info.min), INTVAL_SUB); // Round minutes by sub class interval
 
-	// Init converted day var for confliction between classes timeline 
+	// Init converted day var for conflicts between classes timeline 
 	let c_Day = info.day;
+	const c_DayIdx = DAYS_ARR.indexOf(info.day);
+	let extraCol_idx = 0;
 
-	// Get class ends by "getClassEnds_toObj" which returns object
-	const c_End = getClassEnds_toObj(info.hour, info.min, info.ampm, info.duration);
+	// Get class ends by "get_ClassEnds_toObj" which returns object
+	const c_End = get_ClassEnds_toObj(info.hour, info.min, info.ampm, info.duration);
 
-	// Select the position where the new class will be added
-	let newClass_position = document.querySelector(`#${SCHEDULE_TYPE}-${c_Type}-${idx} .h_${c_beginHour}.m_${get_string00(class_BeginMin_Rounded)}>.${info.day}`);
+	// Select the position where the new class will be addexport default ;
+	let newClass_position = document.querySelector(`#${SCHEDULE_TYPE}-${c_Type}-${idx} .h_${c_BeginHour}.m_${get_string00(c_BeginMin_Rounded)}>.${info.day}`);
 
-	// If <td> does not exist when the space was rowspan by adding other class
-	if (newClass_position === null || newClass_position.classList.contains("onClass") === true) {
+	// If cell is not existing or empty
+	if (check_CellSpaceAvailable(idx, c_Day, c_DayIdx, c_BeginHour, c_BeginMin_Rounded, info.duration, c_Type, extraCol_idx)) {
+		let detected_Class = true; // Flag for detecting other columns' availabilities
 
-		// Create extra column for conflicted classes and returned new column's classname as c_Day
-		c_Day = create_extraColumn(info.day, info.dayIdx, c_beginHour, class_BeginMin_Rounded, c_Type, idx);
+		// Check the availabilities within other columns if there are multiple columns for that day
+		if (ROWSPAN_IDX_ARR[idx - 1][c_DayIdx] > 1) {
+			extraCol_idx++;
 
+			// Iterate through all the other columns in same day
+			while (extraCol_idx <= ROWSPAN_IDX_ARR[idx - 1][c_DayIdx]) {
+				detected_Class = check_CellSpaceAvailable(idx, c_Day, c_DayIdx, c_BeginHour, c_BeginMin_Rounded, info.duration, c_Type, extraCol_idx);
+
+				if (detected_Class === false) {
+					break;
+				} else {
+					extraCol_idx++;
+				}
+			}
+		}
+
+		// If there is no space in  either spaces
+		(detected_Class === true) ? 
+			// Create extra column for conflicted classes and returned new column's classname as c_Day
+			c_Day = create_extraColumn(info.day, info.dayIdx, c_BeginHour, c_BeginMin_Rounded, c_Type, idx):
+
+			// Or create in other column already existed, instead of creating new column
+			c_Day = `${day+ROWSPAN_IDX_ARR[idx-1][extraCol_idx]}`;
+		
 		// Select new position which new inserted column on that day
-		newClass_position = document.querySelector(`#${SCHEDULE_TYPE}-${c_Type}-${idx} .h_${c_beginHour}.m_${get_string00(class_BeginMin_Rounded)}>.${c_Day}`);
+		newClass_position = document.querySelector(`#${SCHEDULE_TYPE}-${c_Type}-${idx} .h_${c_BeginHour}.m_${get_string00(c_BeginMin_Rounded)}>.${c_Day}`);
 
 	}
 
 	// Template HTML for sub schedule on desktop or tablet environment
 	const template =
 		`<p class="className-label"><strong>${info.name}</strong><br>
-	${get_HourByTwelve(c_beginHour)}:${get_string00(parseInt(info.min))}-${get_HourByTwelve(c_End.hour)}:${get_string00(c_End.min)}<br>
-	${get_ClassLevelLabel(info.level)}</p>`;
+		${get_HourByTwelve(c_BeginHour)}:${get_string00(parseInt(info.min))}-${get_HourByTwelve(c_End.hour)}:${get_string00(c_End.min)}<br>
+		${get_ClassLevelLabel(info.level)}</p>`;
 
 	// Adds the template for new class
 	newClass_position.innerHTML = template;
 
 	// Rowspan after adding new class, only if duration is bigger than each minutes of row
-	(parseInt(info.duration) > INTVAL_SUB) && create_rowspan(newClass_position, c_Type, c_Day, c_beginHour, class_BeginMin_Rounded, info.duration, info.studio, INTVAL_SUB, idx);
+	(parseInt(info.duration) > INTVAL_SUB) && create_rowspan(newClass_position, c_Type, c_Day, c_BeginHour, c_BeginMin_Rounded, info.duration, info.studio, INTVAL_SUB, idx);
 
 	// Warning: Do not switch the class sequence (show/hide function for class type and level may affect)
 	newClass_position.classList.add("onClass", "class-border", `${c_Level}-class`);
 
 	// Also add class into sub schedule for mobile environment
-	add_Class_sub_mobile(info.name, c_Type, info.level, info.day, DAYS_ARR.indexOf(info.day), c_beginHour, class_BeginMin_Rounded, info.ampm, c_End, idx);
+	add_Class_sub_mobile(info.name, c_Type, info.level, info.day, c_DayIdx, c_BeginHour, c_BeginMin_Rounded, info.ampm, c_End, idx);
 }
 
 // Adds a class on the sub schedule for each types in mobile environment
@@ -698,7 +744,7 @@ function create_rowspan_sub_mobile(type, idx) {
 }
 
 // Extracts the time of begin and end from user input
-function getClassEnds_toObj(hour, min, ampm, duration) {
+function get_ClassEnds_toObj(hour, min, ampm, duration) {
 	hour = parseInt(hour);
 	min = parseInt(min);
 	duration = parseInt(duration);
