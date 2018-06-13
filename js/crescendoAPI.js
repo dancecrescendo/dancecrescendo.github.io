@@ -128,7 +128,7 @@ function noticeHandler (object) {
 
 		// Otherwise set anchor tag with url from server
 		(object.link === true) && (link_template = `, <a href="${data[1]}"><b>Click Here!</b></a>`)
-console.log(SCHEDULE_NUM)
+
 		const noticeHTML = `  
        <div class="alert alert-${(SCHEDULE_NUM === 1) ? 'danger' : 'warning'} alert-dismissable">
           <a onClick="closeNoticebar()" class="close" data-dismiss="alert" aria-label="close">×</a>
