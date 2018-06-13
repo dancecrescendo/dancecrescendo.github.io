@@ -238,12 +238,12 @@ section.home {
 td.mobile_day {
 	font-weight: 600;
 	vertical-align: middle !important;
-	border-bottom: 2px solid black !important;
+	border-bottom: 2px solid gray !important;
 }
 
 #student-schedule-mobile-body,
 .day-border-bottom {
-	border-bottom: 2px solid black;
+	border-bottom: 2px solid gray;
 }
 
 #student-schedule-mobile {
