@@ -246,6 +246,10 @@ td.mobile_day {
 	border-bottom: 2px solid black;
 }
 
+#student-schedule-mobile {
+  text-align: center;
+}
+
 @media (min-width: 768px) {
 	#student-schedule-mobile {
 		display: none;
