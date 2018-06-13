@@ -24,17 +24,19 @@
 </head>
 
 <body>
-    <!-- Notice Bar -->
-    <div id="notice-container"></div>
-
-    <!-- Full Student Schedule Container div -->
-    <div id="studentScheduleContainer"></div>
+	<div id="student-schedule-container">
+		<!-- Notice Bar -->
+		<div id="notice-container"></div>
+	
+		<!-- Full Student Schedule Container for desktop -->
+		<div id="student-schedule-desktop"></div>
+	</div>	
 
     <!-- Sub Schedule Container div -->
     <!--<div id="subScheduleContainer"></div>-->
 
     <script>
-        init_Crescendo_Schedule(2, "full");
+        initCrescendoSchedule(2, "full");
     </script>
 
     <style>
