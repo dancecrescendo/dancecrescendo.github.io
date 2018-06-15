@@ -131,10 +131,13 @@ function noticeHandler (object) {
 
 		const noticeHTML = `  
        <div class="alert alert-${(SCHEDULE_NUM === 1) ? 'danger' : 'warning'} alert-dismissable">
-          <a onClick="closeNoticebar()" class="close" data-dismiss="alert" aria-label="close">×</a>
+          <a onClick="closeNoticebar()" id="close-notice-bar" class="close" data-dismiss="alert" aria-label="close">×</a>
           <strong>Notice!</strong> ${data[0]}${link_template}
         </div>`
     const noticeBar = document.getElementById("notice-container")
+    noticeBar.addEventListener('click', () => {
+      document.getElementById('close-notice-bar').click()
+    })
     noticeBar.classList.add('display')
 		noticeBar.innerHTML = noticeHTML
 	}
