@@ -235,9 +235,13 @@ section.home {
   background: lightgray;
 } */
 
+td.mobile_day,
+td.mobile_time {
+	vertical-align: middle !important;
+}
+
 td.mobile_day {
 	font-weight: 600;
-	vertical-align: middle !important;
 	border-bottom: 2px solid gray !important;
 }
 
@@ -246,7 +250,8 @@ td.mobile_day {
 	border-bottom: 2px solid gray;
 }
 
-#student-schedule-mobile {
+#student-schedule-mobile,
+#student-schedule-mobile th {
   text-align: center;
 }
 
